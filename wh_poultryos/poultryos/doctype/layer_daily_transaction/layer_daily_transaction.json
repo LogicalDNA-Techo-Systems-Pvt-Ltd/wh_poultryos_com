@@ -1,0 +1,177 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:LYR-DT-{YY}-{#####}",
+ "creation": "2024-12-06 16:27:09.615555",
+ "default_view": "List",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "batch_details_section",
+  "batch",
+  "batch_placed_on",
+  "batch_age_in_days",
+  "column_break_enib",
+  "batch_placed_quantity",
+  "batch_live_quantity",
+  "transaction_details_section",
+  "transaction_date",
+  "mortality_number_of_birds",
+  "mortality_reason",
+  "average_bird_weight_in_grams",
+  "average_bird_weight_in_kg",
+  "column_break_pkev",
+  "feed_consumed_quantity",
+  "medicine_consumed_quantity",
+  "vaccine_consumed_quantity",
+  "vitamin_consumed_quantity"
+ ],
+ "fields": [
+  {
+   "fieldname": "batch_details_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Details"
+  },
+  {
+   "fieldname": "batch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Batch",
+   "link_filters": "[[\"Batch\",\"module\",\"=\",\"MDL-24-00003\"]]",
+   "options": "Batch",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "batch.opening_date",
+   "fieldname": "batch_placed_on",
+   "fieldtype": "Read Only",
+   "label": "Batch Placed On"
+  },
+  {
+   "fetch_from": "batch.batch_age_in_days",
+   "fieldname": "batch_age_in_days",
+   "fieldtype": "Read Only",
+   "label": "Batch Age (In Days)"
+  },
+  {
+   "fieldname": "column_break_enib",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "batch.place_quantity_number_of_birds",
+   "fieldname": "batch_placed_quantity",
+   "fieldtype": "Read Only",
+   "label": "Batch Placed Quantity"
+  },
+  {
+   "fetch_from": "batch.live_quantity_number_of_birds",
+   "fetch_if_empty": 1,
+   "fieldname": "batch_live_quantity",
+   "fieldtype": "Read Only",
+   "label": "Batch Live Quantity"
+  },
+  {
+   "depends_on": "batch",
+   "fieldname": "transaction_details_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Details"
+  },
+  {
+   "fieldname": "transaction_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Transaction Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mortality_number_of_birds",
+   "fieldtype": "Int",
+   "label": "Mortality (Number of Birds)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "mortality_reason",
+   "fieldtype": "Link",
+   "label": "Mortality Reason",
+   "options": "Mortality Reason"
+  },
+  {
+   "fieldname": "average_bird_weight_in_grams",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Average Bird Weight (In Grams)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "average_bird_weight_in_kg",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Average Bird Weight (In KG)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "column_break_pkev",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "feed_consumed_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Feed (Consumed Quantity)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "medicine_consumed_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Medicine (Consumed Quantity)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "vaccine_consumed_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Vaccine (Consumed Quantity)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "vitamin_consumed_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Vitamin (Consumed Quantity)",
+   "non_negative": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-12-10 11:54:29.769121",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Layer Daily Transaction",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "batch",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "batch"
+}

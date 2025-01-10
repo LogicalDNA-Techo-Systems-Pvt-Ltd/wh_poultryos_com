@@ -1,0 +1,29 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2024-12-06 17:55:48.368517",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "json": "{}",
+ "letterhead": null,
+ "modified": "2024-12-06 18:16:21.136448",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "CBF Mortality Report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "select transaction_date, mortality_number_of_birds, batch_live_quantity, ((mortality_number_of_birds/batch_live_quantity) * 100) AS mortality_percent, (feed_consumed_quantity/average_bird_weight_in_grams) AS fcr from `tabCBF Daily Transaction`;",
+ "ref_doctype": "CBF Daily Transaction",
+ "report_name": "CBF Mortality Report",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
+ "timeout": 0
+}

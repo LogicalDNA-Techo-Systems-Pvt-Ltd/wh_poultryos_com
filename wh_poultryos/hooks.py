@@ -137,13 +137,16 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    # 	"*": {
+    # 		"on_update": "method",
+    # 		"on_cancel": "method",
+    # 		"on_trash": "method"
+    # 	}
+    "CBF Daily Transaction": {
+        "after_delete": "wh_poultryos.poultryos.doctype.cbf_daily_transaction.cbf_daily_transaction.show_delete_message"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
@@ -241,4 +244,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
