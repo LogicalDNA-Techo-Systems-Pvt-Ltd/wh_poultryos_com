@@ -6,6 +6,7 @@ from frappe.model.document import Document
 class CBFDailyTransaction(Document):
     pass
 
+
 def show_delete_message(doc, method):
     # Get mortality number of birds from the current document
     mortality_number_of_birds = doc.mortality_number_of_birds

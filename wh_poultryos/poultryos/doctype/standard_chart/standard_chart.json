@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:STD-{###}",
+ "creation": "2025-01-16 22:18:32.511845",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item_name",
+  "age_in_days",
+  "mortality",
+  "feed_consumption",
+  "cumulative_feed",
+  "body_weight",
+  "fcr"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Link",
+   "label": "Item Name",
+   "options": "Item Master"
+  },
+  {
+   "fieldname": "age_in_days",
+   "fieldtype": "Int",
+   "label": "Age in days"
+  },
+  {
+   "fieldname": "mortality",
+   "fieldtype": "Int",
+   "label": "Mortality"
+  },
+  {
+   "fieldname": "feed_consumption",
+   "fieldtype": "Float",
+   "label": "Feed Consumption"
+  },
+  {
+   "fieldname": "cumulative_feed",
+   "fieldtype": "Float",
+   "label": "Cumulative Feed"
+  },
+  {
+   "fieldname": "body_weight",
+   "fieldtype": "Float",
+   "label": "Body weight"
+  },
+  {
+   "fieldname": "fcr",
+   "fieldtype": "Float",
+   "label": "FCR"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-17 11:15:13.089006",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Standard chart",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

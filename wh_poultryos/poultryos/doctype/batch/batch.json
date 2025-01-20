@@ -8,14 +8,23 @@
  "engine": "InnoDB",
  "field_order": [
   "batch_name",
+  "farmer_name",
   "opening_date",
+  "live_batch_date",
   "batch_age_in_days",
+  "breed_name",
   "place_quantity_number_of_birds",
+  "live_quantity_number_of_birds",
   "column_break_njbw",
   "batch_type",
   "module",
-  "breed_name",
-  "live_quantity_number_of_birds"
+  "mortality",
+  "culls",
+  "rate",
+  "amount",
+  "biological_value",
+  "bird_cost",
+  "sale_quantity"
  ],
  "fields": [
   {
@@ -30,7 +39,7 @@
    "fieldname": "opening_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Opening Date",
+   "label": "Placement Date",
    "reqd": 1
   },
   {
@@ -87,11 +96,61 @@
    "in_list_view": 1,
    "label": "Batch Age in Days",
    "non_negative": 1
+  },
+  {
+   "fieldname": "farmer_name",
+   "fieldtype": "Data",
+   "label": "Farmer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "live_batch_date",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Live Batch Date"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "label": "Rate"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "label": "Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "mortality",
+   "fieldtype": "Int",
+   "label": "Mortality"
+  },
+  {
+   "default": "0",
+   "fieldname": "culls",
+   "fieldtype": "Int",
+   "label": "Culls"
+  },
+  {
+   "fieldname": "biological_value",
+   "fieldtype": "Float",
+   "label": "Biological Value"
+  },
+  {
+   "fieldname": "bird_cost",
+   "fieldtype": "Float",
+   "label": "Bird Cost"
+  },
+  {
+   "default": "0",
+   "fieldname": "sale_quantity",
+   "fieldtype": "Float",
+   "label": "Sale Quantity"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-06 16:28:42.943635",
+ "modified": "2025-01-17 17:08:12.265903",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Batch",

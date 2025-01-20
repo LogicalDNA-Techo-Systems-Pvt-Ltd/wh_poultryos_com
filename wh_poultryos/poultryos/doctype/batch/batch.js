@@ -20,15 +20,37 @@ frappe.ui.form.on('Batch', {
         }
     },
 
+
+
     place_quantity_number_of_birds: function (frm) {
         frm.set_value("live_quantity_number_of_birds", frm.doc.place_quantity_number_of_birds || 0);
     },
 
     opening_date: function (frm) {
+
+        // Automatically set live_batch_date when placement_date is entered
+        if (frm.doc.opening_date) {
+            let formatted_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
+            frm.set_value('live_batch_date', formatted_date);
+        }
+
         let opening_date = frm.doc.opening_date;
-        let today = frappe.datetime.get_today();
+        // let today = frappe.datetime.get_today();
+        let today = frm.doc.live_batch_date;
         let days_diff = frappe.datetime.get_diff(today, opening_date);
         frm.set_value("batch_age_in_days", days_diff || 0);
+    },
+
+    rate: function (frm)
+    {
+        frm.set_value('amount', frm.doc.place_quantity_number_of_birds * frm.doc.rate);
+        frm.set_value('biological_value', frm.doc.place_quantity_number_of_birds * frm.doc.rate);
+        frm.set_value('bird_cost', frm.doc.place_quantity_number_of_birds * frm.doc.rate)
     }
+
+    
+  
+
+   
 });
 
