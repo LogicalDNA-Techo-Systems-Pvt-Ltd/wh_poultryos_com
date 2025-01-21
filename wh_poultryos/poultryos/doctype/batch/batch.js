@@ -45,7 +45,7 @@ frappe.ui.form.on('Batch', {
     {
         frm.set_value('amount', frm.doc.place_quantity_number_of_birds * frm.doc.rate);
         frm.set_value('biological_value', frm.doc.place_quantity_number_of_birds * frm.doc.rate);
-        frm.set_value('bird_cost', frm.doc.place_quantity_number_of_birds * frm.doc.rate)
+        frm.set_value('bird_cost', frm.doc.rate)
     }
 
     
