@@ -14,13 +14,38 @@ frappe.ui.form.on('CBF Daily Transaction', {
         });
     },
 
+    mortality_number_of_birds: function (frm) {
+        if (frm.doc.mortality_number_of_birds) {
+            frappe.call({
+                method: 'frappe.client.get',
+                args: {
+                    doctype: 'Batch',
+                    name: frm.doc.batch // Use the batch identifier from the form
+                },
+                callback: function (batch_data) {
+
+                    console.log(batch_data);
+                    if (batch_data && batch_data.message) {
+
+                        let cost = batch_data.message.bird_cost;
+                        let mcost = ((frm.doc.mortality_number_of_birds * cost).toFixed(4));
+                        frm.set_value('mortality_cost', mcost);
+
+                    }
+
+                }
+            });
+        }
+    },
+
     item_name: function (frm) {
         // Recalculate feed cost when item changes
         if (frm.doc.transaction_date) {
             frm.trigger('transaction_date');
 
-               // Fetch standard consumption from Std Chart based on item name and age
-               if (frm.doc.item_name && frm.doc.batch_age_in_days) {
+            // Fetch standard consumption from Std Chart based on item name and age
+
+            if (frm.doc.item_name && frm.doc.batch_age_in_days) {
                 frappe.call({
                     method: 'frappe.client.get_value',
                     args: {
@@ -83,7 +108,6 @@ frappe.ui.form.on('CBF Daily Transaction', {
                     let rate = rate_data.rate;
 
 
-
                     if (frm.doc.feed_consumed_quantity) {
                         let feed_cost = frm.doc.feed_consumed_quantity * rate;
                         frm.set_value('feed_cost', feed_cost);
@@ -99,7 +123,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
         });
     },
 
-   
+
     feed_consumed_quantity: function (frm) {
 
         frm.doc.item = "Feed";
@@ -241,66 +265,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
 
 
 
-    // batch: function (frm) {
-    //     // Set the max date for the Transaction Date field to today
-    //     frm.fields_dict['transaction_date'].df['max'] = frappe.datetime.get_today();
-    //     frm.fields_dict['transaction_date'].refresh();  // Refresh to apply the change
 
-    //     if (frm.doc.batch) {
-    //         // Fetch the rate from the Item Rate Doctype
-    //         frappe.call({
-    //             method: 'frappe.client.get_value',
-    //             args: {
-    //                 doctype: 'Batch',
-    //                 fieldname: 'opening_date',
-    //                 filters: { name: frm.doc.batch }
-    //             },
-    //             callback: function (response) {
-    //                 if (response.message) {
-
-    //                     let placedate = response.message.opening_date;
-    //                     // Convert the date to user-preferred format
-    //                     let formatted_date = frappe.datetime.str_to_user(placedate);
-    //                     // Set the calculated feed cost
-    //                     frm.set_value('batch_placed_on', formatted_date);
-    //                 } else {
-    //                     frappe.msgprint(__('No Date Found'));
-
-    //                 }
-    //             }
-    //         });
-    //     } 
-    //     else {
-    //         // If no item or feed_consumed_quantity is entered, reset feed cost
-
-    //     }
-
-    //     // Fetch the last transaction date for the same batch
-    //     frappe.call({
-    //         method: 'frappe.client.get_list',
-    //         args: {
-    //             doctype: 'CBF Daily Transaction',
-    //             filters: { 'batch_placed_on': frm.doc.batch_placed_on },  // Filter transactions by batch_placed_on
-    //             fields: ['transaction_date'],
-    //             order_by: 'transaction_date desc',  // Order by latest transaction date
-    //             limit_page_length: 1  // Only get the most recent transaction
-    //         },
-    //         callback: function (data) {
-    //             if (data && data.message && data.message.length > 0) {
-    //                 // If a transaction exists, set the next day as the transaction date
-    //                 let last_transaction_date = data.message[0].transaction_date;
-    //                 let next_day = frappe.datetime.add_days(last_transaction_date, 1);
-    //                 frm.set_value('transaction_date', next_day);
-    //             } else {
-    //                 // If no transaction exists, set the transaction date as batch_placed_on
-
-    //                 // Convert the date to user-preferred format
-    //                 let formatted_date = frappe.datetime.str_to_user(frm.doc.batch_placed_on);
-    //                 frm.set_value('transaction_date', formatted_date);
-    //             }
-    //         }
-    //     });
-    // },
 
 
     // batch: function (frm) {
@@ -488,8 +453,11 @@ frappe.ui.form.on('CBF Daily Transaction', {
                                                             if (batch_data && batch_data.message) {
                                                                 let placement_date = batch_data.message.opening_date; // Placement Date from Batch
                                                                 let placed_quantity = batch_data.message.place_quantity_number_of_birds; // Placed Quantity from Batch
+                                                                let biological_value = batch_data.message.biological_value || 0; // Previous Biological Value
 
                                                                 let live_batch_date = frappe.datetime.add_days(frm.doc.transaction_date, 1); // Transaction Date + 1 Day
+                                                                let feed_cost = frm.doc.feed_cost || 0; // Feed Cost from the form
+                                                                let mortality_cost = frm.doc.mortality_cost || 0; // Mortality Cost from the form
 
                                                                 // Calculate Age in Days
                                                                 if (placement_date && live_batch_date) {
@@ -509,6 +477,16 @@ frappe.ui.form.on('CBF Daily Transaction', {
                                                                         }
                                                                     }
 
+                                                                    // Update Biological Value
+                                                                    let updated_biological_value = biological_value + feed_cost - mortality_cost;
+
+                                                                    // Calculate Bird Cost
+                                                                    let bird_cost = 0;
+                                                                    if (updated_batch_live_quantity > 0) {
+                                                                        // bird_cost = updated_biological_value / updated_batch_live_quantity;
+                                                                        bird_cost = (updated_biological_value / updated_batch_live_quantity).toFixed(4);
+                                                                    }
+
                                                                     // Update Batch with Live Batch Date and Age in Days
                                                                     frappe.call({
                                                                         method: 'frappe.client.set_value',
@@ -518,7 +496,9 @@ frappe.ui.form.on('CBF Daily Transaction', {
                                                                             fieldname: {
                                                                                 live_batch_date: formatted_live_batch_date,
                                                                                 batch_age_in_days: age_in_days,
-                                                                                mortality: mortality
+                                                                                mortality: mortality,
+                                                                                biological_value: updated_biological_value,
+                                                                                bird_cost: parseFloat(bird_cost) // Ensure it remains a numeric value
                                                                             }
                                                                         },
                                                                         callback: function () {
@@ -552,7 +532,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
             });
         }
 
-        
+
 
 
     }
