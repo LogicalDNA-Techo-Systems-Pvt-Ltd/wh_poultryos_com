@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background-image: url('http://apps.poultryos.in/css/images/wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: right;
+            align-items: right;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 2rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: right;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-container h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .button {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .link {
+            display: block;
+            margin-top: 1rem;
+            color: #007bff;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            margin-top: 1rem;
+            color: red;
+            text-align: center;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 480px) {
+            body {
+                background-image: none;
+                background-color: #f4f4f4;
+            }
+
+            .login-container {
+                background-color: white;
+                box-shadow: none;
+                padding: 1.5rem;
+            }
+
+            .input-field,
+            .button {
+                padding: 0.625rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Accessibility improvements */
+        .input-field:focus,
+        .button:focus {
+            outline: 2px solid #007bff;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Login Form -->
+    <div class="login-container" id="loginForm">
+        <h2>PoultryOS Login</h2>
+        <input type="email" id="uemail" class="input-field" placeholder="Email">
+        <input type="password" id="pasw" class="input-field" placeholder="Password">
+        <button class="button" id="loginBtn">Login</button>
+        <a href="javascript:void(0);" class="link" id="forgotPasswordLink">Forgot Password?</a>
+        <div class="message" id="loginError"></div>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div class="login-container forgot-password-container" id="forgotPasswordForm" style="display:none;">
+        <h2>Enter Email Address</h2>
+        <label>You will get your details on your registered email!</label>
+        <input type="email" id="ufemail" class="input-field" placeholder="Email">
+        <button class="button" id="sendOtpBtn">Send OTP</button>
+        <a href="javascript:void(0);" class="link" id="backToLoginLink">Go to Login</a>
+        <div class="message" id="otpError"></div>
+    </div>
+
+    <script>
+        // Handle Login Button Click
+        document.getElementById("loginBtn").addEventListener("click", function () {
+            var email = document.getElementById("uemail").value;
+            var password = document.getElementById("pasw").value;
+            var errorMessage = document.getElementById("loginError");
+
+            if (email && password) {
+                // Send login request to Frappe API
+                frappeLogin(email, password)
+                    .then(response => {
+                        if (response.success) {
+                            // Simulate successful login (redirect or show next page)
+                            window.location.href = "/app/breeder";
+                            console.log("Login successful!");
+                        } else {
+                            errorMessage.textContent = "Invalid email or password.";
+                        }
+                    })
+                    .catch(() => {
+                        errorMessage.textContent = "An error occurred. Please try again later.";
+                    });
+            } else {
+                errorMessage.textContent = "Please enter both email and password.";
+            }
+        });
+
+        // Handle Forgot Password Link Click
+        document.getElementById("forgotPasswordLink").addEventListener("click", function () {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("forgotPasswordForm").style.display = "block";
+        });
+
+        // Handle Go to Login Link Click
+        document.getElementById("backToLoginLink").addEventListener("click", function () {
+            document.getElementById("forgotPasswordForm").style.display = "none";
+            document.getElementById("loginForm").style.display = "block";
+        });
+
+        // Handle Send OTP Button Click
+        document.getElementById("sendOtpBtn").addEventListener("click", function () {
+            var email = document.getElementById("ufemail").value;
+            var otpErrorMessage = document.getElementById("otpError");
+
+            if (email) {
+                sendOtp(email)
+                    .then(response => {
+                        if (response.success) {
+                            alert("OTP sent successfully!");
+                            // Optionally, show OTP input for verification
+                        } else {
+                            otpErrorMessage.textContent = "Failed to send OTP. Please try again.";
+                        }
+                    })
+                    .catch(() => {
+                        otpErrorMessage.textContent = "An error occurred while sending OTP.";
+                    });
+            } else {
+                otpErrorMessage.textContent = "Please enter your email address.";
+            }
+        });
+
+        // Frappe Login API Call
+        function frappeLogin(email, password) {
+            return new Promise(function (resolve, reject) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/method/login", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.message === "Logged In") {
+                            resolve({ success: true });
+                        } else {
+                            resolve({ success: false });
+                        }
+                    } else {
+                        reject();
+                    }
+                };
+                xhr.onerror = reject;
+                xhr.send("usr=" + email + "&pwd=" + password);
+            });
+        }
+
+        // Simulated Send OTP API Call (For demonstration)
+        function sendOtp(email) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    if (email === "user@example.com") {
+                        resolve({ success: true });
+                    } else {
+                        resolve({ success: false });
+                    }
+                }, 1000);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

@@ -44,7 +44,7 @@ app_license = "mit"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
-doctype_list_js = {"Batch" : "public/js/batch_list.js"}
+# doctype_list_js = {"Batch": "public/js/batch_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -57,7 +57,7 @@ doctype_list_js = {"Batch" : "public/js/batch_list.js"}
 # ----------
 
 # application home page (will override Website Settings)
-# home_page = "login"
+home_page = "test"
 
 # website user home page (by Role)
 # role_home_page = {
@@ -244,3 +244,9 @@ doc_events = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+website_route_rules = [
+    {"from_route": "/login", "to_route": "login"},
+    {"from_route": "/register", "to_route": "register"},
+    {"from_route": "/test", "to_route": "register"}
+]
