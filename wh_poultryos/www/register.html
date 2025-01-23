@@ -1,44 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <!-- Ensure this script is included to load frappe.js -->
-    <script src="/assets/frappe/js/frappe-web.min.js"></script>
+    <title>PoultryOS Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background-image: url('http://apps.poultryos.in/css/images/wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: right;
+            align-items: right;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .register-container {
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 2rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: right;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .register-container h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .button {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+
+        .link {
+            display: block;
+            margin-top: 1rem;
+            color: #007bff;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            margin-top: 1rem;
+            color: red;
+            text-align: center;
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                background-image: none;
+                background-color: #f4f4f4;
+            }
+
+            .register-container {
+                background-color: white;
+                box-shadow: none;
+                padding: 1.5rem;
+            }
+
+            .input-field,
+            .button {
+                padding: 0.625rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .input-field:focus,
+        .button:focus {
+            outline: 2px solid #28a745;
+            outline-offset: 2px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Register</h1>
-    <form id="register-form">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required><br>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required><br>
-        <label for="first_name">First Name</label>
-        <input type="text" id="first_name" name="first_name" required><br>
-        <button type="submit">Register</button>
-    </form>
+    <div class="register-container" id="registerForm">
+        <h2>PoultryOS Register</h2>
+        <input type="text" id="fname" class="input-field" placeholder="Full Name" required>
+        <input type="email" id="remail" class="input-field" placeholder="Email" required>
+        <input type="tel" id="phone" class="input-field" placeholder="Phone Number" required>
+        <input type="password" id="rpassw" class="input-field" placeholder="Password" required>
+        <input type="password" id="confirmpassw" class="input-field" placeholder="Confirm Password" required>
+        <button class="button" id="registerBtn">Register</button>
+        <a href="login.html" class="link">Already have an account? Login</a>
+        <div class="message" id="registerError"></div>
+    </div>
 
     <script>
-        document.getElementById("register-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            var first_name = document.getElementById("first_name").value;
+        document.getElementById("registerBtn").addEventListener("click", function () {
+            var fullName = document.getElementById("fname").value;
+            var email = document.getElementById("remail").value;
+            var phone = document.getElementById("phone").value;
+            var password = document.getElementById("rpassw").value;
+            var confirmPassword = document.getElementById("confirmpassw").value;
+            var errorMessage = document.getElementById("registerError");
 
-            // Send registration request to backend
-            frappe.call({
-                method: "wh_poultryos.wh_poultryos.api.register_custom_user",
-                args: { email: email, password: password, first_name: first_name },
-                callback: function(response) {
-                    if(response.message === 'success') {
-                        window.location.href = '/login'; // Redirect to login after successful registration
+            // Basic validation
+            if (!fullName || !email || !phone || !password || !confirmPassword) {
+                errorMessage.textContent = "Please fill in all fields.";
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Passwords do not match.";
+                return;
+            }
+
+            // Simulate registration request
+            registerUser(fullName, email, phone, password)
+                .then(response => {
+                    if (response.success) {
+                        window.location.href = "/app/breeder";
                     } else {
-                        alert('User already exists');
+                        errorMessage.textContent = response.message || "Registration failed.";
                     }
-                }
-            });
+                })
+                .catch(() => {
+                    errorMessage.textContent = "An error occurred. Please try again.";
+                });
         });
+
+        function registerUser(fullName, email, phone, password) {
+            return new Promise(function (resolve, reject) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/method/register", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        resolve({ success: true, message: response.message });
+                    } else {
+                        resolve({ success: false, message: "Registration unsuccessful." });
+                    }
+                };
+                xhr.onerror = reject;
+                xhr.send(JSON.stringify({
+                    full_name: fullName,
+                    email: email,
+                    phone: phone,
+                    password: password
+                }));
+            });
+        }
     </script>
 </body>
+
 </html>
