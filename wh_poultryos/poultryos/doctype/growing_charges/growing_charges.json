@@ -1,0 +1,245 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-21 12:00:01.468922",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "batch",
+  "farmer_name",
+  "placed_quanity",
+  "live_quantity",
+  "administrative_cost",
+  "first_week_mortality",
+  "total_mortality",
+  "total_feed_consumed",
+  "feed_cost",
+  "medicine_cost",
+  "vaccine_cost",
+  "mortality_percentage",
+  "production_costkg",
+  "production_cost",
+  "column_break_fgct",
+  "total_delivered_weight",
+  "total_sale_quantity",
+  "average_weight_of_birds",
+  "fcr",
+  "average_selling_rate",
+  "actual_rearing_chargekg",
+  "rearing_chargebird",
+  "total_rearing_charges",
+  "additional_incentive",
+  "mortality_incentive",
+  "fcr_deduction",
+  "total_mortality_deduction",
+  "fcr_incentive",
+  "sales_incentive",
+  "net_payable_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "batch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Batch",
+   "options": "Batch",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "batch.farmer_name",
+   "fieldname": "farmer_name",
+   "fieldtype": "Read Only",
+   "label": "Farmer Name"
+  },
+  {
+   "fetch_from": "batch.place_quantity_number_of_birds",
+   "fieldname": "placed_quanity",
+   "fieldtype": "Read Only",
+   "label": "Placed Quanity"
+  },
+  {
+   "fetch_from": "batch.live_quantity_number_of_birds",
+   "fieldname": "live_quantity",
+   "fieldtype": "Read Only",
+   "label": "Live Quantity"
+  },
+  {
+   "default": "0",
+   "fieldname": "first_week_mortality",
+   "fieldtype": "Read Only",
+   "label": "First Week Mortality"
+  },
+  {
+   "fetch_from": "batch.mortality",
+   "fieldname": "total_mortality",
+   "fieldtype": "Read Only",
+   "label": "Total Mortality"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_feed_consumed",
+   "fieldtype": "Read Only",
+   "label": "Total Feed Consumed"
+  },
+  {
+   "default": "0",
+   "fieldname": "feed_cost",
+   "fieldtype": "Read Only",
+   "label": "Feed Cost"
+  },
+  {
+   "default": "0",
+   "fieldname": "medicine_cost",
+   "fieldtype": "Read Only",
+   "label": "Medicine Cost"
+  },
+  {
+   "default": "0",
+   "fieldname": "vaccine_cost",
+   "fieldtype": "Read Only",
+   "label": "Vaccine Cost"
+  },
+  {
+   "default": "0",
+   "fieldname": "mortality_percentage",
+   "fieldtype": "Read Only",
+   "label": "Mortality Percentage"
+  },
+  {
+   "fieldname": "administrative_cost",
+   "fieldtype": "Int",
+   "label": "Administrative Cost"
+  },
+  {
+   "default": "0",
+   "fieldname": "production_cost",
+   "fieldtype": "Read Only",
+   "label": "Production Cost"
+  },
+  {
+   "default": "0",
+   "fieldname": "production_costkg",
+   "fieldtype": "Read Only",
+   "label": "Production Cost/Kg"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_delivered_weight",
+   "fieldtype": "Float",
+   "label": "Total Delivered Weight"
+  },
+  {
+   "fieldname": "column_break_fgct",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_sale_quantity",
+   "fieldtype": "Float",
+   "label": "Total Sale Quantity"
+  },
+  {
+   "default": "0",
+   "fieldname": "average_weight_of_birds",
+   "fieldtype": "Float",
+   "label": "Average weight of birds"
+  },
+  {
+   "default": "0",
+   "fieldname": "fcr",
+   "fieldtype": "Read Only",
+   "label": "FCR"
+  },
+  {
+   "default": "0",
+   "fieldname": "average_selling_rate",
+   "fieldtype": "Read Only",
+   "label": "Average Selling Rate"
+  },
+  {
+   "default": "0",
+   "fieldname": "actual_rearing_chargekg",
+   "fieldtype": "Float",
+   "label": "Actual Rearing Charges"
+  },
+  {
+   "default": "0",
+   "fieldname": "rearing_chargebird",
+   "fieldtype": "Float",
+   "label": "Rearing Charge/Bird"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_rearing_charges",
+   "fieldtype": "Float",
+   "label": "Total Rearing Charges"
+  },
+  {
+   "default": "0",
+   "fieldname": "additional_incentive",
+   "fieldtype": "Float",
+   "label": "Additional Incentive"
+  },
+  {
+   "default": "0",
+   "fieldname": "mortality_incentive",
+   "fieldtype": "Read Only",
+   "label": "Mortality Incentive"
+  },
+  {
+   "default": "0",
+   "fieldname": "fcr_deduction",
+   "fieldtype": "Float",
+   "label": "FCR Deduction"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_mortality_deduction",
+   "fieldtype": "Float",
+   "label": "Total Mortality Deduction"
+  },
+  {
+   "default": "0",
+   "fieldname": "fcr_incentive",
+   "fieldtype": "Read Only",
+   "label": "FCR Incentive"
+  },
+  {
+   "default": "0",
+   "fieldname": "sales_incentive",
+   "fieldtype": "Read Only",
+   "label": "Sales Incentive"
+  },
+  {
+   "bold": 1,
+   "default": "0",
+   "fieldname": "net_payable_amount",
+   "fieldtype": "Read Only",
+   "label": "Net Payable Amount"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-21 16:35:52.643348",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Growing Charges",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
