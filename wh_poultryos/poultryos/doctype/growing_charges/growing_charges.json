@@ -10,6 +10,8 @@
   "placed_quanity",
   "live_quantity",
   "administrative_cost",
+  "rearing_charge",
+  "scheme_production_cost",
   "first_week_mortality",
   "total_mortality",
   "total_feed_consumed",
@@ -17,8 +19,8 @@
   "medicine_cost",
   "vaccine_cost",
   "mortality_percentage",
-  "production_costkg",
   "production_cost",
+  "production_costkg",
   "column_break_fgct",
   "total_delivered_weight",
   "total_sale_quantity",
@@ -28,12 +30,6 @@
   "actual_rearing_chargekg",
   "rearing_chargebird",
   "total_rearing_charges",
-  "additional_incentive",
-  "mortality_incentive",
-  "fcr_deduction",
-  "total_mortality_deduction",
-  "fcr_incentive",
-  "sales_incentive",
   "net_payable_amount"
  ],
  "fields": [
@@ -175,52 +171,28 @@
    "label": "Total Rearing Charges"
   },
   {
-   "default": "0",
-   "fieldname": "additional_incentive",
-   "fieldtype": "Float",
-   "label": "Additional Incentive"
-  },
-  {
-   "default": "0",
-   "fieldname": "mortality_incentive",
-   "fieldtype": "Read Only",
-   "label": "Mortality Incentive"
-  },
-  {
-   "default": "0",
-   "fieldname": "fcr_deduction",
-   "fieldtype": "Float",
-   "label": "FCR Deduction"
-  },
-  {
-   "default": "0",
-   "fieldname": "total_mortality_deduction",
-   "fieldtype": "Float",
-   "label": "Total Mortality Deduction"
-  },
-  {
-   "default": "0",
-   "fieldname": "fcr_incentive",
-   "fieldtype": "Read Only",
-   "label": "FCR Incentive"
-  },
-  {
-   "default": "0",
-   "fieldname": "sales_incentive",
-   "fieldtype": "Read Only",
-   "label": "Sales Incentive"
-  },
-  {
    "bold": 1,
    "default": "0",
    "fieldname": "net_payable_amount",
    "fieldtype": "Read Only",
    "label": "Net Payable Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "rearing_charge",
+   "fieldtype": "Float",
+   "label": "Rearing Charge"
+  },
+  {
+   "default": "0",
+   "fieldname": "scheme_production_cost",
+   "fieldtype": "Float",
+   "label": "Scheme Production Cost"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-21 16:35:52.643348",
+ "modified": "2025-01-25 11:09:04.889799",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Growing Charges",
