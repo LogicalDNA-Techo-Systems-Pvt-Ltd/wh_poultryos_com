@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>PoultryOS Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +24,6 @@
         .login-container {
             background-color: rgba(255, 255, 255, 0.4);
             padding: 2rem;
-            border-radius: 8px;
             width: 100%;
             max-width: 400px;
             display: flex;
@@ -44,38 +43,81 @@
             padding: 0.75rem;
             margin: 0.5rem 0;
             border: 1px solid #ddd;
-            border-radius: 4px;
             box-sizing: border-box;
             font-size: 1rem;
         }
 
         .button {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.5rem;
             margin: 0.5rem 0;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 4px;
             cursor: pointer;
             font-size: 1rem;
             transition: background-color 0.3s ease;
         }
 
-        .button:hover {
-            background-color: #0056b3;
-        }
-
-        .link {
-            display: block;
+        .social-login {
+            display: flex;
+            justify-content: space-between;
             margin-top: 1rem;
-            color: #007bff;
-            text-decoration: none;
             text-align: center;
         }
 
-        .link:hover {
-            text-decoration: underline;
+        .social-button {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .google-login {
+            background-color: #fff;
+            color: #757575;
+            border: 1px solid #ddd;
+        }
+
+        .microsoft-login {
+            background-color: #2672ec;
+            color: white;
+        }
+
+        .email-link-section {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .divider:not(:empty)::before {
+            margin-right: 0.25em;
+        }
+
+        .divider:not(:empty)::after {
+            margin-left: 0.25em;
         }
 
         .message {
@@ -84,156 +126,269 @@
             text-align: center;
         }
 
-        /* Responsive adjustments */
-        @media screen and (max-width: 480px) {
-            body {
-                background-image: none;
-                background-color: #f4f4f4;
-            }
-
-            .login-container {
-                background-color: white;
-                box-shadow: none;
-                padding: 1.5rem;
-            }
-
-            .input-field,
-            .button {
-                padding: 0.625rem;
-                font-size: 0.9rem;
-            }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
         }
 
-        /* Accessibility improvements */
-        .input-field:focus,
-        .button:focus {
-            outline: 2px solid #007bff;
-            outline-offset: 2px;
+        .input-field {
+            border: 1px solid #ccc;
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
-
-    <!-- Login Form -->
     <div class="login-container" id="loginForm">
         <h2>PoultryOS Login</h2>
+
         <input type="email" id="uemail" class="input-field" placeholder="Email">
+        <div id="emailError" class="error-message"></div> <!-- Error message for email -->
+
         <input type="password" id="pasw" class="input-field" placeholder="Password">
+        <div id="passwordError" class="error-message"></div> <!-- Error message for password -->
+        <div id="loginError" class="error-message"></div> <!-- General login error message -->
+
         <button class="button" id="loginBtn">Login</button>
-        <a href="javascript:void(0);" class="link" id="forgotPasswordLink">Forgot Password?</a>
+        <!-- <a href="javascript:void(0);" class="link" id="forgotPasswordLink">Forgot Password?</a> -->
+
+        <div class="divider">OR</div>
+
+        <div class="social-logins text-center" id="socialLoginContainer">
+            <div class="social-login-buttons" id="socialProviders">
+                <!-- Social login providers will be dynamically populated here -->
+            </div>
+        </div>
+
+        <div class="email-link-section">
+            <a href="#" id="loginWithEmailLink" class=".social-button">Login with email link</a>
+        </div>
+
         <div class="message" id="loginError"></div>
     </div>
 
-    <!-- Forgot Password Form -->
-    <div class="login-container forgot-password-container" id="forgotPasswordForm" style="display:none;">
-        <h2>Enter Email Address</h2>
-        <label>You will get your details on your registered email!</label>
-        <input type="email" id="ufemail" class="input-field" placeholder="Email">
-        <button class="button" id="sendOtpBtn">Send OTP</button>
-        <a href="javascript:void(0);" class="link" id="backToLoginLink">Go to Login</a>
-        <div class="message" id="otpError"></div>
+    <div class="login-container" id="loginWithEmailLinkForm" style="display: none;">
+        <h2>Login with Email Link</h2>
+
+        <input type="email" id="emailLinkInput" class="input-field" placeholder="Email">
+        <div id="emailLinkMessage" class="error-message"></div>
+        <button id="sendEmailLinkBtn" class="button">Send Login Link</button>
+
+        <div class="email-link-section">
+            <a href="#" id="backtologin" class=".social-button">Back to Login</a>
+        </div>
     </div>
 
     <script>
-        // Handle Login Button Click
-        document.getElementById("loginBtn").addEventListener("click", function () {
-            var email = document.getElementById("uemail").value;
-            var password = document.getElementById("pasw").value;
-            var errorMessage = document.getElementById("loginError");
-
-            if (email && password) {
-                // Send login request to Frappe API
-                frappeLogin(email, password)
-                    .then(response => {
-                        if (response.success) {
-                            // Simulate successful login (redirect or show next page)
-                            window.location.href = "/app/breeder";
-                            console.log("Login successful!");
-                        } else {
-                            errorMessage.textContent = "Invalid email or password.";
-                        }
-                    })
-                    .catch(() => {
-                        errorMessage.textContent = "An error occurred. Please try again later.";
-                    });
-            } else {
-                errorMessage.textContent = "Please enter both email and password.";
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            fetchSocialLoginProviders();
         });
 
-        // Handle Forgot Password Link Click
-        document.getElementById("forgotPasswordLink").addEventListener("click", function () {
-            document.getElementById("loginForm").style.display = "none";
-            document.getElementById("forgotPasswordForm").style.display = "block";
-        });
+        function setupEventListeners() {
+            document.getElementById("backtologin").addEventListener("click", showLoginForm);
+            document.getElementById("loginBtn").addEventListener("click", handleLogin);
+            document.getElementById("loginWithEmailLink").addEventListener("click", showEmailLinkForm);
+            document.getElementById("sendEmailLinkBtn").addEventListener("click", handleSendEmailLink);
+        }
 
-        // Handle Go to Login Link Click
-        document.getElementById("backToLoginLink").addEventListener("click", function () {
-            document.getElementById("forgotPasswordForm").style.display = "none";
+        function showLoginForm() {
+            document.getElementById("loginWithEmailLinkForm").style.display = "none";
             document.getElementById("loginForm").style.display = "block";
-        });
+        }
 
-        // Handle Send OTP Button Click
-        document.getElementById("sendOtpBtn").addEventListener("click", function () {
-            var email = document.getElementById("ufemail").value;
-            var otpErrorMessage = document.getElementById("otpError");
+        function showEmailLinkForm() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("loginWithEmailLinkForm").style.display = "block";
+        }
+
+        function handleLogin() {
+            const email = document.getElementById("uemail").value;
+            const password = document.getElementById("pasw").value;
+
+            clearErrors();
+
+            let isValid = validateLoginForm(email, password);
+            if (isValid) {
+                attemptLogin(email, password);
+            }
+        }
+
+        function clearErrors() {
+            document.getElementById("emailError").innerText = "";
+            document.getElementById("passwordError").innerText = "";
+            document.getElementById("loginError").innerText = "";
+            document.getElementById("uemail").style.borderColor = "";
+            document.getElementById("pasw").style.borderColor = "";
+        }
+
+        function validateLoginForm(email, password) {
+            let isValid = true;
+
+            // Validate email
+            if (!email) {
+                showError("emailError", "Email is required.", "uemail");
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                showError("emailError", "Please enter a valid email address.", "uemail");
+                isValid = false;
+            }
+
+            // Validate password
+            if (!password) {
+                showError("passwordError", "Password is required.", "pasw");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function showError(errorElementId, errorMessage, inputElementId) {
+            document.getElementById(errorElementId).innerText = errorMessage;
+            document.getElementById(inputElementId).style.borderColor = "red";
+        }
+
+        function isValidEmail(email) {
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            return emailPattern.test(email);
+        }
+
+        function attemptLogin(email, password) {
+            frappeLogin(email, password)
+                .then(response => {
+                    if (response.success) {
+                        window.location.href = '/app';
+                    } else {
+                        showError("loginError", response.message);
+                    }
+                })
+                .catch(() => {
+                    showError("loginError", "Login failed. Please try again later.");
+                });
+        }
+
+        function showError(errorElementId, errorMessage) {
+            document.getElementById(errorElementId).innerText = errorMessage;
+        }
+
+        function fetchSocialLoginProviders() {
+            fetch('/api/method/wh_poultryos.www.login.get_social_login_providers')
+                .then(response => response.json())
+                .then(data => renderSocialLoginProviders(data))
+                .catch((ex) => {
+                    console.error('Error fetching social login providers', ex);
+                });
+        }
+
+        function renderSocialLoginProviders(data) {
+            const socialProvidersContainer = document.getElementById('socialProviders');
+            const emailLinkContainer = document.getElementById('loginWithEmailLink');
+
+            // Render social login providers
+            if (data.message.provider_logins && data.message.provider_logins.length) {
+                data.message.provider_logins.forEach(provider => {
+                    const providerButton = document.createElement('div');
+                    providerButton.className = 'social-login';
+                    providerButton.innerHTML = `
+                <a href="${provider.auth_url}" class="social-button ${provider.name}-login">
+                    Login with ${provider.provider_name}
+                </a>
+            `;
+                    socialProvidersContainer.appendChild(providerButton);
+                });
+            }
+
+            // Show email link login if available
+            if (data.message.login_with_email_link) {
+                emailLinkContainer.style.display = 'block';
+            }
+        }
+
+        function handleSendEmailLink() {
+            const email = document.getElementById("emailLinkInput").value;
+            const messageEl = document.getElementById("emailLinkMessage");
 
             if (email) {
-                sendOtp(email)
+                sendLoginLink(email)
                     .then(response => {
                         if (response.success) {
-                            alert("OTP sent successfully!");
-                            // Optionally, show OTP input for verification
+                            displayMessage(messageEl, "Login link sent to your email!", "green");
                         } else {
-                            otpErrorMessage.textContent = "Failed to send OTP. Please try again.";
+                            displayMessage(messageEl, "Failed to send login link.");
                         }
                     })
                     .catch(() => {
-                        otpErrorMessage.textContent = "An error occurred while sending OTP.";
+                        displayMessage(messageEl, "An error occurred.");
                     });
             } else {
-                otpErrorMessage.textContent = "Please enter your email address.";
+                displayMessage(messageEl, "Please enter your email.");
             }
-        });
+        }
 
-        // Frappe Login API Call
-        function frappeLogin(email, password) {
-            return new Promise(function (resolve, reject) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/api/method/login", true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        function displayMessage(element, message, color = "red") {
+            element.textContent = message;
+            element.style.color = color;
+        }
+
+        function sendLoginLink(email) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/api/method/frappe.www.login.send_login_link', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
                 xhr.onload = function () {
                     if (xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
+                        if (xhr.responseText.length > 0) {
+                            console.log(1, xhr.responseText);
+                            resolve(JSON.parse(xhr.responseText));
+                        } else {
+                            console.log(0);
+                            resolve({ success: true, message: "Email Sent" });
+                        }
+                    } else {
+                        reject(new Error('Failed to send login link'));
+                    }
+                };
+
+                xhr.onerror = function () {
+                    reject(new Error('Network error'));
+                };
+
+                xhr.send(JSON.stringify({ email }));
+            });
+        }
+
+        function frappeLogin(email, password) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/method/login", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
                         if (response.message === "Logged In") {
                             resolve({ success: true });
                         } else {
-                            resolve({ success: false });
+                            resolve({ success: false, message: response.message });
                         }
                     } else {
-                        reject();
+                        const response = JSON.parse(xhr.responseText);
+                        reject({ success: false, message: response.message });
                     }
                 };
-                xhr.onerror = reject;
-                xhr.send("usr=" + email + "&pwd=" + password);
-            });
-        }
 
-        // Simulated Send OTP API Call (For demonstration)
-        function sendOtp(email) {
-            return new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                    if (email === "user@example.com") {
-                        resolve({ success: true });
-                    } else {
-                        resolve({ success: false });
-                    }
-                }, 1000);
+                xhr.onerror = function () {
+                    reject({ success: false, message: "An error occurred while trying to log in." });
+                };
+
+                xhr.send(`usr=${email}&pwd=${password}`);
             });
         }
     </script>
-
 </body>
 
 </html>
