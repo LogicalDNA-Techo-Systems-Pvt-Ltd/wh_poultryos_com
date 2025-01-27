@@ -10,6 +10,8 @@
   "placed_quanity",
   "live_quantity",
   "administrative_cost",
+  "rearing_charge",
+  "scheme_production_cost",
   "first_week_mortality",
   "total_mortality",
   "total_feed_consumed",
@@ -174,11 +176,23 @@
    "fieldname": "net_payable_amount",
    "fieldtype": "Read Only",
    "label": "Net Payable Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "rearing_charge",
+   "fieldtype": "Float",
+   "label": "Rearing Charge"
+  },
+  {
+   "default": "0",
+   "fieldname": "scheme_production_cost",
+   "fieldtype": "Float",
+   "label": "Scheme Production Cost"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-24 12:17:03.793107",
+ "modified": "2025-01-25 11:09:04.889799",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Growing Charges",

@@ -9,15 +9,33 @@ frappe.ui.form.on("Growing Charges", {
         frm.add_custom_button("Calculate GC", () => {
             // frappe.show_alert("It works")
 
+            // Retrieve necessary fields from the form
+            let totalDeliveredWeight = frm.doc.total_delivered_weight;
+            let actualRearingCharges = frm.doc.actual_rearing_chargekg;
+            let mortalityIncentive = frm.doc.mortality_incentive || 0;
+            let excessBirdIncentive = frm.doc.excess_bird_incentive || 0;
+            let fcrIncentive = frm.doc.fcr_incentive || 0;
+            let salesIncentive = frm.doc.sales_incentive || 0;
 
+            let totalMortalityDeduction = frm.doc.total_mortality_deduction || 0;
+            let fcrDeductions = frm.doc.fcr_deductions || 0;
+            let shortageAmount = frm.doc.shortage_amount || 0;
 
+            // Calculate the Rearing Charges Payable
+            let rearingChargesPayable = (
+                ((totalDeliveredWeight * actualRearingCharges) +
+                (mortalityIncentive + excessBirdIncentive + fcrIncentive + salesIncentive)) -
+                (totalMortalityDeduction + fcrDeductions + shortageAmount)
+            );
 
-            // Show a success message
-            frappe.msgprint({
-                title: __('Success'),
-                message: __('Growing charges calculated'),
-                indicator: 'blue'
-            });
+            // Round the result to 2 decimal places
+            rearingChargesPayable = Number(rearingChargesPayable.toFixed(2));
+
+            // Bind the calculated value to the `rearing_charges_payable` field
+            frm.set_value("net_payable_amount", rearingChargesPayable);
+
+            // Optional: Show a success message
+            frappe.msgprint(__('Rearing Charges Payable calculated successfully.'));
 
         })
     },
@@ -110,14 +128,60 @@ frappe.ui.form.on("Growing Charges", {
                         }
                     });
 
-                  
+
                 }
             }
         });
     },
+    scheme_production_cost: function (frm) {
 
-    administrative_cost : function(frm)
+        if (frm.doc.production_cost) {
+            // Retrieve necessary fields from the form
+            let actualProductionCost = parseFloat(frm.doc.production_cost);
+            let totalDeliveredWeight = parseFloat(frm.doc.total_delivered_weight);
+            let schemeProductionCost = parseFloat(frm.doc.scheme_production_cost);
+            let rearingCharges = parseFloat(frm.doc.rearing_charge);
+            let productionIncentive = 1;
+
+            // Check if totalDeliveredWeight is valid to avoid division by zero
+            if (totalDeliveredWeight === 0) {
+                frappe.msgprint(__('Total Delivered Weight cannot be zero for rearing charge calculation.'));
+                return;
+            }
+
+            // Calculate Actual Production Cost Per Unit
+            let productionCostPerUnit = Number((actualProductionCost / totalDeliveredWeight).toFixed(2));
+
+            let actualRearingCharge;
+
+            // Calculate Actual Rearing Charge based on the conditions
+            if (productionCostPerUnit < schemeProductionCost) {
+                actualRearingCharge = (rearingCharges + ((schemeProductionCost - productionCostPerUnit) * productionIncentive) / 100);
+            } else {
+                actualRearingCharge = (rearingCharges - ((productionCostPerUnit - schemeProductionCost) * productionIncentive) / 100);
+            }
+
+            // Set the calculated value to the `actual_rearing_charge` field
+            frm.set_value("actual_rearing_chargekg", actualRearingCharge);
+            frm.set_value("total_sale_quantity", 80);
+
+            let rearingchargeperkg;
+            rearingchargeperkg = ((totalDeliveredWeight * actualRearingCharge)/(frm.doc.total_sale_quantity)).toFixed(2);
+
+             // Set the calculated value to the `actual_rearing_charge` field
+             frm.set_value("rearing_chargebird", rearingchargeperkg);
+        }
+    },
+
+    actual_rearing_chargekg: function(frm)
     {
+        if(frm.doc.actual_rearing_chargekg)
+        {
+            frm.set_value("total_rearing_charges", (frm.doc.actual_rearing_chargekg * (frm.doc.total_delivered_weight)).toFixed(2));
+        }
+    },
+
+    administrative_cost: function (frm) {
         if (!frm.doc.batch) {
             frappe.msgprint(__('Please select a batch'));
             return;
@@ -140,17 +204,20 @@ frappe.ui.form.on("Growing Charges", {
                     if (!placement_date) {
                         frappe.msgprint(__('Placement date not found for the selected batch.'));
                         return;
-                    }                   
+                    }
 
                     const feed_cost = parseFloat(frm.doc.feed_cost);
                     const medicine_cost = parseFloat(frm.doc.medicine_cost);
-                    const vaccine_cost = parseFloat(frm.doc.vaccine_cost);                   
+                    const vaccine_cost = parseFloat(frm.doc.vaccine_cost);
                     const administrative_cost = frm.doc.administrative_cost;
                     // Calculate Production Cost
                     const production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (rate * place_quantity_number_of_birds);
                     console.log("", production_cost);
                     // Set the calculated production cost in the respective field
                     frm.set_value("production_cost", production_cost.toFixed(2)); // Round to 2 decimal places
+
+                    frm.set_value("total_delivered_weight", parseFloat(2.300).toFixed(3));
+
                 }
             }
         });

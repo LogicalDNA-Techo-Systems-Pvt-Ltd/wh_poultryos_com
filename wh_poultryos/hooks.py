@@ -28,23 +28,28 @@ app_license = "mit"
 # app_include_css = "/assets/wh_poultryos/css/wh_poultryos.css"
 # app_include_js = "/assets/wh_poultryos/js/wh_poultryos.js"
 
+
 # include js, css files in header of web template
 # web_include_css = "/assets/wh_poultryos/css/wh_poultryos.css"
-# web_include_js = "/assets/wh_poultryos/js/wh_poultryos.js"
+web_include_js = "/assets/wh_poultryos/js/wh_poultryos.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "wh_poultryos/public/scss/website"
 
 # include js, css files in header of web form
-# webform_include_js = {"doctype": "public/js/doctype.js"}
+webform_include_js = {"doctype": "public/js/doctype.js"}
 # webform_include_css = {"doctype": "public/css/doctype.css"}
 
 # include js in page
 # page_js = {"page" : "public/js/file.js"}
 
+page_js = {
+    "demo-dashboard": "public/js/demo_dashboard.js"
+}
+
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"Batch": "public/js/batch_list.js"}
+doctype_list_js = {"Batch": "public/js/batch_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
