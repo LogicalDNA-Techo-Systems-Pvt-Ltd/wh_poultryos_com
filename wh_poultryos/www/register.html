@@ -120,7 +120,7 @@
         <input type="password" id="rpassw" class="input-field" placeholder="Password" required>
         <input type="password" id="confirmpassw" class="input-field" placeholder="Confirm Password" required>
         <button class="button" id="registerBtn">Register</button>
-        <a href="login.html" class="link">Already have an account? Login</a>
+        <a href="/login" class="link">Already have an account? Login</a>
         <div class="message" id="registerError"></div>
     </div>
 
@@ -161,14 +161,15 @@
         function registerUser(fullName, email, phone, password) {
             return new Promise(function (resolve, reject) {
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/api/method/register", true);
+                xhr.open("POST", "/api/method/wh_poultryos.www.register.register", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onload = function () {
                     if (xhr.status === 200) {
                         var response = JSON.parse(xhr.responseText);
                         resolve({ success: true, message: response.message });
                     } else {
-                        resolve({ success: false, message: "Registration unsuccessful." });
+                        var response = JSON.parse(xhr.responseText);
+                        resolve(response.message);
                     }
                 };
                 xhr.onerror = reject;
