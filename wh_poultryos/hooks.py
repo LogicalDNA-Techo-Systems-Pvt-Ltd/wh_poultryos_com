@@ -49,7 +49,14 @@ page_js = {
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
-doctype_list_js = {"Batch": "public/js/batch_list.js"}
+#doctype_list_js = {"Batch": "public/js/batch_list.js"}
+
+doctype_list_js = {
+    "Batch": "public/js/batch_list.js",
+    "Live Batch": "public/js/live_batch_list.js",  # Add the path for the Live Batch list view
+}
+
+# doctype_list_js = {"Live Batch": "public/js/live_batch_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
