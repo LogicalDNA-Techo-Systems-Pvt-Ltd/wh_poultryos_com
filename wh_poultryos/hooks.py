@@ -69,7 +69,7 @@ doctype_list_js = {
 # ----------
 
 # application home page (will override Website Settings)
-home_page = "test"
+home_page = "login"
 
 # website user home page (by Role)
 # role_home_page = {
@@ -259,6 +259,5 @@ doc_events = {
 
 website_route_rules = [
     {"from_route": "/login", "to_route": "login"},
-    {"from_route": "/register", "to_route": "register"},
-    {"from_route": "/test", "to_route": "register"}
+    {"from_route": "/register", "to_route": "register"}
 ]
