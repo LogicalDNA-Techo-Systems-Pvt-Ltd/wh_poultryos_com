@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -154,6 +155,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="setup-container" id="setupForm">
         <h2>Organization Setup</h2>
@@ -161,7 +163,7 @@
         <input type="text" id="address" class="input-field" placeholder="Address" required>
         <input type="text" id="city" class="input-field" placeholder="City" required>
         <input type="text" id="state" class="input-field" placeholder="State" required>
-        
+
         <div class="combobox-container">
             <label class="combobox-label">Select Modules</label>
             <input type="text" id="moduleSearch" class="combobox-input" placeholder="Search modules...">
@@ -183,7 +185,7 @@
                 this.dropdown = document.getElementById('moduleDropdown');
                 this.selectedContainer = document.getElementById('selectedModules');
                 this.selectAllBtn = document.getElementById('selectAllBtn');
-                
+
                 this.setupEventListeners();
             }
 
@@ -191,7 +193,7 @@
                 // Search input events
                 this.searchInput.addEventListener('input', () => this.filterModules());
                 this.searchInput.addEventListener('focus', () => this.showDropdown());
-                
+
                 // Close dropdown when clicking outside
                 document.addEventListener('click', (e) => {
                     if (!this.searchInput.contains(e.target) && !this.dropdown.contains(e.target)) {
@@ -272,7 +274,7 @@
 
         let comboBox;
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             comboBox = new ComboBox();
             fetchModules();
             setupEventListeners();
@@ -306,7 +308,7 @@
             }
 
             const allModulesSelected = selectedModules.length === comboBox.modules.length;
-            const modulesToSend = allModulesSelected ? ['all'] : selectedModules;
+            const modulesToSend = selectedModules;
 
             const setupData = {
                 organization_name: orgName,
@@ -323,18 +325,19 @@
                 },
                 body: JSON.stringify(setupData)
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message.success) {
-                    window.location.href = data.message.redirect_url;
-                } else {
-                    document.getElementById('setupError').textContent = data.message || 'Setup failed';
-                }
-            })
-            .catch(() => {
-                document.getElementById('setupError').textContent = 'An error occurred. Please try again.';
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message.success) {
+                        window.location.href = data.message.redirect_url;
+                    } else {
+                        document.getElementById('setupError').textContent = data.message || 'Setup failed';
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('setupError').textContent = 'An error occurred. Please try again.';
+                });
         }
     </script>
 </body>
+
 </html>
