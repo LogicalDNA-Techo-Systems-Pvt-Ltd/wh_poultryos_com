@@ -18,7 +18,7 @@
  "is_hidden": 0,
  "label": "BREEDER",
  "links": [],
- "modified": "2025-01-26 22:12:55.905087",
+ "modified": "2025-01-29 16:26:43.569408",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "BREEDER",
@@ -44,8 +44,15 @@
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
- "sequence_id": 2.0,
+ "roles": [
+  {
+   "role": "Breeder Farm Owner"
+  },
+  {
+   "role": "Administrator"
+  }
+ ],
+ "sequence_id": 1.0,
  "shortcuts": [],
  "title": "BREEDER"
 }

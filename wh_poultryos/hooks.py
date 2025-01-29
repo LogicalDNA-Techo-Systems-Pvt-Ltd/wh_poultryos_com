@@ -259,5 +259,6 @@ doc_events = {
 
 website_route_rules = [
     {"from_route": "/login", "to_route": "login"},
-    {"from_route": "/register", "to_route": "register"}
+    {"from_route": "/register", "to_route": "register"},
+    {"from_route": "/organization-setup", "to_route": "organization_setup"}
 ]
