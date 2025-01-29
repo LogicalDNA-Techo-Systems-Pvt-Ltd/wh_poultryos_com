@@ -7,9 +7,10 @@ MODULE_ROLE_MAPPING = {
     "cbf": ["CBF Farm Owner"],
     "layer": ["Layer Farm Owner"],
     "breeder": ["Breeder Farm Owner"],
-    "hatchery": ["Hatchery Owner"],
-    "feed mill": ["Feed Mill Owner"],
+    "hatchery": ["Hatchery Farm Owner"],
+    "feed mill": ["Feed Mill Farm Owner"],
 }
+
 
 @frappe.whitelist(allow_guest=True)
 def get_modules():
@@ -52,7 +53,9 @@ def setup_organization():
         organization.insert(ignore_permissions=True)
 
         # Assign roles based on selected modules
-        selected_modules = [module.lower() for module in data.get("modules")]  # Convert selected modules to lowercase
+        selected_modules = [
+            module.lower() for module in data.get("modules")
+        ]  # Convert selected modules to lowercase
 
         print(selected_modules)
 
@@ -61,7 +64,9 @@ def setup_organization():
             if module in MODULE_ROLE_MAPPING:
                 for role in MODULE_ROLE_MAPPING[module]:
                     print(role)
-                    if role not in [r.role for r in user.roles]:  # Prevent duplicate roles
+                    if role not in [
+                        r.role for r in user.roles
+                    ]:  # Prevent duplicate roles
                         user.append("roles", {"role": role})
 
         # Save the updated user document to apply the roles
@@ -72,11 +77,11 @@ def setup_organization():
         redirect_url = "/app/dashboard"  # Default redirect
         if len(selected_modules) == 1:
             module_pages = {
-                "cbf": "/app/cbf-dashboard",
-                "layer": "/app/layer-dashboard",
-                "breeder": "/app/breeder-dashboard",
-                "hatchery": "/app/hatchery-dashboard",
-                "feed mill": "/app/feed-mill-dashboard",
+                "cbf": "/app/cbf",
+                "layer": "/app/layer",
+                "breeder": "/app/breeder",
+                "hatchery": "/app/hatchery",
+                "feed mill": "/app/feed-mill",
             }
             redirect_url = module_pages.get(selected_modules[0], redirect_url)
 
