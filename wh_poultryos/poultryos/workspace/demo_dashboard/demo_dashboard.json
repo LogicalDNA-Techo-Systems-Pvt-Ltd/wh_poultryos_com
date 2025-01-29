@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Demo Dashboard\"}}]",
+ "content": "[{\"id\":\"Cf70RXFAYy\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Demo Dashboard</span>\",\"col\":12}},{\"id\":\"ObXUZYK9Xn\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Demo Batch\",\"col\":4}},{\"id\":\"pXBViG9TUf\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Demo Transactions\",\"col\":4}}]",
  "creation": "2025-01-26 22:12:51.037220",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,11 +13,20 @@
  "is_hidden": 0,
  "label": "Demo Dashboard",
  "links": [],
- "modified": "2025-01-27 10:15:31.498600",
+ "modified": "2025-01-29 12:32:58.810734",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Demo Dashboard",
- "number_cards": [],
+ "number_cards": [
+  {
+   "label": "Demo Batch",
+   "number_card_name": "Demo Batch"
+  },
+  {
+   "label": "Demo Transactions",
+   "number_card_name": "Demo Transactions"
+  }
+ ],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,

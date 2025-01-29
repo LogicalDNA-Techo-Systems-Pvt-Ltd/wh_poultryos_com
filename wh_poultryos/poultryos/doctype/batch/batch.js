@@ -34,7 +34,7 @@ frappe.ui.form.on('Batch', {
             frm.set_value('live_batch_date', formatted_date);
         }
 
-        let opening_date = frm.doc.opening_date;
+        let opening_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
         // let today = frappe.datetime.get_today();
         let today = frm.doc.live_batch_date;
         let days_diff = frappe.datetime.get_diff(today, opening_date);
@@ -47,54 +47,114 @@ frappe.ui.form.on('Batch', {
         frm.set_value('bird_cost', frm.doc.rate)
     },
 
+    // after_save: function (frm) {
+
+    //     frappe.call({
+    //         method: "frappe.client.get_value",
+    //         args: {
+    //             doctype: "Demo Batch Settings",
+    //             fieldname: "count",
+    //         },
+    //         callback: function (response) {
+    //             const currentCount = response.message ? response.message.count : 0;
+
+    //             if (currentCount > 0) {
+    //                 frappe.call({
+    //                     method: "frappe.client.set_value",
+    //                     args: {
+    //                         doctype: "Demo Batch Settings",
+    //                         name: "DEMO-052", // Replace with your settings name
+    //                         fieldname: "count",
+    //                         value: currentCount - 1,
+    //                     },
+    //                     callback: function () {
+    //                         frappe.msgprint({
+    //                             title: __("Count Updated"),
+    //                             message: __("Demo Batch Count has been decremented."),
+    //                             indicator: "green",
+    //                         });
+
+    //                         // Redirect to the Batch list view and refresh it
+    //                         frappe.set_route("List", "Batch").then(() => {
+    //                             frappe.after_ajax(() => {
+    //                                 if (cur_list) {
+    //                                     cur_list.reload_doc();
+    //                                 }
+    //                             });
+    //                         });
+    //                     },
+    //                 });
+    //             } else {
+    //                 frappe.msgprint({
+    //                     title: __("Count Unchanged"),
+    //                     message: __("Demo Batch Count is already zero."),
+    //                     indicator: "red",
+    //                 });
+    //             }
+    //         },
+    //     });
+
+    // }
+
     after_save: function (frm) {
+        if (frm.is_new()) { // Check if the batch is newly created
+            frappe.call({
+                method: "frappe.client.get_value",
+                args: {
+                    doctype: "Demo Batch Settings",
+                    fieldname: "count",
+                },
+                callback: function (response) {
+                    const currentCount = response.message ? response.message.count : 0;
 
-        frappe.call({
-            method: "frappe.client.get_value",
-            args: {
-                doctype: "Demo Batch Settings",
-                fieldname: "count",
-            },
-            callback: function (response) {
-                const currentCount = response.message ? response.message.count : 0;
-
-                if (currentCount > 0) {
-                    frappe.call({
-                        method: "frappe.client.set_value",
-                        args: {
-                            doctype: "Demo Batch Settings",
-                            name: "DEMO-052", // Replace with your settings name
-                            fieldname: "count",
-                            value: currentCount - 1,
-                        },
-                        callback: function () {
-                            frappe.msgprint({
-                                title: __("Count Updated"),
-                                message: __("Demo Batch Count has been decremented."),
-                                indicator: "green",
-                            });
-
-                            // Redirect to the Batch list view and refresh it
-                            frappe.set_route("List", "Batch").then(() => {
-                                frappe.after_ajax(() => {
-                                    if (cur_list) {
-                                        cur_list.refresh();
-                                    }
+                    if (currentCount > 0) {
+                        frappe.call({
+                            method: "frappe.client.set_value",
+                            args: {
+                                doctype: "Demo Batch Settings",
+                                name: "DEMO-052", // Replace with your settings name
+                                fieldname: "count",
+                                value: currentCount - 1,
+                            },
+                            callback: function () {
+                                frappe.msgprint({
+                                    title: __("Count Updated"),
+                                    message: __("Demo Batch Count has been decremented."),
+                                    indicator: "green",
                                 });
-                            });
-                        },
-                    });
-                } else {
-                    frappe.msgprint({
-                        title: __("Count Unchanged"),
-                        message: __("Demo Batch Count is already zero."),
-                        indicator: "red",
-                    });
-                }
-            },
-        });
 
+                                // Redirect to the Batch list view and refresh it
+                                frappe.set_route("List", "Batch").then(() => {
+                                    frappe.after_ajax(() => {
+                                        if (cur_list) {
+                                            cur_list.reload_doc();
+                                        }
+                                    });
+                                });
+                            },
+                        });
+                    } else {
+                        frappe.msgprint({
+                            title: __("Count Unchanged"),
+                            message: __("Demo Batch Count is already zero."),
+                            indicator: "red",
+                        });
+                    }
+                },
+            });
+        } else {
+            console.log("Batch modified but count remains unchanged."); // Debugging log
+            // Redirect to the Batch list view and refresh it
+            frappe.set_route("List", "Batch").then(() => {
+                frappe.after_ajax(() => {
+                    if (cur_list) {
+                        cur_list.reload_doc();
+                    }
+                });
+            });
+        }
     }
+
 
 
 

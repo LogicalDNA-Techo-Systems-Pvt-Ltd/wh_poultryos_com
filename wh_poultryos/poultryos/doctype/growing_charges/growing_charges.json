@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:GROW-{###}",
  "creation": "2025-01-21 12:00:01.468922",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -192,10 +193,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-25 11:09:04.889799",
+ "modified": "2025-01-29 16:42:15.270736",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Growing Charges",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

@@ -1,8 +1,8 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:CBF-DT-{YY}-{#####}",
- "creation": "2024-12-06 10:37:02.815796",
+ "autoname": "format:CBF-DEMOT-{YY}-{#####}",
+ "creation": "2025-01-29 12:22:26.051804",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -10,7 +10,6 @@
   "batch",
   "batch_placed_on",
   "batch_age_in_days",
-  "batch_catergory",
   "column_break_enib",
   "batch_placed_quantity",
   "batch_live_quantity",
@@ -47,13 +46,19 @@
    "reqd": 1
   },
   {
-   "fieldname": "column_break_enib",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "batch_placed_on",
    "fieldtype": "Read Only",
    "label": "Batch Placed On"
+  },
+  {
+   "fetch_from": "batch.batch_age_in_days",
+   "fieldname": "batch_age_in_days",
+   "fieldtype": "Read Only",
+   "label": "Batch Age (In Days)"
+  },
+  {
+   "fieldname": "column_break_enib",
+   "fieldtype": "Column Break"
   },
   {
    "fetch_from": "batch.place_quantity_number_of_birds",
@@ -67,12 +72,6 @@
    "fieldname": "batch_live_quantity",
    "fieldtype": "Read Only",
    "label": "Batch Live Quantity"
-  },
-  {
-   "fetch_from": "batch.batch_age_in_days",
-   "fieldname": "batch_age_in_days",
-   "fieldtype": "Read Only",
-   "label": "Batch Age (In Days)"
   },
   {
    "depends_on": "batch",
@@ -89,6 +88,51 @@
    "reqd": 1
   },
   {
+   "fieldname": "mortality_number_of_birds",
+   "fieldtype": "Int",
+   "label": "Mortality (Number of Birds)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "mortality_cost",
+   "fieldtype": "Read Only",
+   "label": "Mortality Cost"
+  },
+  {
+   "fieldname": "mortality_reason",
+   "fieldtype": "Link",
+   "label": "Mortality Reason",
+   "options": "Mortality Reason"
+  },
+  {
+   "fieldname": "average_bird_weight_in_grams",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Average Bird Weight (In Grams)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "average_bird_weight_in_kg",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Average Bird Weight (In KG)",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Link",
+   "label": "Item Name",
+   "options": "Item Master"
+  },
+  {
+   "fetch_from": "item_name.item_type",
+   "fieldname": "item_type",
+   "fieldtype": "Read Only",
+   "label": "Item Type"
+  },
+  {
    "fieldname": "column_break_pkev",
    "fieldtype": "Column Break"
   },
@@ -99,6 +143,18 @@
    "label": "Feed (Consumed Quantity)",
    "non_negative": 1,
    "reqd": 1
+  },
+  {
+   "fieldname": "feed_cost",
+   "fieldtype": "Read Only",
+   "label": "Feed Cost"
+  },
+  {
+   "default": "0",
+   "fieldname": "standard_consumption",
+   "fieldtype": "Read Only",
+   "label": "Standard Consumption",
+   "non_negative": 1
   },
   {
    "fieldname": "medicine_consumed_quantity",
@@ -120,77 +176,14 @@
    "in_list_view": 1,
    "label": "Vitamin (Consumed Quantity)",
    "non_negative": 1
-  },
-  {
-   "fieldname": "average_bird_weight_in_grams",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Average Bird Weight (In Grams)",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "average_bird_weight_in_kg",
-   "fieldtype": "Read Only",
-   "in_list_view": 1,
-   "label": "Average Bird Weight (In KG)",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "mortality_number_of_birds",
-   "fieldtype": "Int",
-   "label": "Mortality (Number of Birds)",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "mortality_reason",
-   "fieldtype": "Link",
-   "label": "Mortality Reason",
-   "options": "Mortality Reason"
-  },
-  {
-   "fieldname": "feed_cost",
-   "fieldtype": "Read Only",
-   "label": "Feed Cost"
-  },
-  {
-   "fieldname": "item_name",
-   "fieldtype": "Link",
-   "label": "Item Name",
-   "options": "Item Master"
-  },
-  {
-   "fetch_from": "item_name.item_type",
-   "fieldname": "item_type",
-   "fieldtype": "Read Only",
-   "label": "Item Type"
-  },
-  {
-   "default": "0",
-   "fieldname": "standard_consumption",
-   "fieldtype": "Read Only",
-   "label": "Standard Consumption",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "mortality_cost",
-   "fieldtype": "Read Only",
-   "label": "Mortality Cost"
-  },
-  {
-   "fetch_from": "batch.batch_category",
-   "fieldname": "batch_catergory",
-   "fieldtype": "Read Only",
-   "label": "Batch Catergory"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-29 12:37:34.880953",
+ "modified": "2025-01-29 12:23:04.392599",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Daily Transaction",
+ "name": "Demo Transctions",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
