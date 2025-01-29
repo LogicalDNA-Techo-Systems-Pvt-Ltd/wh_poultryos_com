@@ -24,7 +24,6 @@
         .register-container {
             background-color: rgba(255, 255, 255, 0.4);
             padding: 2rem;
-            border-radius: 8px;
             width: 100%;
             max-width: 400px;
             display: flex;
@@ -44,7 +43,6 @@
             padding: 0.75rem;
             margin: 0.5rem 0;
             border: 1px solid #ddd;
-            border-radius: 4px;
             box-sizing: border-box;
             font-size: 1rem;
         }
@@ -56,7 +54,6 @@
             background-color: #28a745;
             color: white;
             border: none;
-            border-radius: 4px;
             cursor: pointer;
             font-size: 1rem;
             transition: background-color 0.3s ease;
@@ -120,7 +117,7 @@
         <input type="password" id="rpassw" class="input-field" placeholder="Password" required>
         <input type="password" id="confirmpassw" class="input-field" placeholder="Confirm Password" required>
         <button class="button" id="registerBtn">Register</button>
-        <a href="login.html" class="link">Already have an account? Login</a>
+        <a href="/login" class="link">Already have an account? Login</a>
         <div class="message" id="registerError"></div>
     </div>
 
@@ -148,7 +145,7 @@
             registerUser(fullName, email, phone, password)
                 .then(response => {
                     if (response.success) {
-                        window.location.href = "/app/breeder";
+                        window.location.href = "/organization-setup";
                     } else {
                         errorMessage.textContent = response.message || "Registration failed.";
                     }
@@ -161,14 +158,15 @@
         function registerUser(fullName, email, phone, password) {
             return new Promise(function (resolve, reject) {
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/api/method/register", true);
+                xhr.open("POST", "/api/method/wh_poultryos.www.register.register", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onload = function () {
                     if (xhr.status === 200) {
                         var response = JSON.parse(xhr.responseText);
                         resolve({ success: true, message: response.message });
                     } else {
-                        resolve({ success: false, message: "Registration unsuccessful." });
+                        var response = JSON.parse(xhr.responseText);
+                        resolve(response.message);
                     }
                 };
                 xhr.onerror = reject;

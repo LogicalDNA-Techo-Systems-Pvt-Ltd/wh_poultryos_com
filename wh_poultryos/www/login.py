@@ -8,6 +8,9 @@ import uuid
 import base64
 import secrets
 
+def get_context(context):
+    # Adding app title to context
+    context.app_title = frappe.get_website_settings("app_name")
 
 @frappe.whitelist(allow_guest=True)
 def send_login_link(email):

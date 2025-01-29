@@ -94,8 +94,14 @@
         }
 
         .link {
+            display: block;
             color: #007bff;
             text-decoration: none;
+            text-align: center;
+        }
+
+        .link:hover {
+            text-decoration: underline;
         }
 
         .divider {
@@ -164,10 +170,14 @@
         </div>
 
         <div class="email-link-section">
-            <a href="#" id="loginWithEmailLink" class=".social-button">Login with email link</a>
+            <a href="#" id="loginWithEmailLink" class="link">Login with email link</a>
         </div>
 
         <div class="message" id="loginError"></div>
+
+        <div class="email-link-section">
+            <a href="/register" id="newtopoultryos" class="link">New to {{ app_title }}? Create Account</a>
+        </div>
     </div>
 
     <div class="login-container" id="loginWithEmailLinkForm" style="display: none;">
@@ -178,7 +188,7 @@
         <button id="sendEmailLinkBtn" class="button">Send Login Link</button>
 
         <div class="email-link-section">
-            <a href="#" id="backtologin" class=".social-button">Back to Login</a>
+            <a href="#" id="backtologin" class="link">Back to Login</a>
         </div>
     </div>
 
@@ -232,7 +242,8 @@
             if (!email) {
                 showError("emailError", "Email is required.", "uemail");
                 isValid = false;
-            } else if (!isValidEmail(email)) {
+            }
+            else if (!isValidEmail(email) && email !== "Administrator") {
                 showError("emailError", "Please enter a valid email address.", "uemail");
                 isValid = false;
             }
@@ -252,7 +263,7 @@
         }
 
         function isValidEmail(email) {
-            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             return emailPattern.test(email);
         }
 

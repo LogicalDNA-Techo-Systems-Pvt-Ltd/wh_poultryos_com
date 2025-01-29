@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoultryOS Organization Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background-image: url('http://apps.poultryos.in/css/images/wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: right;
+            align-items: right;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .setup-container {
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: right;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .setup-container h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .combobox-container {
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .combobox-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .combobox-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .combobox-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .combobox-option {
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+
+        .combobox-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .combobox-option.selected {
+            background-color: #e3f2fd;
+        }
+
+        .selected-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .selected-item {
+            background-color: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remove-item {
+            cursor: pointer;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .button {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+
+        .select-all-btn {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .select-all-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            margin-top: 1rem;
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="setup-container" id="setupForm">
+        <h2>Organization Setup</h2>
+        <input type="text" id="orgName" class="input-field" placeholder="Organization Name" required>
+        <input type="text" id="address" class="input-field" placeholder="Address" required>
+        <input type="text" id="city" class="input-field" placeholder="City" required>
+        <input type="text" id="state" class="input-field" placeholder="State" required>
+
+        <div class="combobox-container">
+            <label class="combobox-label">Select Modules</label>
+            <input type="text" id="moduleSearch" class="combobox-input" placeholder="Search modules...">
+            <div class="selected-items" id="selectedModules"></div>
+            <div class="combobox-dropdown" id="moduleDropdown"></div>
+            <button class="select-all-btn" id="selectAllBtn">Select All Modules</button>
+        </div>
+
+        <button class="button" id="setupBtn">Complete Setup</button>
+        <div class="message" id="setupError"></div>
+    </div>
+
+    <script>
+        class ComboBox {
+            constructor() {
+                this.modules = [];
+                this.selectedModules = new Set();
+                this.searchInput = document.getElementById('moduleSearch');
+                this.dropdown = document.getElementById('moduleDropdown');
+                this.selectedContainer = document.getElementById('selectedModules');
+                this.selectAllBtn = document.getElementById('selectAllBtn');
+
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                // Search input events
+                this.searchInput.addEventListener('input', () => this.filterModules());
+                this.searchInput.addEventListener('focus', () => this.showDropdown());
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!this.searchInput.contains(e.target) && !this.dropdown.contains(e.target)) {
+                        this.hideDropdown();
+                    }
+                });
+
+                // Select all button
+                this.selectAllBtn.addEventListener('click', () => this.selectAllModules());
+            }
+
+            setModules(modules) {
+                this.modules = modules;
+                this.renderDropdown();
+            }
+
+            showDropdown() {
+                this.dropdown.style.display = 'block';
+            }
+
+            hideDropdown() {
+                this.dropdown.style.display = 'none';
+            }
+
+            filterModules() {
+                const searchTerm = this.searchInput.value.toLowerCase();
+                this.renderDropdown(searchTerm);
+            }
+
+            renderDropdown(searchTerm = '') {
+                this.dropdown.innerHTML = '';
+                this.modules
+                    .filter(module => module.module_name.toLowerCase().includes(searchTerm))
+                    .forEach(module => {
+                        const option = document.createElement('div');
+                        option.className = `combobox-option ${this.selectedModules.has(module.module_name) ? 'selected' : ''}`;
+                        option.textContent = module.module_name;
+                        option.addEventListener('click', () => this.toggleModule(module));
+                        this.dropdown.appendChild(option);
+                    });
+            }
+
+            toggleModule(module) {
+                if (this.selectedModules.has(module.module_name)) {
+                    this.selectedModules.delete(module.module_name);
+                } else {
+                    this.selectedModules.add(module.module_name);
+                }
+                this.renderSelected();
+                this.renderDropdown(this.searchInput.value.toLowerCase());
+            }
+
+            selectAllModules() {
+                this.modules.forEach(module => this.selectedModules.add(module.module_name));
+                this.renderSelected();
+                this.renderDropdown(this.searchInput.value.toLowerCase());
+            }
+
+            renderSelected() {
+                this.selectedContainer.innerHTML = '';
+                this.modules
+                    .filter(module => this.selectedModules.has(module.module_name))
+                    .forEach(module => {
+                        const item = document.createElement('div');
+                        item.className = 'selected-item';
+                        item.innerHTML = `
+                            ${module.module_name}
+                            <span class="remove-item" onclick="event.stopPropagation(); comboBox.toggleModule({name: '${module.module_name}', module_name: '${module.module_name}'})">×</span>
+                        `;
+                        this.selectedContainer.appendChild(item);
+                    });
+            }
+
+            getSelectedModules() {
+                return Array.from(this.selectedModules);
+            }
+        }
+
+        let comboBox;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            comboBox = new ComboBox();
+            fetchModules();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('setupBtn').addEventListener('click', handleSetup);
+        }
+
+        function fetchModules() {
+            fetch('/api/method/wh_poultryos.www.organization_setup.get_modules')
+                .then(response => response.json())
+                .then(data => {
+                    comboBox.setModules(data.message);
+                })
+                .catch(error => {
+                    document.getElementById('setupError').textContent = 'Failed to load modules';
+                });
+        }
+
+        function handleSetup() {
+            const orgName = document.getElementById('orgName').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const selectedModules = comboBox.getSelectedModules();
+
+            if (!orgName || !address || !city || !state || selectedModules.length === 0) {
+                document.getElementById('setupError').textContent = 'Please fill in all required fields';
+                return;
+            }
+
+            const allModulesSelected = selectedModules.length === comboBox.modules.length;
+            const modulesToSend = selectedModules;
+
+            const setupData = {
+                organization_name: orgName,
+                address: address,
+                city: city,
+                state: state,
+                modules: modulesToSend
+            };
+
+            fetch('/api/method/wh_poultryos.www.organization_setup.setup_organization', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(setupData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message.success) {
+                        window.location.href = data.message.redirect_url;
+                    } else {
+                        document.getElementById('setupError').textContent = data.message || 'Setup failed';
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('setupError').textContent = 'An error occurred. Please try again.';
+                });
+        }
+    </script>
+</body>
+
+</html>
