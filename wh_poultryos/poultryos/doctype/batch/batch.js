@@ -2,6 +2,24 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Batch', {
+
+    onload: function (frm) {
+        // Fetch the session variable 'org_name' from the server-side (frappe.call)
+        frappe.call({
+            method: 'wh_poultryos.session_getter.get_org_name_from_session',
+            args: {},
+            callback: function (r) {
+                console.log(r);
+                if (r.message) {
+                    console.log(r.message);
+                    // Set the hidden field value to the 'org_name' session variable
+                    frm.set_value('org_name', r.message.org_name);
+                }
+            }
+        });
+
+    },
+
     module: function (frm) {
         // Check if the 'Module' field is set
         if (frm.doc.module) {

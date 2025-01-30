@@ -51,6 +51,10 @@ def setup_organization():
             }
         )
         organization.insert(ignore_permissions=True)
+        
+        # Set session variable `org_name` to the created organization's name
+        frappe.local.session['org_name'] = organization.name
+        print(f"Organization name set to session: {frappe.local.session['org_name']}")
 
         # Assign roles based on selected modules
         selected_modules = [
