@@ -52,6 +52,31 @@ def setup_organization():
         )
         organization.insert(ignore_permissions=True)
 
+        org_name = organization.name
+        print(f"Setting org_name to: {org_name}")
+
+        # Method 1: Set directly in session
+        frappe.session.org_name = org_name
+        print(
+            f"After setting - frappe.session.org_name: {getattr(frappe.session, 'org_name', None)}"
+        )
+
+        # Method 2: Set in local session
+        frappe.local.session.org_name = org_name
+        print(
+            f"After setting - frappe.local.session.org_name: {getattr(frappe.local.session, 'org_name', None)}"
+        )
+
+        # Method 3: Try setting as dictionary
+        frappe.session["org_name"] = org_name
+        print(
+            f"After setting as dict - frappe.session.get('org_name'): {frappe.session.get('org_name')}"
+        )
+
+        # Method 4: Set in cache
+        frappe.cache().set_value(f"org_name:{user}", org_name)
+        print(f"Set in cache - org_name:{user}")
+
         # Assign roles based on selected modules
         selected_modules = [
             module.lower() for module in data.get("modules")

@@ -128,6 +128,7 @@
 frappe.listview_settings['Batch'] = {
     refresh: function (listview) {
 
+        disableCreateBatchButton();
         function fetchAndDisplayCount() {
             frappe.call({
                 method: "frappe.client.get_value",
@@ -198,3 +199,16 @@ frappe.listview_settings['Batch'] = {
         listview.page.wrapper.on('refresh', fetchAndDisplayCount);
     },
 };
+
+// Function to disable "Create your first Live Batch" button
+function disableCreateBatchButton() {
+    setTimeout(() => {
+        const createBatchButton = $('button:contains("Create your first Batch")');
+        if (createBatchButton.length) {
+            createBatchButton.prop("disabled", true).css({
+                backgroundColor: "#d3d3d3", // Greyed out color
+                cursor: "not-allowed",
+            });
+        }
+    }, 100); // Delay to allow DOM elements to be available
+}
