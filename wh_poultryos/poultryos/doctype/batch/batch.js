@@ -2,6 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Batch', {
+    
     module: function (frm) {
         // Check if the 'Module' field is set
         if (frm.doc.module) {
@@ -96,67 +97,94 @@ frappe.ui.form.on('Batch', {
 
     // }
 
-    after_save: function (frm) {
-        if (frm.is_new()) { // Check if the batch is newly created
-            frappe.call({
-                method: "frappe.client.get_value",
-                args: {
-                    doctype: "Demo Batch Settings",
-                    fieldname: "count",
-                },
-                callback: function (response) {
-                    const currentCount = response.message ? response.message.count : 0;
-
-                    if (currentCount > 0) {
-                        frappe.call({
-                            method: "frappe.client.set_value",
-                            args: {
-                                doctype: "Demo Batch Settings",
-                                name: "DEMO-052", // Replace with your settings name
-                                fieldname: "count",
-                                value: currentCount - 1,
-                            },
-                            callback: function () {
-                                frappe.msgprint({
-                                    title: __("Count Updated"),
-                                    message: __("Demo Batch Count has been decremented."),
-                                    indicator: "green",
-                                });
-
-                                // Redirect to the Batch list view and refresh it
-                                frappe.set_route("List", "Batch").then(() => {
-                                    frappe.after_ajax(() => {
-                                        if (cur_list) {
-                                            cur_list.reload_doc();
-                                        }
-                                    });
-                                });
-                            },
-                        });
-                    } else {
-                        frappe.msgprint({
-                            title: __("Count Unchanged"),
-                            message: __("Demo Batch Count is already zero."),
-                            indicator: "red",
-                        });
-                    }
-                },
-            });
+    before_save: function (frm) {  // Runs before saving (detects new batch)
+        if (frm.is_new()) {
+            console.log("New Batch Detected in before_save");
+            handleDemoBatchSettings(frm);
         } else {
-            console.log("Batch modified but count remains unchanged."); // Debugging log
-            // Redirect to the Batch list view and refresh it
-            frappe.set_route("List", "Batch").then(() => {
-                frappe.after_ajax(() => {
-                    if (cur_list) {
-                        cur_list.reload_doc();
-                    }
-                });
-            });
+            console.log("Existing Batch Modified: No Count Change Needed");
         }
-    }
+    },
+    after_save: function (frm) {  // Redirect after save
 
+        // Ensure mandatory fields are filled before redirecting
+        if (!validateMandatoryFields(frm)) {
+            return; // Stop execution if validation fails
+        }
+
+        // Redirect after successful save
+        frappe.set_route("List", "Batch");
+    }
 
 
 
 });
 
+// Function to check if mandatory fields are filled
+function validateMandatoryFields(frm) {
+    let missingFields = [];
+    frm.meta.fields.forEach(field => {
+        if (field.reqd && !frm.doc[field.fieldname]) {
+            missingFields.push(field.label);
+        }
+    });
+
+    if (missingFields.length > 0) {
+        frappe.msgprint({
+            title: __("Missing Mandatory Fields"),
+            message: __("Please fill in the following fields:") + "<br><b>" + missingFields.join(", ") + "</b>",
+            indicator: "red",
+        });
+        return false; // Stop further execution
+    }
+    return true; // Continue execution
+}
+
+function handleDemoBatchSettings(frm) {
+    frappe.call({
+        method: "frappe.client.get_value",
+        args: {
+            doctype: "Demo Batch Settings",
+            fieldname: ["name", "count"],
+        },
+        callback: function (response) {
+            if (response.message) {
+                const settingsName = response.message.name;
+                const currentCount = response.message.count;
+
+                if (currentCount > 0) {
+                    frappe.call({
+                        method: "frappe.client.set_value",
+                        args: {
+                            doctype: "Demo Batch Settings",
+                            name: settingsName,
+                            fieldname: "count",
+                            value: currentCount - 1,
+                        },
+                        callback: function () {
+                            frappe.msgprint({
+                                title: __("Count Updated"),
+                                message: __("Demo Batch Count has been decremented."),
+                                indicator: "green",
+                            });
+
+                            
+                        },
+                    });
+                } else {
+                    frappe.msgprint({
+                        title: __("Count Unchanged"),
+                        message: __("Demo Batch Count is already zero."),
+                        indicator: "red",
+                    });
+                }
+            } else {
+                frappe.msgprint({
+                    title: __("Error"),
+                    message: __("Demo Batch Settings not found."),
+                    indicator: "red",
+                });
+            }
+        },
+    });
+}

@@ -17,7 +17,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-25 20:03:33.649668",
+ "modified": "2025-01-30 12:45:01.463099",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Shed",
@@ -37,7 +37,10 @@
    "write": 1
   }
  ],
+ "search_fields": "shed_name",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "shed_name"
 }

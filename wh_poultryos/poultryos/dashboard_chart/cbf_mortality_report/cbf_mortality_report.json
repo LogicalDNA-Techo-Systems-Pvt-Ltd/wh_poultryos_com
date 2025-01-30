@@ -10,18 +10,14 @@
  "idx": 4,
  "is_public": 1,
  "is_standard": 1,
- "modified": "2025-01-21 16:45:57.298563",
+ "modified": "2025-01-30 14:45:07.846300",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "CBF Mortality Report",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "CBF Mortality Report",
- "roles": [
-  {
-   "role": "Farm Owner"
-  }
- ],
+ "roles": [],
  "time_interval": "Yearly",
  "timeseries": 0,
  "timespan": "Last Year",

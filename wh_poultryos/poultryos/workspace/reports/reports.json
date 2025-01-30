@@ -1,0 +1,49 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"_m75neZ4w9\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Reports</span>\",\"col\":12}}]",
+ "creation": "2025-01-30 12:29:03.958340",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "right",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Reports",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Growing Charges Report",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Growing Charges",
+   "link_count": 0,
+   "link_to": "Growing Charges",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-01-30 15:00:29.456672",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Reports",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "CBF",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 6.0,
+ "shortcuts": [],
+ "title": "Reports"
+}

@@ -42,7 +42,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Batch",
-   "link_filters": "[[\"Batch\",\"module\",\"=\",\"MDL-25-00012\"]]",
+   "link_filters": "[[\"Batch\",\"module\",\"=\",\"MDL-25-00003\"]]",
    "options": "Batch",
    "reqd": 1
   },
@@ -158,7 +158,7 @@
    "fieldname": "item_name",
    "fieldtype": "Link",
    "label": "Item Name",
-   "options": "Item Master"
+   "options": "Item Master POS"
   },
   {
    "fetch_from": "item_name.item_type",
@@ -187,7 +187,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-29 12:37:34.880953",
+ "modified": "2025-01-30 14:52:58.767023",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "CBF Daily Transaction",

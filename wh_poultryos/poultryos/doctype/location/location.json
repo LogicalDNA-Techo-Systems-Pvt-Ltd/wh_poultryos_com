@@ -23,7 +23,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-25 20:00:34.922648",
+ "modified": "2025-01-30 12:44:42.780026",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Location",
@@ -43,7 +43,10 @@
    "write": 1
   }
  ],
+ "search_fields": "location_name",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "location_name"
 }

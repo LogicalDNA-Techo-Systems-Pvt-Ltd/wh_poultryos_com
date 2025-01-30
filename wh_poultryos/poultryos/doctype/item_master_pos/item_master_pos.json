@@ -24,7 +24,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-18 12:38:38.177192",
+ "modified": "2025-01-30 14:53:52.797619",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Item Master POS",
@@ -44,7 +44,10 @@
    "write": 1
   }
  ],
+ "search_fields": "item_name",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "item_name"
 }
