@@ -173,12 +173,12 @@
    "fieldname": "org_name",
    "fieldtype": "Read Only",
    "hidden": 1,
-   "label": "org_name"
+   "label": "Org Name"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 12:19:36.108994",
+ "modified": "2025-01-30 16:32:14.590186",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Batch",
