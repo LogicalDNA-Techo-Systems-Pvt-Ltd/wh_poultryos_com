@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:ORG-{YYYY}-{#####}",
  "creation": "2025-01-29 12:36:16.348823",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -45,10 +46,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-29 12:42:07.520024",
+ "modified": "2025-01-30 12:14:55.218960",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Organization",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

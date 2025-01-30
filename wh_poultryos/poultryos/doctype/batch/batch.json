@@ -27,7 +27,8 @@
   "amount",
   "biological_value",
   "bird_cost",
-  "sale_quantity"
+  "sale_quantity",
+  "org_name"
  ],
  "fields": [
   {
@@ -167,11 +168,17 @@
    "fieldname": "batch_category",
    "fieldtype": "Read Only",
    "label": "Batch Category"
+  },
+  {
+   "fieldname": "org_name",
+   "fieldtype": "Read Only",
+   "hidden": 1,
+   "label": "org_name"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-29 12:13:57.285024",
+ "modified": "2025-01-30 12:19:36.108994",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Batch",

@@ -27,6 +27,7 @@ app_license = "mit"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/wh_poultryos/css/wh_poultryos.css"
 # app_include_js = "/assets/wh_poultryos/js/wh_poultryos.js"
+app_include_js = ["/assets/js/session_handler.js"]  # Include your JavaScript file
 
 
 # include js, css files in header of web template
@@ -43,13 +44,11 @@ webform_include_js = {"doctype": "public/js/doctype.js"}
 # include js in page
 # page_js = {"page" : "public/js/file.js"}
 
-page_js = {
-    "demo-dashboard": "public/js/demo_dashboard.js"
-}
+page_js = {"demo-dashboard": "public/js/demo_dashboard.js"}
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
-#doctype_list_js = {"Batch": "public/js/batch_list.js"}
+# doctype_list_js = {"Batch": "public/js/batch_list.js"}
 
 doctype_list_js = {
     "Batch": "public/js/batch_list.js",
@@ -145,6 +144,8 @@ home_page = "login"
 # 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
+on_session_creation = "wh_poultryos.session_setter.set_org_name_in_session"
+
 # Document Events
 # ---------------
 # Hook on document methods and events
@@ -155,9 +156,11 @@ doc_events = {
     # 		"on_cancel": "method",
     # 		"on_trash": "method"
     # 	}
+    # "*": {"onload": "wh_poultryos.api.get_org_name_from_session"},
+    # "User": {"on_login": "wh_poultryos.api.set_org_name_in_session"},
     "CBF Daily Transaction": {
         "after_delete": "wh_poultryos.poultryos.doctype.cbf_daily_transaction.cbf_daily_transaction.show_delete_message"
-    }
+    },
 }
 
 # Scheduled Tasks
@@ -260,5 +263,5 @@ doc_events = {
 website_route_rules = [
     {"from_route": "/login", "to_route": "login"},
     {"from_route": "/register", "to_route": "register"},
-    {"from_route": "/organization-setup", "to_route": "organization_setup"}
+    {"from_route": "/organization-setup", "to_route": "organization_setup"},
 ]
