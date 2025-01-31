@@ -77,6 +77,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
     },
 
     transaction_date: function (frm) {
+
         if (!frm.doc.transaction_date) {
             frappe.msgprint(__('Please select a transaction date.'));
             return;
@@ -86,7 +87,10 @@ frappe.ui.form.on('CBF Daily Transaction', {
         if (!frm.doc.item_type) {
             frappe.msgprint(__('Please select an item.'));
             return;
-        }
+        }   
+
+        console.log("Placement date", frm.doc.batch_placed_on);
+        console.log(frm.doc.transaction_date);
 
         // Fetch the appropriate rate for the transaction date
         frappe.call({

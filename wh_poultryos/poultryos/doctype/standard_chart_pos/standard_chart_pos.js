@@ -12,7 +12,7 @@ frappe.ui.form.on('Standard Chart POS', {
     },
 
     feed_consumption: function (frm) {
-        if (frm.doc.item_name && frm.doc.age_in_days) {
+        if (frm.doc.item_name && frm.doc.age_in_days !== undefined) {
             // Fetch the last cumulative feed for the same item
             frappe.call({
                 method: 'frappe.client.get_list',
