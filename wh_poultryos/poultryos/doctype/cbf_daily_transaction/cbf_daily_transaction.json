@@ -23,6 +23,7 @@
   "average_bird_weight_in_kg",
   "item_name",
   "item_type",
+  "ready_for_sale",
   "column_break_pkev",
   "feed_consumed_quantity",
   "feed_cost",
@@ -183,11 +184,17 @@
    "fieldname": "batch_catergory",
    "fieldtype": "Read Only",
    "label": "Batch Catergory"
+  },
+  {
+   "default": "0",
+   "fieldname": "ready_for_sale",
+   "fieldtype": "Check",
+   "label": "Ready for sale"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 14:52:58.767023",
+ "modified": "2025-02-01 18:26:26.393451",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "CBF Daily Transaction",

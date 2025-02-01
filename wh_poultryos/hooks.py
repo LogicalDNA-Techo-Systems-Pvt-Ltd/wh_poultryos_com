@@ -158,9 +158,14 @@ doc_events = {
     # 	}
     # "*": {"onload": "wh_poultryos.api.get_org_name_from_session"},
     # "User": {"on_login": "wh_poultryos.api.set_org_name_in_session"},
+    
     "CBF Daily Transaction": {
         "after_delete": "wh_poultryos.poultryos.doctype.cbf_daily_transaction.cbf_daily_transaction.show_delete_message"
     },
+    
+     "CBF Daily Transaction": {
+        "after_save": "wh_poultryos.poultryos.doctype.cbf_daily_transaction.cbf_daily_transaction.update_batch_status"
+    }
 }
 
 # Scheduled Tasks

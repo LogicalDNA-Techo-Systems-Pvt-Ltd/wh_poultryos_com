@@ -7,6 +7,18 @@ class CBFDailyTransaction(Document):
     pass
 
 
+def update_batch_status(doc, method):
+    if doc.batch:
+        # Check the current status of the batch
+        batch_status = frappe.db.get_value('Batch', doc.batch, 'batch_status')
+        frappe.logger().info(f"Triggered update_batch_status for batch: {doc.batch}")
+        print("#########################################",batch_status)
+        # Update status ONLY if it's still 'New'
+        if batch_status == "New":
+            frappe.db.set_value('Batch', doc.batch, 'batch_status', 'Batch Started')
+            frappe.db.commit()
+
+
 def show_delete_message(doc, method):
     # Get mortality number of birds from the current document
     mortality_number_of_birds = doc.mortality_number_of_birds
