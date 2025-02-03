@@ -6,7 +6,7 @@ from frappe.model.document import Document
 class CBFDailyTransaction(Document):
     pass
 
-
+@frappe.whitelist()
 def update_batch_status(doc, method):
     if doc.batch:
         # Check the current status of the batch

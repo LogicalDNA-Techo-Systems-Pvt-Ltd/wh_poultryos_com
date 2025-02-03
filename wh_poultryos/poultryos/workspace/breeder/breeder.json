@@ -18,7 +18,7 @@
  "is_hidden": 0,
  "label": "BREEDER",
  "links": [],
- "modified": "2025-01-30 12:43:35.449289",
+ "modified": "2025-02-03 11:13:32.946241",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "BREEDER",
@@ -52,7 +52,7 @@
    "role": "Administrator"
   }
  ],
- "sequence_id": 2.0,
+ "sequence_id": 3.0,
  "shortcuts": [],
  "title": "BREEDER"
 }
