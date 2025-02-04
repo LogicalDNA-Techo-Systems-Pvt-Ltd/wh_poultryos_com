@@ -37,11 +37,10 @@ frappe.pages['payment-success'].on_page_load = function (wrapper) {
 			var paymentStatus = response.message.status;
 			var paymentMessage = response.message.message;
 
-			if (paymentStatus === "success") {
+			if (paymentMessage === "Payment success, user balance updated") {
 				message_container.html(`
                     <div class="alert alert-success">
                         <h4>Payment Successful!</h4>
-                        <p>Your payment was successful. Your balance has been updated.</p>
                         ${paymentMessage ? `<p>${paymentMessage}</p>` : ''}
                     </div>
                 `);
@@ -49,7 +48,6 @@ frappe.pages['payment-success'].on_page_load = function (wrapper) {
 				message_container.html(`
                     <div class="alert alert-danger">
                         <h4>Payment Failed</h4>
-                        <p>There was an issue with your payment. Please try again later.</p>
                         ${paymentMessage ? `<p>${paymentMessage}</p>` : ''}
                     </div>
                 `);
