@@ -42,8 +42,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Batch",
-   "link_filters": "[[\"Batch\",\"module\",\"=\",\"MDL-25-00003\"]]",
-   "options": "Batch",
+   "options": "CBF Batch",
    "reqd": 1
   },
   {
@@ -187,7 +186,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 14:52:58.767023",
+ "modified": "2025-01-31 13:49:00.840136",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "CBF Daily Transaction",

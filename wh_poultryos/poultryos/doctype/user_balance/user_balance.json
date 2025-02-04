@@ -1,0 +1,75 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-04 15:06:27.180169",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "available_balance",
+  "total_credits",
+  "total_debits",
+  "user_balance_transactions"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User"
+  },
+  {
+   "fieldname": "available_balance",
+   "fieldtype": "Currency",
+   "label": "Available Balance",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_credits",
+   "fieldtype": "Currency",
+   "label": "Total Credits",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_debits",
+   "fieldtype": "Currency",
+   "label": "Total Debits",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "columns": 11,
+   "fieldname": "user_balance_transactions",
+   "fieldtype": "Table",
+   "label": "User Balance Transactions",
+   "options": "User Transaction",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-04 16:52:33.275417",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "User Balance",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

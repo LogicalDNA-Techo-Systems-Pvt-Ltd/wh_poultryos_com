@@ -5,7 +5,7 @@
    "label": "Mortality Percentage & FCR"
   }
  ],
- "content": "[{\"id\":\"PhDA3BQMBJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"No. of Batches\",\"col\":3}},{\"id\":\"qiohTBeK5o\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Mortality\",\"col\":3}},{\"id\":\"OiM38rdrcD\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Average Bird Weight (In Grams)\",\"col\":3}},{\"id\":\"XKFKYYfcEU\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Feed Consumed\",\"col\":3}},{\"id\":\"RC-76ang0E\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Mortality Percentage & FCR\",\"col\":12}}]",
+ "content": "[{\"id\":\"PhDA3BQMBJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"No. of Batches\",\"col\":6}},{\"id\":\"gmESmtk8I7\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Available Balance\",\"col\":6}},{\"id\":\"qiohTBeK5o\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Mortality\",\"col\":4}},{\"id\":\"OiM38rdrcD\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Average Bird Weight (In Grams)\",\"col\":4}},{\"id\":\"XKFKYYfcEU\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Feed Consumed\",\"col\":4}},{\"id\":\"RC-76ang0E\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Mortality Percentage & FCR\",\"col\":12}}]",
  "creation": "2024-12-06 16:54:43.323525",
  "custom_blocks": [],
  "docstatus": 0,
@@ -18,11 +18,15 @@
  "is_hidden": 0,
  "label": "CBF",
  "links": [],
- "modified": "2025-01-30 12:43:35.724085",
+ "modified": "2025-01-31 17:59:18.079074",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "CBF",
  "number_cards": [
+  {
+   "label": "Available Balance",
+   "number_card_name": "Available Balance"
+  },
   {
    "label": "Total Mortality",
    "number_card_name": "Total Mortality"
