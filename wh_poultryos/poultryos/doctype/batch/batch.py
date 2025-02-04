@@ -19,4 +19,18 @@ def before_insert(doc, method):
     settings.save()
 
     frappe.msgprint("Batch token used. Please purchase more tokens if required.")
+    
+@frappe.whitelist()
+def update_batch_ready_for_sale(batch_name, ready_for_sale):
+    """
+    Update the ready_for_sale field in the Batch doctype.
+    :param batch_name: Name of the batch to update
+    :param ready_for_sale: Boolean (0 or 1) to update the status
+    """
+    if batch_name:
+        frappe.db.set_value("Batch", batch_name, "ready_for_sale", ready_for_sale)
+        frappe.db.commit()
+        return {"status": "success", "message": f"Batch {batch_name} updated successfully"}
+    
+    return {"status": "error", "message": "Batch not found"}
 

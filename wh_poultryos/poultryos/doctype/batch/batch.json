@@ -29,7 +29,8 @@
   "bird_cost",
   "sale_quantity",
   "org_name",
-  "batch_status"
+  "batch_status",
+  "ready_for_sale"
  ],
  "fields": [
   {
@@ -181,11 +182,17 @@
    "fieldname": "batch_status",
    "fieldtype": "Read Only",
    "label": "Batch Status"
+  },
+  {
+   "default": "0",
+   "fieldname": "ready_for_sale",
+   "fieldtype": "Read Only",
+   "label": "Ready for sale"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-31 13:53:30.390200",
+ "modified": "2025-02-03 12:20:25.659804",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Batch",

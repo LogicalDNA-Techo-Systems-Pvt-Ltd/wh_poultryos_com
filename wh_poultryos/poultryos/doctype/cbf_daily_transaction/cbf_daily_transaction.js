@@ -181,14 +181,6 @@ frappe.ui.form.on('CBF Daily Transaction', {
             return;
         }
 
-        // if (frm.doc.ready_for_sale) {
-        //     frappe.msgprint({
-
-        //         message: __('This batch has been marked as ready for sale'),
-        //         indicator: 'green'
-        //     });
-        // }
-
         // If turning on for the first time
         if (frm.doc.ready_for_sale) {
             // Show confirmation dialog
@@ -207,7 +199,23 @@ frappe.ui.form.on('CBF Daily Transaction', {
                     // Make the field read-only after enabling
                     frm.set_df_property('ready_for_sale', 'read_only', 1);
 
-                    
+                    // Call the server method in batch.py
+                    frappe.call({
+                        method: 'wh_poultryos.poultryos.doctype.batch.batch.update_batch_ready_for_sale',
+                        args: {
+                            batch_name: frm.doc.batch,  // Assuming 'batch' field exists in CBF Daily Transaction
+                            ready_for_sale: 1
+                        },
+                        callback: function (r) {
+                            if (r.message.status === "success") {
+                                frappe.msgprint(__('Batch status updated successfully.'));
+                            } else {
+                                frappe.msgprint(__('Error updating batch status.'));
+                            }
+                        }
+                    });
+
+
                 },
                 () => {
                     // On cancel
@@ -497,6 +505,21 @@ frappe.ui.form.on('CBF Daily Transaction', {
                 }
             });
         }
+
+        frappe.call({
+            method: 'wh_poultryos.poultryos.doctype.cbf_daily_transaction.cbf_daily_transaction.update_batch_status',
+            args: {
+                batch: frm.doc.batch  // Ensure 'batch' exists in the document
+            },
+            callback: function (r) {
+                if (r.message.status === "success") {
+                    frappe.msgprint(__('Batch status updated successfully.'));
+                } else {
+                    frappe.msgprint(__('Error updating batch status: ' + r.message));
+                }
+            }
+        });
+        
 
     }
 

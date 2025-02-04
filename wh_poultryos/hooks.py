@@ -161,10 +161,6 @@ doc_events = {
     
     "CBF Daily Transaction": {
         "after_delete": "wh_poultryos.poultryos.doctype.cbf_daily_transaction.cbf_daily_transaction.show_delete_message"
-    },
-    
-     "CBF Daily Transaction": {
-        "after_save": "wh_poultryos.poultryos.doctype.cbf_daily_transaction.cbf_daily_transaction.update_batch_status"
     }
 }
 
