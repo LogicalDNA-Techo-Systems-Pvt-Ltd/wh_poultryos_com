@@ -77,15 +77,58 @@ frappe.ui.form.on('CBF Daily Transaction', {
     },
 
     transaction_date: function (frm) {
+
         if (!frm.doc.transaction_date) {
             frappe.msgprint(__('Please select a transaction date.'));
             return;
         }
 
-        // Ensure item is selected
-        if (!frm.doc.item_type) {
-            frappe.msgprint(__('Please select an item.'));
-            return;
+        // // Ensure item is selected
+        // if (!frm.doc.item_type) {
+        //     frappe.msgprint(__('Please select an item.'));
+        //     return;
+        // }   
+
+        console.log("Placement date", frm.doc.batch_placed_on);
+        console.log(frm.doc.transaction_date);
+
+        function standardizeDate(dateStr) {
+            if (!dateStr) return null;
+
+            // Check if date is already in YYYY-MM-DD format
+            if (dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                return dateStr;
+            }
+
+            // Convert DD-MM-YYYY to YYYY-MM-DD
+            let parts = dateStr.split('-');
+            if (parts.length === 3) {
+                // Ensure year is 4 digits
+                if (parts[2].length === 4) {
+                    return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+                }
+            }
+            return null;
+        }
+
+        // Get and standardize both dates
+        let placementDate = standardizeDate(frm.doc.batch_placed_on);
+        let transactionDate = standardizeDate(frm.doc.transaction_date);
+
+        console.log("Standardized Placement Date:", placementDate);
+        console.log("Standardized Transaction Date:", transactionDate);
+
+        if (placementDate && transactionDate) {
+            // Calculate difference in days
+            let days_diff = frappe.datetime.get_diff(transactionDate, placementDate);
+            console.log("Age in days:", days_diff);
+
+            // Optionally set the value in a field
+            frm.set_value('batch_age_in_days', days_diff);
+            // Remember to refresh if you're setting a value
+            frm.refresh_field('batch_age_in_days');
+        } else {
+            console.log("Error: Invalid date format");
         }
 
         // Fetch the appropriate rate for the transaction date
@@ -123,75 +166,63 @@ frappe.ui.form.on('CBF Daily Transaction', {
         });
     },
 
+    ready_for_sale: function (frm) {
+
+        if (!frm.doc.ready_for_sale && frm.doc.__prev_ready_for_sale) {
+            // Prevent toggle from being turned off
+            frappe.show_alert({
+                message: __('Ready for Sale cannot be disabled once enabled'),
+                indicator: 'red'
+            }, 5);
+
+            // Reset the toggle back to on
+            frm.set_value('ready_for_sale', 1);
+
+            return;
+        }
+
+        // if (frm.doc.ready_for_sale) {
+        //     frappe.msgprint({
+
+        //         message: __('This batch has been marked as ready for sale'),
+        //         indicator: 'green'
+        //     });
+        // }
+
+        // If turning on for the first time
+        if (frm.doc.ready_for_sale) {
+            // Show confirmation dialog
+            frappe.confirm(
+                'Are you sure you want to mark this batch as ready for sale? This action cannot be undone.',
+                () => {
+                    // On confirm
+                    frm.doc.__prev_ready_for_sale = 1;
+
+                    // Show success message
+                    frappe.show_alert({
+                        message: __('This batch is now available for ready for sale'),
+                        indicator: 'green'
+                    }, 5);
+
+                    // Make the field read-only after enabling
+                    frm.set_df_property('ready_for_sale', 'read_only', 1);
+
+                    
+                },
+                () => {
+                    // On cancel
+                    frm.set_value('ready_for_sale', 0);
+                }
+            );
+        }
+    },
+
 
     feed_consumed_quantity: function (frm) {
 
         frm.doc.item = "Feed";
         console.log(frm.doc.item_type);
 
-        // if (frm.doc.item && frm.doc.feed_consumed_quantity) {
-        //     // Fetch the rate from the Item Rate Doctype
-        //     frappe.call({
-        //         method: 'frappe.client.get_value',
-        //         args: {
-        //             doctype: 'Item Rate POS',
-        //             fieldname: 'rate',
-        //             filters: { item_type: frm.doc.item }
-        //         },
-        //         callback: function (response) {
-        //             if (response.message && Object.keys(response.message).length > 0){
-
-        //                 let rate = response.message.rate;
-        //                 console.log(rate);
-        //                 // Calculate feed cost
-        //                 let feed_cost = frm.doc.feed_consumed_quantity * rate;
-
-        //                 // Set the calculated feed cost
-        //                 frm.set_value('feed_cost', feed_cost);
-        //             } else {
-        //                 frappe.msgprint(__('Rate not found for the selected item'));
-        //                 frm.set_value('feed_cost', 0);
-        //             }
-        //         }
-        //     });
-        // } else {
-        //     // If no item or feed_consumed_quantity is entered, reset feed cost
-        //     frm.set_value('feed_cost', 0);
-        // }
-
-        // if (!frm.doc.transaction_date || !frm.doc.item_type) {
-        //     frappe.msgprint(__('Please select a transaction date and item.'));
-        //     return;
-        // }
-
-        // frappe.call({
-        //     method: 'frappe.client.get_list',
-        //     args: {
-        //         doctype: 'Item Rate POS',
-        //         filters: {
-        //             item_type: frm.doc.item_type,
-        //             date: ['<=', frm.doc.transaction_date] // Get rates up to the transaction date
-        //         },
-        //         fields: ['rate', 'date'],
-        //         order_by: 'date desc', // Get the latest rate before the transaction date
-        //         limit_page_length: 1 // Only fetch the latest rate
-        //     },
-        //     callback: function (response) {
-        //         if (response.message && response.message.length > 0) {
-        //             let rate_data = response.message[0];
-        //             let rate = rate_data.rate;
-
-
-        //             if (frm.doc.feed_consumed_quantity) {
-        //                 let feed_cost = frm.doc.feed_consumed_quantity * rate;
-        //                 frm.set_value('feed_cost', feed_cost);
-        //             }
-        //         } else {
-        //             frappe.msgprint(__('No rate found for the selected item and date.'));
-        //             frm.set_value('feed_cost', 0);
-        //         }
-        //     }
-        // });
         if (frm.doc.item_type === "Feed") {
             frm.trigger('transaction_date');
 
@@ -261,71 +292,6 @@ frappe.ui.form.on('CBF Daily Transaction', {
         // Automatically update weight in KG when weight in grams is entered
         frm.set_value("average_bird_weight_in_kg", (frm.doc.average_bird_weight_in_grams / 1000));
     },
-
-
-
-
-
-
-
-    // batch: function (frm) {
-
-    //     // Set the max date for the Transaction Date field to today
-    //     frm.fields_dict['transaction_date'].df['max'] = frappe.datetime.get_today();
-    //     frm.fields_dict['transaction_date'].refresh(); // Refresh to apply the change
-
-    //     if (frm.doc.batch) {
-    //         // Fetch the opening date from the Batch Doctype
-    //         frappe.call({
-    //             method: 'frappe.client.get_value',
-    //             args: {
-    //                 doctype: 'CBF Batch',
-    //                 fieldname: 'opening_date',
-    //                 filters: { name: frm.doc.batch }
-    //             },
-    //             callback: function (response) {
-    //                 if (response.message && Object.keys(response.message).length > 0){
-    //                     let opening_date = response.message.opening_date;
-    //                     if (opening_date) {
-    //                         // Convert the date to user-preferred format
-    //                         let formatted_date = frappe.datetime.str_to_user(opening_date);
-    //                         frm.set_value('batch_placed_on', formatted_date);
-    //                     } else {
-    //                         frappe.msgprint(__('Opening date not found for the selected batch.'));
-    //                     }
-    //                 }
-    //             }
-    //         });
-
-    //         // Fetch the last transaction date for the same batch
-    //         frappe.call({
-    //             method: 'frappe.client.get_list',
-    //             args: {
-    //                 doctype: 'CBF Daily Transaction',
-    //                 filters: { 'batch': frm.doc.batch }, // Filter transactions by batch
-    //                 fields: ['transaction_date'],
-    //                 order_by: 'transaction_date desc', // Order by latest transaction date
-    //                 limit_page_length: 1 // Only get the most recent transaction
-    //             },
-    //             callback: function (data) {
-    //                 if (data && data.message && data.message.length > 0) {
-    //                     // If a transaction exists, calculate the next day's date
-    //                     let last_transaction_date = data.message[0].transaction_date;
-    //                     let next_day = frappe.datetime.add_days(last_transaction_date, 1);
-    //                     frm.set_value('transaction_date', next_day);
-    //                 } else if (frm.doc.batch_placed_on) {
-    //                     // If no transaction exists, use the batch_placed_on date
-    //                     let batch_date = frappe.datetime.user_to_str(frm.doc.batch_placed_on);
-    //                     frm.set_value('transaction_date', batch_date);
-    //                 } else {
-    //                     frappe.msgprint(__('Batch placed date is missing.'));
-    //                 }
-    //             }
-    //         });
-    //     } else {
-    //         frappe.msgprint(__('Please select a batch.'));
-    //     }
-    // },
 
     batch: function (frm) {
         // Set the max date for the Transaction Date field to today
@@ -531,9 +497,6 @@ frappe.ui.form.on('CBF Daily Transaction', {
                 }
             });
         }
-
-
-
 
     }
 

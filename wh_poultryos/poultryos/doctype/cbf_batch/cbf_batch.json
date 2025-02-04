@@ -29,7 +29,8 @@
   "biological_value",
   "bird_cost",
   "sale_quantity",
-  "org_name"
+  "org_name",
+  "batch_status"
  ],
  "fields": [
   {
@@ -176,6 +177,12 @@
    "fieldtype": "Read Only",
    "hidden": 1,
    "label": "Org Name"
+  },
+  {
+   "default": "New",
+   "fieldname": "batch_status",
+   "fieldtype": "Read Only",
+   "label": "Batch Status"
   }
  ],
  "index_web_pages_for_search": 1,
