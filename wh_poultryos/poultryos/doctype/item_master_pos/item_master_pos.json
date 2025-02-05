@@ -18,13 +18,14 @@
   },
   {
    "fieldname": "item_name",
-   "fieldtype": "Data",
-   "label": "Item Name"
+   "fieldtype": "Link",
+   "label": "Item Name",
+   "options": "Breed"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 14:53:52.797619",
+ "modified": "2025-02-05 15:03:49.751712",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Item Master POS",

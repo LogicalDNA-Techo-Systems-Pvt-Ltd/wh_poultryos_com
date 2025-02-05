@@ -201,7 +201,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
 
                     // Call the server method in batch.py
                     frappe.call({
-                        method: 'wh_poultryos.poultryos.doctype.batch.batch.update_batch_ready_for_sale',
+                        method: 'wh_poultryos.poultryos.doctype.cbf_batch.cbf_batch.update_batch_ready_for_sale',
                         args: {
                             batch_name: frm.doc.batch,  // Assuming 'batch' field exists in CBF Daily Transaction
                             ready_for_sale: 1
@@ -515,7 +515,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                 if (r.message.status === "success") {
                     frappe.msgprint(__('Batch status updated successfully.'));
                 } else {
-                    frappe.msgprint(__('Error updating batch status: ' + r.message));
+                    
                 }
             }
         });

@@ -51,7 +51,7 @@ frappe.ui.form.on("Growing Charges", {
         frappe.call({
             method: "frappe.client.get",
             args: {
-                doctype: "Batch",
+                doctype: "CBF Batch",
                 name: frm.doc.batch
             },
             callback: function (response) {
@@ -191,7 +191,7 @@ frappe.ui.form.on("Growing Charges", {
         frappe.call({
             method: "frappe.client.get",
             args: {
-                doctype: "Batch",
+                doctype: "CBF Batch",
                 name: frm.doc.batch
             },
             callback: function (response) {

@@ -41,7 +41,7 @@ def update_batch_quantities(batches):
         field_to_update = "live_quantity_number_of_birds" if batch_type == "Bird" else "culls"
 
         # ✅ Retrieve batch details safely
-        batch_data = frappe.db.get_value("Batch", batch_id, 
+        batch_data = frappe.db.get_value("CBF Batch", batch_id, 
                                          ["live_quantity_number_of_birds", "culls", "sale_quantity", "bird_cost", "biological_value"], 
                                          as_dict=True)
 
@@ -58,20 +58,20 @@ def update_batch_quantities(batches):
         if current_quantity >= quantity_sold:
             # 1️⃣ Deduct sold quantity from live batch
             new_quantity = current_quantity - quantity_sold
-            frappe.db.set_value("Batch", batch_id, field_to_update, new_quantity)
+            frappe.db.set_value("CBF Batch", batch_id, field_to_update, new_quantity)
 
             # 2️⃣ Update sale quantity
             new_sale_quantity = current_sale_quantity + quantity_sold
-            frappe.db.set_value("Batch", batch_id, "sale_quantity", new_sale_quantity)
+            frappe.db.set_value("CBF Batch", batch_id, "sale_quantity", new_sale_quantity)
 
             # 3️⃣ Update biological value
             deducted_value = quantity_sold * bird_cost
             new_biological_value = max(biological_value - deducted_value, 0)  
-            frappe.db.set_value("Batch", batch_id, "biological_value", new_biological_value)
+            frappe.db.set_value("CBF Batch", batch_id, "biological_value", new_biological_value)
 
             # 4️⃣ Recalculate bird cost
             new_bird_cost = (new_biological_value / new_quantity) if new_quantity > 0 else 0.0
-            frappe.db.set_value("Batch", batch_id, "bird_cost", new_bird_cost)
+            frappe.db.set_value("CBF Batch", batch_id, "bird_cost", new_bird_cost)
 
             # ✅ Commit changes
             frappe.db.commit()
