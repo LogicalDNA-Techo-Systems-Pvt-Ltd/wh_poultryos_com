@@ -10,18 +10,14 @@
  "idx": 1,
  "is_public": 1,
  "is_standard": 1,
- "modified": "2025-01-21 16:45:38.174117",
+ "modified": "2025-02-05 12:57:37.252689",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Mortality Report",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Breeder Mortality Report",
- "roles": [
-  {
-   "role": "Farm Owner"
-  }
- ],
+ "roles": [],
  "time_interval": "Yearly",
  "timeseries": 0,
  "timespan": "Last Year",

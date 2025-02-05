@@ -30,12 +30,12 @@ frappe.listview_settings['Layer Batch'] = {
                         console.log("user_balance", user_balance);
 
                         // Check if the user has sufficient balance
-                        if (user_balance >= layer_batch_cost) {
+                        if (user_balance > 0) {
                             // Sufficient balance, redirect to Layer Batch creation page
                             frappe.set_route('Form', 'Layer Batch', 'new-layer-batch');
                         } else {
                             // Insufficient balance, show dialog to purchase tokens
-                            let amount_needed = layer_batch_cost - user_balance;
+                            let amount_needed = layer_batch_cost;
                             console.log("amount_needed", amount_needed);
                             showPaymentDialog(amount_needed);
                         }

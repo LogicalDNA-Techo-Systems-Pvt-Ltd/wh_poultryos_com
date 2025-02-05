@@ -25,6 +25,7 @@ def create_cashfree_order(amount_needed, batch_count):
             "customer_phone": user.mobile_no,
         },
         "order_note": "Purchasing " + batch_count + " batch tokens",
+        "order_tags": {"batch_tokens": batch_count},
     }
 
     headers = {
@@ -69,7 +70,8 @@ def handle_payment_success(order_id):
     if payment_status.get("order_status") == "PAID":
         # Update the user balance if the payment is successful
         user = payment_status.get("customer_details", {}).get("customer_email")
-        amount = payment_status.get("order_amount")
+        batch_tokens = int(payment_status.get("order_tags", {}).get("batch_tokens"))
+        amount = float(payment_status.get("order_amount"))
 
         # Check if the order_id is new by querying the User Balance record
         user_balance_records = frappe.get_all(
@@ -80,7 +82,7 @@ def handle_payment_success(order_id):
 
         if not user_balance_records:
             # Proceed to update the user balance if the order is new
-            update_user_balance(user, amount, order_id)
+            update_user_balance(user, amount, batch_tokens, order_id)
             return {"message": "Payment success, user balance updated"}
         else:
             return {"message": "Order already processed, balance not updated"}
@@ -89,7 +91,7 @@ def handle_payment_success(order_id):
         return {"message": "Payment failed"}
 
 
-def update_user_balance(user, amount, order_id):
+def update_user_balance(user, amount, batch_tokens, order_id):
     # Try to fetch the existing User Balance document for the user
     user_balance_records = frappe.get_all(
         "User Balance", filters={"user": user}, limit_page_length=1
@@ -101,14 +103,15 @@ def update_user_balance(user, amount, order_id):
         print("User Balance Found", user_balance.user)
 
         # Add the payment amount to the user's total credits and update the available balance
-        user_balance.total_credits += amount
-        user_balance.available_balance += amount
+        user_balance.total_credits += batch_tokens
+        user_balance.available_balance += batch_tokens
 
         # Create a new transaction for this credit
         user_balance.append(
             "user_balance_transactions",
             {
                 "order_id": order_id,  # Only store order_id for credit transactions
+                "batch_tokens": batch_tokens,
                 "amount": amount,
                 "transaction_type": "credit",  # Indicate this is a credit transaction
             },
@@ -122,8 +125,8 @@ def update_user_balance(user, amount, order_id):
         # Create a new User Balance document
         new_balance = frappe.new_doc("User Balance")
         new_balance.user = user
-        new_balance.total_credits = amount  # Set initial credits
-        new_balance.available_balance = amount  # Set initial available balance
+        new_balance.total_credits = batch_tokens  # Set initial credits
+        new_balance.available_balance = batch_tokens  # Set initial available balance
         new_balance.total_debits = 0  # No debits at this point
 
         # Create a transaction for this payment
@@ -131,6 +134,7 @@ def update_user_balance(user, amount, order_id):
             "user_balance_transactions",
             {
                 "order_id": order_id,  # Only store order_id for credit transactions
+                "batch_tokens": batch_tokens,
                 "amount": amount,
                 "transaction_type": "credit",  # Indicate this is a credit transaction
             },

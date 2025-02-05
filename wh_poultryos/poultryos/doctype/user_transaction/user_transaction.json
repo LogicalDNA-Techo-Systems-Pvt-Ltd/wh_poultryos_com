@@ -8,7 +8,8 @@
  "field_order": [
   "order_id",
   "amount",
-  "transaction_type"
+  "transaction_type",
+  "batch_tokens"
  ],
  "fields": [
   {
@@ -28,12 +29,19 @@
    "in_list_view": 1,
    "label": "Transaction Type",
    "options": "credit\ndebit"
+  },
+  {
+   "fieldname": "batch_tokens",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Batch Tokens",
+   "non_negative": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-02-04 16:55:37.819252",
+ "modified": "2025-02-05 17:01:34.624466",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "User Transaction",

@@ -12,9 +12,9 @@ class CBFBatch(Document):
         self.batch_price = self.get_batch_price()
         self.user_balance = self.get_user_balance()
 
-        if self.user_balance < self.batch_price:
+        if self.user_balance < 1:
             frappe.throw(
-                f"Insufficient balance. You need {self.batch_price} tokens but have {self.user_balance}."
+                f"Insufficient balance. You need atleast 1 token but have {self.user_balance}."
             )
 
     def after_insert(self):
@@ -54,7 +54,7 @@ class CBFBatch(Document):
 
         # Recheck balance to prevent race conditions
         current_balance = self.get_user_balance()
-        if current_balance < self.batch_price:
+        if current_balance < 1:
             frappe.throw("Insufficient balance for the transaction")
 
         # Try to fetch the existing User Balance document for the user
@@ -68,14 +68,14 @@ class CBFBatch(Document):
             print("User Balance Found", user_balance.user)
 
             # Add the payment amount to the user's total credits and update the available balance
-            user_balance.total_debits += self.batch_price
-            user_balance.available_balance -= self.batch_price
+            user_balance.total_debits += 1
+            user_balance.available_balance -= 1
 
             # Create a new transaction for this credit
             user_balance.append(
                 "user_balance_transactions",
                 {
-                    "amount": self.batch_price,
+                    "batch_tokens": 1,
                     "transaction_type": "debit",  # Indicate this is a credit transaction
                 },
             )
