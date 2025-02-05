@@ -34,7 +34,7 @@ def show_delete_message(doc, method):
     if mortality_number_of_birds > 0:
         # Get the batch data using the batch identifier from the form
         batch = doc.batch
-        batch_data = frappe.get_doc('Batch', batch)
+        batch_data = frappe.get_doc('CBF Batch', batch)
 
         if batch_data and batch_data.live_quantity_number_of_birds is not None:
             batch_placed_quantity = batch_data.place_quantity_number_of_birds

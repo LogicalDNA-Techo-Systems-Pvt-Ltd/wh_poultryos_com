@@ -39,7 +39,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Batch",
-   "options": "Batch",
+   "options": "CBF Batch",
    "reqd": 1
   },
   {
@@ -193,7 +193,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-29 16:42:15.270736",
+ "modified": "2025-01-31 13:46:14.830863",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Growing Charges",

@@ -99,7 +99,7 @@ frappe.ui.form.on('Layer Daily Transaction', {
             frappe.call({
                 method: 'frappe.client.get',
                 args: {
-                    doctype: 'Batch',
+                    doctype: 'Layer Batch',
                     name: frm.doc.batch  // Use the batch identifier from the form
                 },
                 callback: function (batch_data) {
@@ -138,7 +138,7 @@ frappe.ui.form.on('Layer Daily Transaction', {
                                         frappe.call({
                                             method: 'frappe.client.set_value',
                                             args: {
-                                                doctype: 'Batch',
+                                                doctype: 'Layer Batch',
                                                 name: frm.doc.batch,
                                                 fieldname: 'live_quantity_number_of_birds',
                                                 value: updated_batch_live_quantity

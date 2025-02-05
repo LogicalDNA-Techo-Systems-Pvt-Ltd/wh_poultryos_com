@@ -19,7 +19,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
             frappe.call({
                 method: 'frappe.client.get',
                 args: {
-                    doctype: 'Batch',
+                    doctype: 'CBF Batch',
                     name: frm.doc.batch // Use the batch identifier from the form
                 },
                 callback: function (batch_data) {
@@ -311,7 +311,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
             frappe.call({
                 method: 'frappe.client.get_value',
                 args: {
-                    doctype: 'Batch',
+                    doctype: 'CBF Batch',
                     fieldname: 'opening_date',
                     filters: { name: frm.doc.batch }
                 },
@@ -369,7 +369,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
             frappe.call({
                 method: 'frappe.client.get',
                 args: {
-                    doctype: 'Batch',
+                    doctype: 'CBF Batch',
                     name: frm.doc.batch  // Use the batch identifier from the form
                 },
                 callback: function (batch_data) {
@@ -408,7 +408,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                                         frappe.call({
                                             method: 'frappe.client.set_value',
                                             args: {
-                                                doctype: 'Batch',
+                                                doctype: 'CBF Batch',
                                                 name: frm.doc.batch,
                                                 fieldname: 'live_quantity_number_of_birds',
                                                 value: updated_batch_live_quantity
@@ -420,7 +420,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                                                     frappe.call({
                                                         method: 'frappe.client.get',
                                                         args: {
-                                                            doctype: 'Batch',
+                                                            doctype: 'CBF Batch',
                                                             name: frm.doc.batch // Use the batch identifier from the form
                                                         },
                                                         callback: function (batch_data) {
@@ -465,7 +465,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                                                                     frappe.call({
                                                                         method: 'frappe.client.set_value',
                                                                         args: {
-                                                                            doctype: 'Batch',
+                                                                            doctype: 'CBF Batch',
                                                                             name: frm.doc.batch,
                                                                             fieldname: {
                                                                                 live_batch_date: formatted_live_batch_date,

@@ -36,8 +36,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Batch",
-   "link_filters": "[[\"Batch\",\"module\",\"=\",\"MDL-24-00001\"]]",
-   "options": "Batch",
+   "options": "Breeder Batch",
    "reqd": 1
   },
   {
@@ -147,7 +146,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-10 11:54:48.160435",
+ "modified": "2025-01-31 13:49:20.115438",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Daily Transaction",

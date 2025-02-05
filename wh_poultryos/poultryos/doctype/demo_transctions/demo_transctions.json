@@ -42,7 +42,7 @@
    "in_list_view": 1,
    "label": "Batch",
    "link_filters": "[[\"Batch\",\"module\",\"=\",\"MDL-25-00012\"]]",
-   "options": "Batch",
+   "options": "CBF Batch",
    "reqd": 1
   },
   {
@@ -180,7 +180,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-29 12:23:04.392599",
+ "modified": "2025-01-31 13:46:14.523577",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Demo Transctions",

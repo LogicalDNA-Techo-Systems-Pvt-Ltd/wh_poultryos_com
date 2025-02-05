@@ -27,12 +27,15 @@ app_license = "mit"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/wh_poultryos/css/wh_poultryos.css"
 # app_include_js = "/assets/wh_poultryos/js/wh_poultryos.js"
-app_include_js = ["/assets/js/session_handler.js"]  # Include your JavaScript file
+app_include_js = [
+    "/assets/wh_poultryos/js/session_handler.js",
+    "/assets/wh_poultryos/js/cashfree.js",
+]  # Include your JavaScript file
 
 
 # include js, css files in header of web template
 # web_include_css = "/assets/wh_poultryos/css/wh_poultryos.css"
-web_include_js = "/assets/wh_poultryos/js/wh_poultryos.js"
+# web_include_js = "/assets/wh_poultryos/js/wh_poultryos.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "wh_poultryos/public/scss/website"
@@ -51,8 +54,8 @@ page_js = {"demo-dashboard": "public/js/demo_dashboard.js"}
 # doctype_list_js = {"Batch": "public/js/batch_list.js"}
 
 doctype_list_js = {
-    "Batch": "public/js/batch_list.js",
-    "Live Batch": "public/js/live_batch_list.js",  # Add the path for the Live Batch list view
+    # "Batch": "public/js/batch_list.js",
+    # "Live Batch": "public/js/live_batch_list.js",  # Add the path for the Live Batch list view
 }
 
 # doctype_list_js = {"Live Batch": "public/js/live_batch_list.js"}

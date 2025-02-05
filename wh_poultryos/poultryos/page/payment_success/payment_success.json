@@ -1,0 +1,18 @@
+{
+ "content": null,
+ "creation": "2025-02-04 12:46:43.811467",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2025-02-04 12:46:43.811467",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "payment-success",
+ "owner": "Administrator",
+ "page_name": "payment-success",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0
+}
