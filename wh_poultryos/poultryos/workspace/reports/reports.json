@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"_m75neZ4w9\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Reports</span>\",\"col\":12}},{\"id\":\"1UPBBy1gxg\",\"type\":\"card\",\"data\":{\"card_name\":\"Daily Transaction\",\"col\":4}},{\"id\":\"1AkFdveTXH\",\"type\":\"card\",\"data\":{\"card_name\":\"Batch Details Report\",\"col\":4}},{\"id\":\"gAseGzABpV\",\"type\":\"card\",\"data\":{\"card_name\":\"Deviation Report\",\"col\":4}},{\"id\":\"XWvdEFNQsJ\",\"type\":\"card\",\"data\":{\"card_name\":\"Stock of Live Bird\",\"col\":4}},{\"id\":\"3_6bQFMr1K\",\"type\":\"card\",\"data\":{\"card_name\":\"Growing Charges Report\",\"col\":4}}]",
+ "content": "[{\"id\":\"_m75neZ4w9\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Reports</span>\",\"col\":12}},{\"id\":\"1UPBBy1gxg\",\"type\":\"card\",\"data\":{\"card_name\":\"Daily Transaction\",\"col\":4}},{\"id\":\"1AkFdveTXH\",\"type\":\"card\",\"data\":{\"card_name\":\"Batch Details Report\",\"col\":4}},{\"id\":\"gAseGzABpV\",\"type\":\"card\",\"data\":{\"card_name\":\"Deviation Report\",\"col\":4}},{\"id\":\"XWvdEFNQsJ\",\"type\":\"card\",\"data\":{\"card_name\":\"Stock of Live Bird\",\"col\":4}},{\"id\":\"3_6bQFMr1K\",\"type\":\"card\",\"data\":{\"card_name\":\"Growing Charges Report\",\"col\":4}},{\"id\":\"qm_Ln4NM8D\",\"type\":\"card\",\"data\":{\"card_name\":\"Sales Invoice Report\",\"col\":4}}]",
  "creation": "2025-01-30 12:29:03.958340",
  "custom_blocks": [],
  "docstatus": 0,
@@ -107,9 +107,28 @@
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Invoice Report",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Sales",
+   "link_count": 0,
+   "link_to": "Sales Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2025-02-03 11:59:55.059955",
+ "modified": "2025-02-06 10:27:18.233157",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Reports",
@@ -119,7 +138,7 @@
  "public": 1,
  "quick_lists": [],
  "roles": [],
- "sequence_id": 6.0,
+ "sequence_id": 8.0,
  "shortcuts": [],
  "title": "Reports"
 }
