@@ -55,7 +55,7 @@ frappe.ui.form.on('Batch Selection', {
     type: function (frm, cdt, cdn) {
         let row = locals[cdt][cdn];
         if (row.batch) {
-            frappe.db.get_value("Batch", row.batch, row.type === "Bird" ? "live_quantity_number_of_birds" : "culls")
+            frappe.db.get_value("CBF Batch", row.batch, row.type === "Bird" ? "live_quantity_number_of_birds" : "culls")
                 .then((r) => {
                     if (r.message) {
                         let instock = r.message[row.type === "Bird" ? "live_quantity_number_of_birds" : "culls"];

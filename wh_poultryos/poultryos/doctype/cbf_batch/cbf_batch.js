@@ -81,7 +81,7 @@ frappe.ui.form.on('CBF Batch', {
         }
 
         // Redirect after successful save
-        frappe.set_route("List", "CBF Batch");
+        frappe.set_route("List", "CBF Daily Transaction");
     }
 
 
