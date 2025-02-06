@@ -1,0 +1,31 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2025-02-06 10:10:08.702251",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2025-02-06 10:24:48.524313",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Sales Report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "select s1.date,s1.party,p1.party_name,p1.party_group,\nb1.type,b1.instock,b1.quantity,b1.rate,s1.total_amount\nfrom `tabCustom Sales Invoice` s1\nleft join `tabBatch Selection` b1 on b1.parent = s1.name\nleft join `tabParty POS` p1 on p1.name = s1.party;",
+ "ref_doctype": "Custom Sales Invoice",
+ "report_name": "Sales Report",
+ "report_type": "Query Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "CBF Farm Owner"
+  }
+ ],
+ "timeout": 0
+}
