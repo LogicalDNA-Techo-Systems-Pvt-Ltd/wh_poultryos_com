@@ -2,39 +2,25 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "format:IRATE-{###}",
- "creation": "2025-01-15 21:36:21.234642",
+ "creation": "2025-02-06 16:30:55.542110",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "item",
   "item_type",
-  "item_code",
   "rate",
   "date"
  ],
  "fields": [
   {
-   "fieldname": "item",
-   "fieldtype": "Link",
-   "label": "Item",
-   "options": "Item Master"
-  },
-  {
-   "fetch_from": "item.item_type",
    "fieldname": "item_type",
-   "fieldtype": "Read Only",
-   "label": "Item Type"
-  },
-  {
-   "fieldname": "item_code",
-   "fieldtype": "Data",
-   "label": "Item Code"
+   "fieldtype": "Select",
+   "label": "Item Type",
+   "options": "Bird\nFeed\nMedicine\nVaccine"
   },
   {
    "fieldname": "rate",
-   "fieldtype": "Float",
-   "label": "Rate",
-   "non_negative": 1
+   "fieldtype": "Int",
+   "label": "Rate"
   },
   {
    "fieldname": "date",
@@ -44,7 +30,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-17 11:15:03.900126",
+ "modified": "2025-02-06 16:32:36.338983",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Item Rate",

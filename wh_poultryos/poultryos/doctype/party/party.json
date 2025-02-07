@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:party_code",
- "creation": "2025-01-15 21:39:52.922159",
+ "creation": "2025-02-06 15:05:57.653911",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -31,7 +31,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-17 11:15:21.572078",
+ "modified": "2025-02-06 15:05:57.653911",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Party",

@@ -19,7 +19,7 @@
    "fieldname": "item_name",
    "fieldtype": "Link",
    "label": "Item Name",
-   "options": "Item Master POS"
+   "options": "Item Master"
   },
   {
    "fieldname": "age_in_days",
@@ -55,7 +55,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-31 14:31:15.567616",
+ "modified": "2025-02-06 14:56:50.754658",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Standard Chart POS",
