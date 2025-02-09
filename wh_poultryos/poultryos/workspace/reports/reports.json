@@ -54,44 +54,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Deviation Report",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "CBF deviation report",
-   "link_count": 0,
-   "link_to": "Deviation Report",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Stock of Live Bird",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "CBF stock of live bird",
-   "link_count": 0,
-   "link_to": "Stock of Live Bird",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Growing Charges Report",
    "link_count": 1,
    "link_type": "DocType",
@@ -111,6 +73,25 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Deviation Report",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "CBF deviation report",
+   "link_count": 0,
+   "link_to": "Dummy Deviation Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Sales Invoice Report",
    "link_count": 1,
    "link_type": "DocType",
@@ -122,13 +103,32 @@
    "is_query_report": 1,
    "label": "Sales",
    "link_count": 0,
-   "link_to": "Sales Report",
+   "link_to": "Dummy Sales Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Stock of Live Bird",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "CBF stock of live bird",
+   "link_count": 0,
+   "link_to": "Dummy Stock of Live Bird",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2025-02-06 10:27:18.233157",
+ "modified": "2025-02-10 00:26:12.336632",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Reports",
