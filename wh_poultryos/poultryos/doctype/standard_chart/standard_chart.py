@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class Standardchart(Document):
+class StandardChart(Document):
 	pass

@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:BTTY-{YY}-{#####}",
+ "autoname": "field:batch_type",
  "creation": "2024-12-04 14:00:24.156648",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -14,16 +14,17 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Batch Type",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-04 15:00:33.265921",
+ "modified": "2025-02-06 12:46:52.333006",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Batch Type",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

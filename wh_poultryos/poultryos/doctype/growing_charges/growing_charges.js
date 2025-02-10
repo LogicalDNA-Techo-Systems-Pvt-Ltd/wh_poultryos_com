@@ -3,6 +3,39 @@
 
 frappe.ui.form.on("Growing Charges", {
 
+    setup: function (frm) {
+        // First, fetch the ID of "Contract" from Batch Type
+        frappe.call({
+            method: "frappe.client.get_list",
+            args: {
+                doctype: "Batch Type", // Fetch all batch types
+                fields: ["name", "batch_type"] // Get Name and ID
+            },
+            callback: function (response) {
+                if (response.message && response.message.length > 0) {
+                    // Find the ID where the name is "Contract"
+                    let contractBatch = response.message.find(bt => bt.batch_type === "Contract");
+
+                    if (contractBatch) {
+                        let contract_id = contractBatch.name; // Retrieve the contract ID
+
+                        // Now, set the query for the Batch field using this ID
+                        frm.set_query("batch", function () {
+                            return {
+                                filters: { batch_type: contract_id } // Apply the contract ID filter
+                            };
+                        });
+
+                        console.log("Contract ID retrieved:", contract_id);
+                    } else {
+                        frappe.msgprint(__('Contract batch type not found.'));
+                    }
+                } else {
+                    frappe.msgprint(__('Could not find Contract ID in Batch Type.'));
+                }
+            }
+        });
+    },
 
     refresh(frm) {
 
@@ -24,7 +57,7 @@ frappe.ui.form.on("Growing Charges", {
             // Calculate the Rearing Charges Payable
             let rearingChargesPayable = (
                 ((totalDeliveredWeight * actualRearingCharges) +
-                (mortalityIncentive + excessBirdIncentive + fcrIncentive + salesIncentive)) -
+                    (mortalityIncentive + excessBirdIncentive + fcrIncentive + salesIncentive)) -
                 (totalMortalityDeduction + fcrDeductions + shortageAmount)
             );
 
@@ -47,6 +80,8 @@ frappe.ui.form.on("Growing Charges", {
             return;
         }
 
+
+
         // Fetch the placement date from the Batch doctype
         frappe.call({
             method: "frappe.client.get",
@@ -58,6 +93,7 @@ frappe.ui.form.on("Growing Charges", {
                 if (response.message) {
                     let placement_date = response.message.opening_date;
                     let live_batch_date = response.message.live_batch_date;
+
                     const live_batch_quantity = parseFloat(response.message.live_quantity_number_of_birds || 0);
                     const rate = response.message.rate;
                     const place_quantity_number_of_birds = response.message.place_quantity_number_of_birds;
@@ -86,6 +122,7 @@ frappe.ui.form.on("Growing Charges", {
 
                                 // Bind the total mortality to the fw_mortality field
                                 frm.set_value("first_week_mortality", total_mortality);
+                                // frm.set_value("total_sale_quantity", total_sale_quantity);
                                 frm.set_value("mortality_percentage", mortality_percent.toFixed(2)); // Limit to 2 decimal places
 
                                 frappe.msgprint(__('First-week mortality calculated successfully.'));
@@ -119,7 +156,24 @@ frappe.ui.form.on("Growing Charges", {
                                 frm.set_value("total_feed_consumed", total_feed_quantity);
                                 frm.set_value("feed_cost", total_feed_cost);
 
+                                // Get delivered weight
+                                const delivered_weight = parseFloat(frm.doc.total_delivered_weight) || 0;
+
+                                if (delivered_weight === 0) {
+                                    frappe.msgprint(__('Total Delivered Weight is zero, cannot calculate FCR.'));
+                                    frm.set_value("fcr", 0);
+                                } else {
+                                    // Calculate FCR
+                                    const fcr = total_feed_cost / delivered_weight;
+
+                                    // Set the calculated FCR in the form
+                                    frm.set_value("fcr", fcr.toFixed(2));
+
+                                    
+                                }
+
                                 frappe.msgprint(__('Feed quantity and cost calculated successfully.'));
+
                             } else {
                                 frappe.msgprint(__('No feed records found.'));
                                 frm.set_value("feed_consumed_quantity", 0);
@@ -127,6 +181,100 @@ frappe.ui.form.on("Growing Charges", {
                             }
                         }
                     });
+
+                    frappe.call({
+                        method: "wh_poultryos.poultryos.doctype.growing_charges.growing_charges.get_delivered_weights",  // Replace with your app name
+                        args: {
+                            batch: frm.doc.batch  // Pass selected batch from form
+                        },
+                        callback: function (response) {
+                            if (response.message) {
+                                console.log("Delivered Weights:", response.message);
+
+                                let total_weight = response.message.reduce((sum, record) =>
+                                    sum + (parseFloat(record.weight) || 0), 0
+                                );
+
+                                // Display the total delivered weight
+                                frappe.msgprint(__('Total Delivered Weight: ') + total_weight);
+                                frm.set_value("total_delivered_weight", total_weight);
+
+                                // Get total sales quantity
+                                const total_sales_quantity = (frm.doc.total_sale_quantity) || 0;
+
+                                if (total_sales_quantity === 0) {
+                                    frappe.msgprint(__('Total Sales Quantity is zero, cannot calculate Average Weight of Birds.'));
+                                    frm.set_value("average_weight_of_birds", 0);
+                                } else {
+                                    // Calculate average weight of birds
+                                    const average_weight_of_birds = total_weight / total_sales_quantity;
+
+                                    // Set the calculated average weight in the form
+                                    frm.set_value("average_weight_of_birds", average_weight_of_birds.toFixed(2));
+
+                                }
+
+
+
+
+                            } else {
+                                frappe.msgprint(__('No records found for the given batch.'));
+                            }
+                        }
+                    });
+
+
+
+                    // frappe.call({
+
+                    //     method: "frappe.client.get_list",
+                    //     args: {
+                    //         doctype: "CBF Daily Transaction",
+                    //         filters: { batch: frm.doc.batch },
+                    //         fields: ["feed_consumed_quantity", "average_bird_weight_in_grams"]
+                    //     },
+                    //     callback: function (response) {
+
+
+                    //         frappe.call({
+                    //             method: "frappe.client.get_list",
+                    //             args: {
+                    //                 doctype: "CBF Daily Transaction",
+                    //                 filters: { batch: frm.doc.batch },
+                    //                 fields: ["feed_consumed_quantity", "average_bird_weight_in_grams"]
+                    //             },
+                    //             callback: function (response) {
+                    //                 if (response.message && response.message.length > 0) {
+                    //                     let total_feed = 0;
+                    //                     let total_weight = 0;
+
+                    //                     response.message.forEach(record => {
+                    //                         total_feed += parseFloat(record.feed_consumed_quantity) || 0;
+                    //                         total_weight += parseFloat(record.average_bird_weight_in_grams) || 0;
+                    //                     });
+
+                    //                     // Convert total weight from grams to kilograms
+                    //                     let total_weight_kg = total_weight / 1000;
+
+                    //                     if (total_weight === 0) {
+                    //                         frappe.msgprint(__('Total weight is zero, cannot calculate FCR.'));
+                    //                         frm.set_value("fcr", 0);
+                    //                     } else {
+                    //                         let fcr = total_feed / total_weight_kg;
+                    //                         frm.set_value("fcr", fcr.toFixed(2)); // Set FCR value
+                    //                         frappe.msgprint(__('FCR calculated successfully: ') + fcr.toFixed(2));
+                    //                     }
+                    //                 } else {
+                    //                     frappe.msgprint(__('No transaction records found for the selected batch.'));
+                    //                     frm.set_value("fcr", 0);
+                    //                 }
+                    //             }
+                    //         });
+                    //     }
+                    // });
+
+
+
 
 
                 }
@@ -163,20 +311,18 @@ frappe.ui.form.on("Growing Charges", {
 
             // Set the calculated value to the `actual_rearing_charge` field
             frm.set_value("actual_rearing_chargekg", actualRearingCharge);
-            frm.set_value("total_sale_quantity", 80);
+            // frm.set_value("total_sale_quantity", 80);
 
             let rearingchargeperkg;
-            rearingchargeperkg = ((totalDeliveredWeight * actualRearingCharge)/(frm.doc.total_sale_quantity)).toFixed(2);
+            rearingchargeperkg = ((totalDeliveredWeight * actualRearingCharge) / (frm.doc.total_sale_quantity)).toFixed(2);
 
-             // Set the calculated value to the `actual_rearing_charge` field
-             frm.set_value("rearing_chargebird", rearingchargeperkg);
+            // Set the calculated value to the `actual_rearing_charge` field
+            frm.set_value("rearing_chargebird", rearingchargeperkg);
         }
     },
 
-    actual_rearing_chargekg: function(frm)
-    {
-        if(frm.doc.actual_rearing_chargekg)
-        {
+    actual_rearing_chargekg: function (frm) {
+        if (frm.doc.actual_rearing_chargekg) {
             frm.set_value("total_rearing_charges", (frm.doc.actual_rearing_chargekg * (frm.doc.total_delivered_weight)).toFixed(2));
         }
     },
@@ -213,10 +359,28 @@ frappe.ui.form.on("Growing Charges", {
                     // Calculate Production Cost
                     const production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (rate * place_quantity_number_of_birds);
                     console.log("", production_cost);
+
                     // Set the calculated production cost in the respective field
                     frm.set_value("production_cost", production_cost.toFixed(2)); // Round to 2 decimal places
 
-                    frm.set_value("total_delivered_weight", parseFloat(2.300).toFixed(3));
+                    // Get total delivered weight
+                    const total_delivered_weight = parseFloat(frm.doc.total_delivered_weight) || 0;
+
+                    if (total_delivered_weight === 0) {
+                        frappe.msgprint(__('Total Delivered Weight is zero, cannot calculate Production Cost per kg.'));
+                        frm.set_value("production_cost_per_kg", 0);
+                    } else {
+                        // Calculate production cost per kg
+                        const production_cost_per_kg = production_cost / total_delivered_weight;
+
+                        // Set values in the form
+                        frm.set_value("production_cost", production_cost.toFixed(2));  // Round to 2 decimal places
+                        frm.set_value("production_costkg", production_cost_per_kg.toFixed(2));
+
+                        console.log("Production Cost per kg:", production_cost_per_kg);
+                        frappe.msgprint(__('Production Cost per kg calculated successfully: ') + production_cost_per_kg.toFixed(2));
+                    }
+
 
                 }
             }

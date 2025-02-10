@@ -49,7 +49,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                 frappe.call({
                     method: 'frappe.client.get_value',
                     args: {
-                        doctype: 'Standard Chart POS',
+                        doctype: 'Standard Chart',
                         filters: {
                             item_name: frm.doc.item_name,   // Match item name
                             age_in_days: frm.doc.batch_age_in_days // Match age in weeks
@@ -116,7 +116,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
         frappe.call({
             method: 'frappe.client.get_list',
             args: {
-                doctype: 'Item Rate POS',
+                doctype: 'Item Rate',
                 filters: {
                     item_type: frm.doc.item_type, // Match the item type
                     date: ['<=', frm.doc.transaction_date] // Fetch rates up to the transaction date

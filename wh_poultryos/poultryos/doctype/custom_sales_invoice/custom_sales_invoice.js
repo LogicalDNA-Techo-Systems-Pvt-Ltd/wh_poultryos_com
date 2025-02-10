@@ -120,6 +120,7 @@ function update_amount(frm, cdt, cdn) {
     row.amount = row.quantity * row.rate;
     frm.refresh_field("batches");
     calculate_total(frm);
+    calculate_total_weight(frm);
 }
 
 // Function to calculate the total amount from child table
@@ -131,4 +132,16 @@ function calculate_total(frm) {
 
     frm.set_value("total_amount", total);
     frm.refresh_field("total_amount");
+}
+
+// Function to calculate the total weight from the child table
+function calculate_total_weight(frm) {
+    let total_weight = 0;
+    
+    frm.doc.batches.forEach(row => {
+        total_weight += row.weight || 0; // Sum up all row weights
+    });
+
+    frm.set_value("total_weight", total_weight);
+    frm.refresh_field("total_weight");
 }

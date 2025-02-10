@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "format:STD-{###}",
- "creation": "2025-01-16 22:18:32.511845",
+ "creation": "2025-02-06 14:59:29.254040",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -18,8 +18,10 @@
   {
    "fieldname": "item_name",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Item Name",
-   "options": "Item Master"
+   "options": "Item Master",
+   "reqd": 1
   },
   {
    "fieldname": "age_in_days",
@@ -37,8 +39,9 @@
    "label": "Feed Consumption"
   },
   {
+   "default": "0",
    "fieldname": "cumulative_feed",
-   "fieldtype": "Float",
+   "fieldtype": "Read Only",
    "label": "Cumulative Feed"
   },
   {
@@ -54,10 +57,10 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-17 11:15:13.089006",
+ "modified": "2025-02-06 16:51:37.446787",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "Standard chart",
+ "name": "Standard Chart",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [

@@ -27,7 +27,6 @@
   "total_sale_quantity",
   "average_weight_of_birds",
   "fcr",
-  "average_selling_rate",
   "actual_rearing_chargekg",
   "rearing_chargebird",
   "total_rearing_charges",
@@ -131,8 +130,9 @@
   },
   {
    "default": "0",
+   "fetch_from": "batch.sale_quantity",
    "fieldname": "total_sale_quantity",
-   "fieldtype": "Float",
+   "fieldtype": "Read Only",
    "label": "Total Sale Quantity"
   },
   {
@@ -146,12 +146,6 @@
    "fieldname": "fcr",
    "fieldtype": "Read Only",
    "label": "FCR"
-  },
-  {
-   "default": "0",
-   "fieldname": "average_selling_rate",
-   "fieldtype": "Read Only",
-   "label": "Average Selling Rate"
   },
   {
    "default": "0",
@@ -193,7 +187,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-31 13:46:14.830863",
+ "modified": "2025-02-07 16:44:01.296717",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Growing Charges",

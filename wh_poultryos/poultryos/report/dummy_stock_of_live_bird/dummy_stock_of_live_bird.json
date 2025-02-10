@@ -1,0 +1,30 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2025-02-09 23:32:39.087228",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2025-02-09 23:32:39.087228",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Dummy Stock of Live Bird",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "CBF Batch",
+ "report_name": "Dummy Stock of Live Bird",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "CBF Farm Owner"
+  }
+ ],
+ "timeout": 0
+}

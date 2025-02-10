@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"Y0543M_6GH\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Master</span>\",\"col\":12}},{\"id\":\"CPDc1dMEHG\",\"type\":\"card\",\"data\":{\"card_name\":\"Location\",\"col\":4}},{\"id\":\"Nt8-h33L0L\",\"type\":\"card\",\"data\":{\"card_name\":\"Shed\",\"col\":4}},{\"id\":\"gqLNuAxJnb\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Master\",\"col\":4}},{\"id\":\"BYK_e8smrR\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Rate\",\"col\":4}},{\"id\":\"M_VQQ3O-Fu\",\"type\":\"card\",\"data\":{\"card_name\":\"Standard Chart\",\"col\":4}},{\"id\":\"g5d-Oa_AST\",\"type\":\"card\",\"data\":{\"card_name\":\"Party\",\"col\":4}}]",
+ "content": "[{\"id\":\"Y0543M_6GH\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Master</span>\",\"col\":12}},{\"id\":\"CPDc1dMEHG\",\"type\":\"card\",\"data\":{\"card_name\":\"Location\",\"col\":4}},{\"id\":\"Nt8-h33L0L\",\"type\":\"card\",\"data\":{\"card_name\":\"Shed\",\"col\":4}},{\"id\":\"p29KAPHLFz\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Master\",\"col\":4}},{\"id\":\"0rcxihOgX2\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Rate\",\"col\":4}},{\"id\":\"L8igXYt5tw\",\"type\":\"card\",\"data\":{\"card_name\":\"Standard Chart\",\"col\":4}},{\"id\":\"K8Tk5N2_W9\",\"type\":\"card\",\"data\":{\"card_name\":\"Party\",\"col\":4}}]",
  "creation": "2025-02-05 23:45:26.674023",
  "custom_blocks": [],
  "docstatus": 0,
@@ -65,7 +65,7 @@
    "is_query_report": 0,
    "label": "Item Master",
    "link_count": 0,
-   "link_to": "Item Master POS",
+   "link_to": "Item Master",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -84,7 +84,7 @@
    "is_query_report": 0,
    "label": "Item Rate",
    "link_count": 0,
-   "link_to": "Item Rate POS",
+   "link_to": "Item Rate",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -103,7 +103,7 @@
    "is_query_report": 0,
    "label": "Standard Chart",
    "link_count": 0,
-   "link_to": "Standard Chart POS",
+   "link_to": "Standard Chart",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -122,13 +122,17 @@
    "is_query_report": 0,
    "label": "Party",
    "link_count": 0,
-   "link_to": "Party POS",
+   "link_to": "Party",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
+<<<<<<< HEAD
  "modified": "2025-02-06 11:02:06.154079",
+=======
+ "modified": "2025-02-06 16:47:55.611377",
+>>>>>>> bf32b7bbcbd08c8c8401401dba70861a42490771
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Master",
