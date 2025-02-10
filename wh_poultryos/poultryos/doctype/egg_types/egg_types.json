@@ -1,0 +1,54 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-10 10:52:10.415972",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "egg_type_title",
+  "egg_type_module"
+ ],
+ "fields": [
+  {
+   "fieldname": "egg_type_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Egg Type Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "egg_type_module",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Egg Type Module",
+   "options": "Module",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-10 11:27:14.888908",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Egg Types",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "egg_type_title"
+}

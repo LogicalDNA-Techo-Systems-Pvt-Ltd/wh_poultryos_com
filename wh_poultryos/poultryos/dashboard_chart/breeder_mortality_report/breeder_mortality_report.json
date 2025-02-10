@@ -7,17 +7,21 @@
  "dynamic_filters_json": "{}",
  "filters_json": "{}",
  "group_by_type": "Count",
- "idx": 1,
+ "idx": 2,
  "is_public": 1,
  "is_standard": 1,
- "modified": "2025-02-05 12:57:37.252689",
+ "modified": "2025-02-06 17:33:02.999516",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Mortality Report",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Breeder Mortality Report",
- "roles": [],
+ "roles": [
+  {
+   "role": "Breeder Farm Owner"
+  }
+ ],
  "time_interval": "Yearly",
  "timeseries": 0,
  "timespan": "Last Year",

@@ -92,25 +92,6 @@ frappe.ui.form.on('CBF Daily Transaction', {
         console.log("Placement date", frm.doc.batch_placed_on);
         console.log(frm.doc.transaction_date);
 
-        function standardizeDate(dateStr) {
-            if (!dateStr) return null;
-
-            // Check if date is already in YYYY-MM-DD format
-            if (dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                return dateStr;
-            }
-
-            // Convert DD-MM-YYYY to YYYY-MM-DD
-            let parts = dateStr.split('-');
-            if (parts.length === 3) {
-                // Ensure year is 4 digits
-                if (parts[2].length === 4) {
-                    return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
-                }
-            }
-            return null;
-        }
-
         // Get and standardize both dates
         let placementDate = standardizeDate(frm.doc.batch_placed_on);
         let transactionDate = standardizeDate(frm.doc.transaction_date);
@@ -245,8 +226,8 @@ frappe.ui.form.on('CBF Daily Transaction', {
 
     validate: function (frm) {
         // Ensure the Transaction Date is not in the future when validating
-        let transaction_date = frm.doc.transaction_date;
-        let batch_placed_on = frm.doc.batch_placed_on;
+        let transaction_date = standardizeDate(frm.doc.transaction_date);
+        let batch_placed_on = standardizeDate(frm.doc.batch_placed_on);
         let mortality_number_of_birds = frm.doc.mortality_number_of_birds;
         let feed_consumed_quantity = frm.doc.feed_consumed_quantity;
         let batch_live_quantity = frm.doc.batch_live_quantity;
@@ -260,6 +241,9 @@ frappe.ui.form.on('CBF Daily Transaction', {
             frappe.validated = false;
             return;
         }
+
+        console.log("transaction_date", transaction_date);
+        console.log("batch_placed_on", batch_placed_on);
 
         // Transaction Date must be >= Batch Placed On
         if (transaction_date < batch_placed_on) {
@@ -515,12 +499,31 @@ frappe.ui.form.on('CBF Daily Transaction', {
                 if (r.message.status === "success") {
                     frappe.msgprint(__('Batch status updated successfully.'));
                 } else {
-                    
+
                 }
             }
         });
-        
+
 
     }
 
 });
+
+function standardizeDate(dateStr) {
+    if (!dateStr) return null;
+
+    // Check if date is already in YYYY-MM-DD format
+    if (dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        return dateStr;
+    }
+
+    // Convert DD-MM-YYYY to YYYY-MM-DD
+    let parts = dateStr.split('-');
+    if (parts.length === 3) {
+        // Ensure year is 4 digits
+        if (parts[2].length === 4) {
+            return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+        }
+    }
+    return null;
+};
