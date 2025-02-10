@@ -1,0 +1,121 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:BRD-DT-{YY}-{#####}",
+ "creation": "2025-02-07 17:47:05.900145",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "batch_details_section",
+  "batch",
+  "batch_placed_on",
+  "batch_age_in_days",
+  "column_break_enib",
+  "batch_placed_quantity",
+  "batch_live_quantity",
+  "transaction_details_section",
+  "collection_date",
+  "type_wise_eggs_collection",
+  "total_eggs_collection_quantity"
+ ],
+ "fields": [
+  {
+   "fieldname": "batch_details_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Details"
+  },
+  {
+   "fieldname": "batch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Batch",
+   "options": "Breeder Batch",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "batch.opening_date",
+   "fieldname": "batch_placed_on",
+   "fieldtype": "Read Only",
+   "label": "Batch Placed On"
+  },
+  {
+   "fetch_from": "batch.batch_age_in_days",
+   "fieldname": "batch_age_in_days",
+   "fieldtype": "Read Only",
+   "label": "Batch Age (In Days)"
+  },
+  {
+   "fieldname": "column_break_enib",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "batch.place_quantity_number_of_birds",
+   "fieldname": "batch_placed_quantity",
+   "fieldtype": "Read Only",
+   "label": "Batch Placed Quantity"
+  },
+  {
+   "fetch_from": "batch.live_quantity_number_of_birds",
+   "fetch_if_empty": 1,
+   "fieldname": "batch_live_quantity",
+   "fieldtype": "Read Only",
+   "label": "Batch Live Quantity"
+  },
+  {
+   "depends_on": "batch",
+   "fieldname": "transaction_details_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Details"
+  },
+  {
+   "fieldname": "collection_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Collection Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type_wise_eggs_collection",
+   "fieldtype": "Table",
+   "label": "Type Wise Eggs Collection",
+   "options": "Layer Type Wise Eggs Collection",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_eggs_collection_quantity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Total Eggs Collection Quantity",
+   "non_negative": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-10 11:21:10.102072",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Layer Eggs Collection",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "batch",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "batch"
+}
