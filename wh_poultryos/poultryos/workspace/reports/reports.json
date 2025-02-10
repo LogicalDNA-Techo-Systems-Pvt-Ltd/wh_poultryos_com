@@ -16,8 +16,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-<<<<<<< HEAD
-=======
    "label": "Daily Transaction",
    "link_count": 1,
    "link_type": "DocType",
@@ -56,7 +54,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
->>>>>>> bf32b7bbcbd08c8c8401401dba70861a42490771
    "label": "Growing Charges Report",
    "link_count": 1,
    "link_type": "DocType",
@@ -207,11 +204,7 @@
    "type": "Link"
   }
  ],
-<<<<<<< HEAD
- "modified": "2025-02-06 12:23:38.764044",
-=======
  "modified": "2025-02-10 00:26:12.336632",
->>>>>>> bf32b7bbcbd08c8c8401401dba70861a42490771
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Reports",
