@@ -23,3 +23,23 @@ def get_delivered_weights(batch):
     )
 
     return delivered_weights
+
+
+import frappe
+
+@frappe.whitelist()
+def get_available_batches():
+    # Get batches that already exist in Growing Charges
+    used_batches = frappe.get_all("Growing Charges", fields=["batch"])
+    used_batch_names = [batch["batch"] for batch in used_batches]
+
+    # Fetch batches that are not used in Growing Charges
+    available_batches = frappe.get_all(
+        "CBF Batch",
+        filters={"name": ["not in", used_batch_names]},
+        fields=["name", "batch_name"]
+    )
+
+    return available_batches
+
+

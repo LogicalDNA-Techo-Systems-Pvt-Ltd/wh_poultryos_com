@@ -39,6 +39,19 @@ frappe.ui.form.on("Growing Charges", {
 
     refresh(frm) {
 
+        frappe.call({
+            method: "wh_poultryos.poultryos.doctype.growing_charges.growing_charges.get_available_batches",
+            callback: function(r) {
+                if (r.message) {
+                    frm.set_query("batch", function() {
+                        return {
+                            filters: [["name", "in", r.message.map(b => b.name)]]
+                        };
+                    });
+                }
+            }
+        });
+
         frm.add_custom_button("Calculate GC", () => {
             // frappe.show_alert("It works")
 
