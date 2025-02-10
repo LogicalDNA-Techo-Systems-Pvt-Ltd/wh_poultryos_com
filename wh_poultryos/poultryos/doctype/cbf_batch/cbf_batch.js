@@ -138,7 +138,7 @@ function showPaymentDialog(amount_needed, batch_count, frm, resolve, reject) {
             {
                 fieldtype: 'HTML',
                 fieldname: 'message_html',
-                options: `<p>You need <strong>${amount_needed}</strong> tokens to create a new CBF Batch.</p>`
+                options: `<p>You need <strong>atleast 1</strong> token to create a new CBF Batch.</p>`
             },
             {
                 label: 'Amount Needed',
