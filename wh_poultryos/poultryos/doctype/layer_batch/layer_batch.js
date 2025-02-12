@@ -118,7 +118,7 @@ function checkTokenBalance(frm, resolve, reject) {
                 callback: function (r) {
                     const user_balance = r.message?.available_balance || 0;
 
-                    if (user_balance < layer_batch_cost) {
+                    if (user_balance < 1) {
                         // Show payment dialog if insufficient balance
                         showPaymentDialog(layer_batch_cost, 1, frm, resolve, reject);
                         if (reject) reject(new Error('Insufficient tokens'));

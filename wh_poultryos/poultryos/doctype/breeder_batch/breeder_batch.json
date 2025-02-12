@@ -179,8 +179,19 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2025-01-31 14:21:40.502645",
+ "links": [
+  {
+   "group": "Transaction",
+   "link_doctype": "Breeder Daily Transaction",
+   "link_fieldname": "batch"
+  },
+  {
+   "group": "Transaction",
+   "link_doctype": "Breeder Eggs Collection",
+   "link_fieldname": "batch"
+  }
+ ],
+ "modified": "2025-02-11 17:36:07.749300",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Batch",

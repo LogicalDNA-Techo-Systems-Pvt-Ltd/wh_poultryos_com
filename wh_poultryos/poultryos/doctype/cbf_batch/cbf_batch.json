@@ -193,8 +193,14 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2025-02-07 15:45:56.810504",
+ "links": [
+  {
+   "group": "Transaction",
+   "link_doctype": "CBF Daily Transaction",
+   "link_fieldname": "batch"
+  }
+ ],
+ "modified": "2025-02-11 16:10:29.938773",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "CBF Batch",
