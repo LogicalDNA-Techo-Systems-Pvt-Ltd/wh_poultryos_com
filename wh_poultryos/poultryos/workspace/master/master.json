@@ -1,144 +1,163 @@
 {
-    "charts": [],
-    "content": "[{\"id\":\"Y0543M_6GH\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Master</span>\",\"col\":12}},{\"id\":\"CPDc1dMEHG\",\"type\":\"card\",\"data\":{\"card_name\":\"Location\",\"col\":4}},{\"id\":\"Nt8-h33L0L\",\"type\":\"card\",\"data\":{\"card_name\":\"Shed\",\"col\":4}},{\"id\":\"p29KAPHLFz\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Master\",\"col\":4}},{\"id\":\"0rcxihOgX2\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Rate\",\"col\":4}},{\"id\":\"L8igXYt5tw\",\"type\":\"card\",\"data\":{\"card_name\":\"Standard Chart\",\"col\":4}},{\"id\":\"K8Tk5N2_W9\",\"type\":\"card\",\"data\":{\"card_name\":\"Party\",\"col\":4}}]",
-    "creation": "2025-02-05 23:45:26.674023",
-    "custom_blocks": [],
-    "docstatus": 0,
-    "doctype": "Workspace",
-    "for_user": "",
-    "hide_custom": 0,
-    "icon": "projects",
-    "idx": 0,
-    "indicator_color": "",
-    "is_hidden": 0,
-    "label": "Master",
-    "links": [
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Location",
-            "link_count": 1,
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Card Break"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Location",
-            "link_count": 0,
-            "link_to": "Location",
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Link"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Shed",
-            "link_count": 1,
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Card Break"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Shed",
-            "link_count": 0,
-            "link_to": "Shed",
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Link"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Item Master",
-            "link_count": 1,
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Card Break"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Item Master",
-            "link_count": 0,
-            "link_to": "Item Master",
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Link"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Item Rate",
-            "link_count": 1,
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Card Break"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Item Rate",
-            "link_count": 0,
-            "link_to": "Item Rate",
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Link"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Standard Chart",
-            "link_count": 1,
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Card Break"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Standard Chart",
-            "link_count": 0,
-            "link_to": "Standard Chart",
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Link"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Party",
-            "link_count": 1,
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Card Break"
-        },
-        {
-            "hidden": 0,
-            "is_query_report": 0,
-            "label": "Party",
-            "link_count": 0,
-            "link_to": "Party",
-            "link_type": "DocType",
-            "onboard": 0,
-            "type": "Link"
-        }
-    ],
-    "modified": "2025-02-06 11:02:06.154079",
-    "modified_by": "Administrator",
-    "module": "PoultryOS",
-    "name": "Master",
-    "number_cards": [],
-    "owner": "Administrator",
-    "parent_page": "CBF",
-    "public": 1,
-    "quick_lists": [],
-    "roles": [],
-    "sequence_id": 5.0,
-    "shortcuts": [],
-    "title": "Master"
+ "charts": [],
+ "content": "[{\"id\":\"Y0543M_6GH\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Master</span>\",\"col\":12}},{\"id\":\"CPDc1dMEHG\",\"type\":\"card\",\"data\":{\"card_name\":\"Location\",\"col\":4}},{\"id\":\"Nt8-h33L0L\",\"type\":\"card\",\"data\":{\"card_name\":\"Shed\",\"col\":4}},{\"id\":\"p29KAPHLFz\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Master\",\"col\":4}},{\"id\":\"0rcxihOgX2\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Rate\",\"col\":4}},{\"id\":\"L8igXYt5tw\",\"type\":\"card\",\"data\":{\"card_name\":\"Standard Chart\",\"col\":4}},{\"id\":\"K8Tk5N2_W9\",\"type\":\"card\",\"data\":{\"card_name\":\"Party\",\"col\":4}},{\"id\":\"WuwtTumk3L\",\"type\":\"card\",\"data\":{\"card_name\":\"Branch\",\"col\":4}}]",
+ "creation": "2025-02-05 23:45:26.674023",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "right",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Master",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Location",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Location",
+   "link_count": 0,
+   "link_to": "Location",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Shed",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Shed",
+   "link_count": 0,
+   "link_to": "Shed",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Master",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Master",
+   "link_count": 0,
+   "link_to": "Item Master",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Rate",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Rate",
+   "link_count": 0,
+   "link_to": "Item Rate",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Standard Chart",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Standard Chart",
+   "link_count": 0,
+   "link_to": "Standard Chart",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Party",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Party",
+   "link_count": 0,
+   "link_to": "Party",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Branch",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Branch",
+   "link_count": 0,
+   "link_to": "Branch",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-02-13 11:11:22.812264",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Master",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "CBF",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 6.0,
+ "shortcuts": [],
+ "title": "Master"
 }
