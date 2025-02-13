@@ -83,6 +83,7 @@
    "reqd": 1
   },
   {
+   "default": "0",
    "fieldname": "total_eggs_collection_quantity",
    "fieldtype": "Int",
    "in_list_view": 1,
@@ -92,7 +93,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-10 11:21:10.102072",
+ "modified": "2025-02-12 12:20:04.848723",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Layer Eggs Collection",
