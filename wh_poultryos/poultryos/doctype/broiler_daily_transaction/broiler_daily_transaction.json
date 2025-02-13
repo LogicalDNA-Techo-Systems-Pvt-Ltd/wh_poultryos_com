@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:Broiler-DT-{YY}-{#####}",
+ "autoname": "format:CBF-DT-{YY}-{#####}",
  "creation": "2024-12-06 10:37:02.815796",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -10,7 +10,6 @@
   "batch",
   "batch_placed_on",
   "batch_age_in_days",
-  "batch_catergory",
   "column_break_enib",
   "batch_placed_quantity",
   "batch_live_quantity",
@@ -179,12 +178,6 @@
    "label": "Mortality Cost"
   },
   {
-   "fetch_from": "batch.batch_category",
-   "fieldname": "batch_catergory",
-   "fieldtype": "Read Only",
-   "label": "Batch Catergory"
-  },
-  {
    "default": "0",
    "fieldname": "ready_for_sale",
    "fieldtype": "Check",
@@ -193,7 +186,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-13 11:46:21.320640",
+ "modified": "2025-02-13 17:14:30.762713",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Daily Transaction",

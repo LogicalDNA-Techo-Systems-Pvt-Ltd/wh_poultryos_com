@@ -11,7 +11,7 @@
  "idx": 0,
  "indicator_color": "",
  "is_hidden": 0,
- "label": "Reports",
+ "label": "Broiler Reports",
  "links": [
   {
    "hidden": 0,
@@ -204,10 +204,10 @@
    "type": "Link"
   }
  ],
- "modified": "2025-02-13 11:58:27.968739",
+ "modified": "2025-02-13 17:05:25.111601",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "Reports",
+ "name": "Broiler Reports",
  "number_cards": [],
  "owner": "Administrator",
  "parent_page": "BROILER",
@@ -216,5 +216,5 @@
  "roles": [],
  "sequence_id": 7.0,
  "shortcuts": [],
- "title": "Reports"
+ "title": "Broiler Reports"
 }

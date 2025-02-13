@@ -7,11 +7,11 @@
  "doctype": "Workspace",
  "for_user": "",
  "hide_custom": 0,
- "icon": "right",
+ "icon": "sell",
  "idx": 0,
  "indicator_color": "",
  "is_hidden": 0,
- "label": "Transactions",
+ "label": "Broiler Transactions",
  "links": [
   {
    "hidden": 0,
@@ -90,10 +90,10 @@
    "type": "Link"
   }
  ],
- "modified": "2025-02-13 11:58:27.770289",
+ "modified": "2025-02-13 17:05:15.803455",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "Transactions",
+ "name": "Broiler Transactions",
  "number_cards": [],
  "owner": "Administrator",
  "parent_page": "BROILER",
@@ -102,5 +102,5 @@
  "roles": [],
  "sequence_id": 6.0,
  "shortcuts": [],
- "title": "Transactions"
+ "title": "Broiler Transactions"
 }

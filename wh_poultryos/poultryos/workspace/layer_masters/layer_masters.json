@@ -11,12 +11,12 @@
  "idx": 0,
  "indicator_color": "",
  "is_hidden": 0,
- "label": "Layer Master",
+ "label": "Layer Masters",
  "links": [],
- "modified": "2025-02-11 14:47:09.767578",
+ "modified": "2025-02-13 17:04:39.280004",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "Layer Master",
+ "name": "Layer Masters",
  "number_cards": [],
  "owner": "Administrator",
  "parent_page": "LAYER",
@@ -25,5 +25,5 @@
  "roles": [],
  "sequence_id": 23.0,
  "shortcuts": [],
- "title": "Layer Master"
+ "title": "Layer Masters"
 }

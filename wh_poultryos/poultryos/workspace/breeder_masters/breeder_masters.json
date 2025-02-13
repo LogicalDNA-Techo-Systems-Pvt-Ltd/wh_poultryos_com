@@ -11,12 +11,12 @@
  "idx": 0,
  "indicator_color": "",
  "is_hidden": 0,
- "label": "Breeder Master",
+ "label": "Breeder Masters",
  "links": [],
- "modified": "2025-02-11 14:46:44.704784",
+ "modified": "2025-02-13 17:04:24.687777",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "Breeder Master",
+ "name": "Breeder Masters",
  "number_cards": [],
  "owner": "Administrator",
  "parent_page": "BREEDER",
@@ -25,5 +25,5 @@
  "roles": [],
  "sequence_id": 26.0,
  "shortcuts": [],
- "title": "Breeder Master"
+ "title": "Breeder Masters"
 }

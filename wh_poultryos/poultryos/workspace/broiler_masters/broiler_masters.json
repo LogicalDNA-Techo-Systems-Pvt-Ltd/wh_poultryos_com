@@ -11,7 +11,7 @@
  "idx": 0,
  "indicator_color": "",
  "is_hidden": 0,
- "label": "Master",
+ "label": "Broiler Masters",
  "links": [
   {
    "hidden": 0,
@@ -29,7 +29,7 @@
    "link_count": 0,
    "link_to": "Location",
    "link_type": "DocType",
-   "onboard": 0,
+   "onboard": 1,
    "type": "Link"
   },
   {
@@ -48,7 +48,7 @@
    "link_count": 0,
    "link_to": "Shed",
    "link_type": "DocType",
-   "onboard": 0,
+   "onboard": 1,
    "type": "Link"
   },
   {
@@ -65,9 +65,9 @@
    "is_query_report": 0,
    "label": "Item Master",
    "link_count": 0,
-   "link_to": "Item Master POS",
+   "link_to": "Item Master",
    "link_type": "DocType",
-   "onboard": 0,
+   "onboard": 1,
    "type": "Link"
   },
   {
@@ -84,9 +84,9 @@
    "is_query_report": 0,
    "label": "Item Rate",
    "link_count": 0,
-   "link_to": "Item Rate POS",
+   "link_to": "Item Rate",
    "link_type": "DocType",
-   "onboard": 0,
+   "onboard": 1,
    "type": "Link"
   },
   {
@@ -103,9 +103,9 @@
    "is_query_report": 0,
    "label": "Standard Chart",
    "link_count": 0,
-   "link_to": "Standard Chart POS",
+   "link_to": "Standard Chart",
    "link_type": "DocType",
-   "onboard": 0,
+   "onboard": 1,
    "type": "Link"
   },
   {
@@ -122,16 +122,16 @@
    "is_query_report": 0,
    "label": "Party",
    "link_count": 0,
-   "link_to": "Party POS",
+   "link_to": "Party",
    "link_type": "DocType",
-   "onboard": 0,
+   "onboard": 1,
    "type": "Link"
   }
  ],
- "modified": "2025-02-13 11:58:26.939535",
+ "modified": "2025-02-13 17:44:25.641046",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "Master",
+ "name": "Broiler Masters",
  "number_cards": [],
  "owner": "Administrator",
  "parent_page": "BROILER",
@@ -140,5 +140,5 @@
  "roles": [],
  "sequence_id": 5.0,
  "shortcuts": [],
- "title": "Master"
+ "title": "Broiler Masters"
 }
