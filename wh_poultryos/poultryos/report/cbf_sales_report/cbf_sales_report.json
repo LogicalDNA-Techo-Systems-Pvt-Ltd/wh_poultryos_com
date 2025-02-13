@@ -12,18 +12,18 @@
  "modified": "2025-02-10 17:36:16.680086",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Sales Report",
+ "name": "Broiler Sales Report",
  "owner": "Administrator",
  "prepared_report": 0,
  "ref_doctype": "Custom Sales Invoice",
- "report_name": "CBF Sales Report",
+ "report_name": "Broiler Sales Report",
  "report_type": "Script Report",
  "roles": [
   {
    "role": "System Manager"
   },
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   }
  ],
  "timeout": 0

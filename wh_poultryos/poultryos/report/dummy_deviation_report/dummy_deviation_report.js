@@ -21,7 +21,7 @@ frappe.query_reports["Dummy Deviation Report"] = {
             "fieldname": "batch",
             "label": __("Batch"),
             "fieldtype": "Link",
-            "options": "CBF Batch",
+            "options": "Broiler Batch",
             "reqd": 1
         }
     ]

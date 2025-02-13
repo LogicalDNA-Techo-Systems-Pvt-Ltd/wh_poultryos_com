@@ -17,6 +17,20 @@ frappe.ui.form.on('Breeder Batch', {
         if (frm.is_new()) {
             checkTokenBalance(frm);
         }
+
+        var startDate = new Date(2017, 11);
+
+        new Chart("#activity", {
+            type: 'heatmap',
+            height: 115,
+            data: {
+                1520380800: 1,
+                1520467200: 4,
+                1520553600: 2
+            },
+            discreteDomains: 1,
+            start: startDate,
+        });
     },
 
     module: function (frm) {

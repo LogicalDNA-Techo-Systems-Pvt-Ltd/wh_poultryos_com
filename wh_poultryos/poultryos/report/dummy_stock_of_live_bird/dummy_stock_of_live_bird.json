@@ -15,7 +15,7 @@
  "name": "Dummy Stock of Live Bird",
  "owner": "Administrator",
  "prepared_report": 0,
- "ref_doctype": "CBF Batch",
+ "ref_doctype": "Broiler Batch",
  "report_name": "Dummy Stock of Live Bird",
  "report_type": "Script Report",
  "roles": [
@@ -23,7 +23,7 @@
    "role": "System Manager"
   },
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   }
  ],
  "timeout": 0

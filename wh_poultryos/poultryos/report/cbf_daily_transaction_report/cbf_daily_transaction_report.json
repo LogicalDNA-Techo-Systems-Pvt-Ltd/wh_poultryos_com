@@ -12,18 +12,18 @@
  "modified": "2025-02-10 11:34:09.740340",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Daily Transaction Report",
+ "name": "Broiler Daily Transaction Report",
  "owner": "Administrator",
  "prepared_report": 0,
- "ref_doctype": "CBF Daily Transaction",
- "report_name": "CBF Daily Transaction Report",
+ "ref_doctype": "Broiler Daily Transaction",
+ "report_name": "Broiler Daily Transaction Report",
  "report_type": "Script Report",
  "roles": [
   {
    "role": "System Manager"
   },
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   }
  ],
  "timeout": 0

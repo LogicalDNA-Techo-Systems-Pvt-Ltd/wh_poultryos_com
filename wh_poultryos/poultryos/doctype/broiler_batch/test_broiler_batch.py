@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestCBFDailyTransaction(FrappeTestCase):
+class TestBroilerBatch(FrappeTestCase):
 	pass

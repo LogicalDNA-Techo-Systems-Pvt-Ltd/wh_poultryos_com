@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:CBF-DT-{YY}-{#####}",
+ "autoname": "format:Broiler-DT-{YY}-{#####}",
  "creation": "2024-12-06 10:37:02.815796",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -43,7 +43,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Batch",
-   "options": "CBF Batch",
+   "options": "Broiler Batch",
    "reqd": 1
   },
   {
@@ -193,10 +193,10 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 14:56:51.183891",
+ "modified": "2025-02-13 11:46:21.320640",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Daily Transaction",
+ "name": "Broiler Daily Transaction",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [

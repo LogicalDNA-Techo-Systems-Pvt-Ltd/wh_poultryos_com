@@ -1,7 +1,7 @@
 // Copyright (c) 2025, LogicalDNA Techno Systems Pvt Ltd and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('CBF Batch', {
+frappe.ui.form.on('Broiler Batch', {
     onload: function (frm) {
         // Fetch organization name
         frappe.call({
@@ -58,12 +58,12 @@ frappe.ui.form.on('CBF Batch', {
 
     before_save: function (frm) {
         if (frm.is_new()) {
-            console.log("New CBF Batch Detected in before_save");
+            console.log("New Broiler Batch Detected in before_save");
             return new Promise((resolve, reject) => {
                 checkTokenBalance(frm, resolve, reject);
             });
         } else {
-            console.log("Existing CBF Batch Modified: No Count Change Needed");
+            console.log("Existing Broiler Batch Modified: No Count Change Needed");
         }
     },
 
@@ -71,7 +71,7 @@ frappe.ui.form.on('CBF Batch', {
         if (!validateMandatoryFields(frm)) {
             return;
         }
-        frappe.set_route("List", "CBF Batch");
+        frappe.set_route("List", "Broiler Batch");
     }
 });
 
@@ -97,15 +97,15 @@ function validateMandatoryFields(frm) {
 function checkTokenBalance(frm, resolve, reject) {
     const user_id = frappe.session.user;
 
-    // Fetch CBF Batch cost from Batch Settings
+    // Fetch Broiler Batch cost from Batch Settings
     frappe.call({
         method: 'frappe.client.get_value',
         args: {
             doctype: 'Batch Settings',
-            fieldname: 'cbf_batch_cost'
+            fieldname: 'broiler_batch_cost'
         },
         callback: function (r) {
-            const cbf_batch_cost = r.message.cbf_batch_cost;
+            const broiler_batch_cost = r.message.broiler_batch_cost;
 
             // Fetch user's token balance
             frappe.call({
@@ -120,7 +120,7 @@ function checkTokenBalance(frm, resolve, reject) {
 
                     if (user_balance < 1) {
                         // Show payment dialog if insufficient balance
-                        showPaymentDialog(cbf_batch_cost, 1, frm, resolve, reject);
+                        showPaymentDialog(broiler_batch_cost, 1, frm, resolve, reject);
                         if (reject) reject(new Error('Insufficient tokens'));
                     } else if (resolve) {
                         resolve();
@@ -138,7 +138,7 @@ function showPaymentDialog(amount_needed, batch_count, frm, resolve, reject) {
             {
                 fieldtype: 'HTML',
                 fieldname: 'message_html',
-                options: `<p>You need <strong>atleast 1</strong> token to create a new CBF Batch.</p>`
+                options: `<p>You need <strong>atleast 1</strong> token to create a new Broiler Batch.</p>`
             },
             {
                 label: 'Amount Needed',
@@ -181,7 +181,7 @@ function redirectToPayment(total_amount, batch_count, frm) {
             let checkoutOptions = {
                 paymentSessionId: response.message.payment_session_id,
                 redirectTarget: "_self",
-                returnUrl: base_url + "/app/cbf-batch/new-cbf-batch",
+                returnUrl: base_url + "/app/broiler-batch/new-broiler-batch",
             };
 
             cashfree.checkout(checkoutOptions).then(function (result) {

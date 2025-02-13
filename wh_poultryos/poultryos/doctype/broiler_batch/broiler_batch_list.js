@@ -1,18 +1,18 @@
-frappe.listview_settings['CBF Batch'] = {
+frappe.listview_settings['Broiler Batch'] = {
     primary_action() {
         // Get the current logged-in user's ID
         var user_id = frappe.session.user;
 
-        // Fetch CBF Batch cost from Batch Settings
+        // Fetch Broiler Batch cost from Batch Settings
         frappe.call({
             method: 'frappe.client.get_value',
             args: {
                 doctype: 'Batch Settings',
-                fieldname: 'cbf_batch_cost'
+                fieldname: 'broiler_batch_cost'
             },
             callback: function (response) {
-                var cbf_batch_cost = response.message.cbf_batch_cost;
-                console.log("cbf_batch_cost", cbf_batch_cost);
+                var broiler_batch_cost = response.message.broiler_batch_cost;
+                console.log("broiler_batch_cost", broiler_batch_cost);
 
                 // Fetch the current token balance of the user
                 frappe.call({
@@ -31,11 +31,11 @@ frappe.listview_settings['CBF Batch'] = {
 
                         // Check if the user has sufficient balance
                         if (user_balance > 0) {
-                            // Sufficient balance, redirect to CBF Batch creation page
-                            frappe.set_route('Form', 'CBF Batch', 'new-cbf-batch');
+                            // Sufficient balance, redirect to Broiler Batch creation page
+                            frappe.set_route('Form', 'Broiler Batch', 'new-broiler-batch');
                         } else {
                             // Insufficient balance, show dialog to purchase tokens
-                            let amount_needed = cbf_batch_cost;
+                            let amount_needed = broiler_batch_cost;
                             console.log("amount_needed", amount_needed);
                             showPaymentDialog(amount_needed);
                         }
@@ -54,7 +54,7 @@ function showPaymentDialog(amount_needed) {
             {
                 label: 'You need to purchase more tokens.',
                 fieldtype: 'HTML',
-                options: `<p>You need more tokens to proceed with creating the CBF Batch.</p>`
+                options: `<p>You need more tokens to proceed with creating the Broiler Batch.</p>`
             },
             {
                 label: 'Number of Batches',
@@ -72,7 +72,7 @@ function showPaymentDialog(amount_needed) {
 
                     // Update the HTML message
                     dialog.set_value('message_html',
-                        `<p>You need <strong>${total_amount}</strong> tokens to proceed with creating ${batch_count} CBF Batch${batch_count > 1 ? 'es' : ''}.</p>`
+                        `<p>You need <strong>${total_amount}</strong> tokens to proceed with creating ${batch_count} Broiler Batch${batch_count > 1 ? 'es' : ''}.</p>`
                     );
                 }
             },

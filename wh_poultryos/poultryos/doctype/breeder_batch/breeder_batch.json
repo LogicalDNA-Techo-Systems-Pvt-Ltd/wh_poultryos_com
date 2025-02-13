@@ -8,6 +8,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "section_break_ymub",
   "batch_name",
   "farmer_name",
   "location",
@@ -176,6 +177,10 @@
    "fieldtype": "Read Only",
    "hidden": 1,
    "label": "Org Name"
+  },
+  {
+   "fieldname": "section_break_ymub",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -191,7 +196,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-11 17:36:07.749300",
+ "modified": "2025-02-12 17:51:07.338219",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Batch",

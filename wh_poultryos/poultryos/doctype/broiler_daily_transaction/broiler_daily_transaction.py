@@ -3,21 +3,21 @@
 import frappe
 from frappe.model.document import Document
 
-class CBFDailyTransaction(Document):
+class BroilerDailyTransaction(Document):
     pass
 
 @frappe.whitelist()
 def update_batch_status(batch):
     if batch:  # Use the correct parameter name
         # Check the current status of the batch
-        batch_status = frappe.db.get_value('CBF Batch', batch, 'batch_status')
+        batch_status = frappe.db.get_value('Broiler Batch', batch, 'batch_status')
         
         frappe.logger().info(f"Triggered update_batch_status for batch: {batch}")
         frappe.logger().info(f"Batch status before update: {batch_status}")
 
         # Update status ONLY if it's still 'New'
         if batch_status == "New":
-            frappe.db.set_value('CBF Batch', batch, 'batch_status', 'Batch Started')
+            frappe.db.set_value('Broiler Batch', batch, 'batch_status', 'Batch Started')
             frappe.db.commit()
             
             return {"status": "success", "message": f"Batch {batch} updated successfully"}
@@ -34,7 +34,7 @@ def show_delete_message(doc, method):
     if mortality_number_of_birds > 0:
         # Get the batch data using the batch identifier from the form
         batch = doc.batch
-        batch_data = frappe.get_doc('CBF Batch', batch)
+        batch_data = frappe.get_doc('Broiler Batch', batch)
 
         if batch_data and batch_data.live_quantity_number_of_birds is not None:
             batch_placed_quantity = batch_data.place_quantity_number_of_birds
@@ -42,7 +42,7 @@ def show_delete_message(doc, method):
 
             # Fetch all transactions related to the batch to calculate total mortality
             transactions = frappe.get_all(
-                'CBF Daily Transaction',
+                'Broiler Daily Transaction',
                 filters={'batch': batch},
                 fields=['mortality_number_of_birds'],
                 order_by='transaction_date asc'  # Order by date (ascending)

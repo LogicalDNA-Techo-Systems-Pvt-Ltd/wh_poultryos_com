@@ -1,0 +1,21 @@
+{
+ "cards": [],
+ "charts": [
+  {
+   "chart": "Breeder DT HeatMap",
+   "width": "Full"
+  }
+ ],
+ "creation": "2025-02-11 15:25:38.321344",
+ "dashboard_name": "Test Demo",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 1,
+ "is_standard": 1,
+ "modified": "2025-02-12 18:23:31.001337",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Test Demo",
+ "owner": "Administrator"
+}

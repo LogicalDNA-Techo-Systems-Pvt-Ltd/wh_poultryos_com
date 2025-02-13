@@ -4,7 +4,7 @@ from frappe.utils import escape_html
 
 # Convert MODULE_ROLE_MAPPING keys to lowercase
 MODULE_ROLE_MAPPING = {
-    "cbf": ["CBF Farm Owner"],
+    "broiler": ["Broiler Farm Owner"],
     "layer": ["Layer Farm Owner"],
     "breeder": ["Breeder Farm Owner"],
     "hatchery": ["Hatchery Farm Owner"],
@@ -102,7 +102,7 @@ def setup_organization():
         redirect_url = "/app/dashboard"  # Default redirect
         if len(selected_modules) == 1:
             module_pages = {
-                "cbf": "/app/cbf",
+                "broiler": "/app/broiler",
                 "layer": "/app/layer",
                 "breeder": "/app/breeder",
                 "hatchery": "/app/hatchery",

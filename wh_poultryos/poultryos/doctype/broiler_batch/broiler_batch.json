@@ -8,30 +8,40 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "batch_information_section",
   "batch_name",
-  "farmer_name",
-  "location",
-  "shed",
   "opening_date",
-  "live_batch_date",
-  "batch_age_in_days",
-  "breed_name",
-  "place_quantity_number_of_birds",
-  "live_quantity_number_of_birds",
-  "batch_category",
+  "farmer_name",
   "column_break_njbw",
   "batch_type",
   "module",
+  "breed_name",
+  "quantity_and_age_information_section",
+  "batch_age_in_days",
+  "place_quantity_number_of_birds",
+  "live_quantity_number_of_birds",
+  "column_break_pfmw",
   "mortality",
   "culls",
+  "financial_information_section",
   "rate",
   "amount",
+  "column_break_brdb",
   "biological_value",
   "bird_cost",
+  "location_and_shed_information_section",
+  "location",
+  "column_break_ogte",
+  "shed",
+  "transaction_related_information_section",
   "sale_quantity",
+  "organizational_and_status_information_section",
   "org_name",
   "batch_status",
-  "ready_for_sale"
+  "column_break_dmdn",
+  "ready_for_sale",
+  "miscellaneous_information_section",
+  "live_batch_date"
  ],
  "fields": [
   {
@@ -75,7 +85,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Module",
-   "link_filters": "[[\"Module\",\"module_name\",\"=\",\"CBF\"]]",
+   "link_filters": "[[\"Module\",\"module_name\",\"=\",\"BROILER\"]]",
    "options": "Module",
    "reqd": 1
   },
@@ -168,12 +178,6 @@
    "options": "Location"
   },
   {
-   "default": "Demo Batch",
-   "fieldname": "batch_category",
-   "fieldtype": "Read Only",
-   "label": "Batch Category"
-  },
-  {
    "fieldname": "org_name",
    "fieldtype": "Read Only",
    "hidden": 1,
@@ -190,20 +194,71 @@
    "fieldname": "ready_for_sale",
    "fieldtype": "Read Only",
    "label": "Ready for sale"
+  },
+  {
+   "fieldname": "batch_information_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Information"
+  },
+  {
+   "fieldname": "quantity_and_age_information_section",
+   "fieldtype": "Section Break",
+   "label": "Quantity and Age Information"
+  },
+  {
+   "fieldname": "column_break_pfmw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "financial_information_section",
+   "fieldtype": "Section Break",
+   "label": "Financial Information"
+  },
+  {
+   "fieldname": "column_break_brdb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location_and_shed_information_section",
+   "fieldtype": "Section Break",
+   "label": "Location and Shed Information"
+  },
+  {
+   "fieldname": "column_break_ogte",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transaction_related_information_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Related Information"
+  },
+  {
+   "fieldname": "organizational_and_status_information_section",
+   "fieldtype": "Section Break",
+   "label": "Organizational and Status Information"
+  },
+  {
+   "fieldname": "column_break_dmdn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "miscellaneous_information_section",
+   "fieldtype": "Section Break",
+   "label": "Miscellaneous Information"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [
   {
    "group": "Transaction",
-   "link_doctype": "CBF Daily Transaction",
+   "link_doctype": "Broiler Daily Transaction",
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-11 16:10:29.938773",
+ "modified": "2025-02-13 13:09:16.284024",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Batch",
+ "name": "Broiler Batch",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [

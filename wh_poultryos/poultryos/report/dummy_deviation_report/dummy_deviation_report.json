@@ -15,7 +15,7 @@
  "name": "Dummy Deviation Report",
  "owner": "Administrator",
  "prepared_report": 0,
- "ref_doctype": "CBF Daily Transaction",
+ "ref_doctype": "Broiler Daily Transaction",
  "report_name": "Dummy Deviation Report",
  "report_type": "Script Report",
  "roles": [
@@ -23,7 +23,7 @@
    "role": "Administrator"
   },
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   }
  ],
  "timeout": 0

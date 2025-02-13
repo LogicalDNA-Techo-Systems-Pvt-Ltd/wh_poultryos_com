@@ -1,7 +1,7 @@
 // Copyright (c) 2025, LogicalDNA Techno Systems Pvt Ltd and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["CBF Daily Transaction Report"] = {
+frappe.query_reports["Broiler Daily Transaction Report"] = {
 	"filters": [
 
 		{
@@ -22,7 +22,7 @@ frappe.query_reports["CBF Daily Transaction Report"] = {
             "fieldname": "Batch",
             "label": __("Batch"),
             "fieldtype": "Link",
-            "options": "CBF Batch",
+            "options": "Broiler Batch",
             "reqd": 0
         }
 	]

@@ -12,18 +12,18 @@
  "modified": "2025-02-10 12:01:20.041997",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Growing Charges",
+ "name": "Broiler Growing Charges",
  "owner": "Administrator",
  "prepared_report": 0,
  "ref_doctype": "Growing Charges",
- "report_name": "CBF Growing Charges",
+ "report_name": "Broiler Growing Charges",
  "report_type": "Script Report",
  "roles": [
   {
    "role": "System Manager"
   },
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   }
  ],
  "timeout": 0

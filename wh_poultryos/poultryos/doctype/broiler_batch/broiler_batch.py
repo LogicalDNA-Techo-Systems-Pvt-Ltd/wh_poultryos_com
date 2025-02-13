@@ -5,7 +5,7 @@ import frappe
 from frappe.model.document import Document
 
 
-class CBFBatch(Document):
+class BroilerBatch(Document):
     def before_insert(self):
         """Validate user balance before allowing batch creation"""
         self.user = frappe.session.user
@@ -28,10 +28,10 @@ class CBFBatch(Document):
             frappe.throw(f"Failed to process payment: {str(e)}")
 
     def get_batch_price(self):
-        """Get cbf batch cost from settings"""
-        batch_cost = frappe.get_value("Batch Settings", None, "cbf_batch_cost")
+        """Get broiler batch cost from settings"""
+        batch_cost = frappe.get_value("Batch Settings", None, "broiler_batch_cost")
         if not batch_cost:
-            frappe.throw("CBF batch cost not configured in Batch Settings")
+            frappe.throw("Broiler batch cost not configured in Batch Settings")
         return float(batch_cost)
 
     def get_user_balance(self):
@@ -93,7 +93,7 @@ class CBFBatch(Document):
                 "reference_name": self.name,
                 "balance_before": self.user_balance,
                 "balance_after": self.user_balance - self.batch_price,
-                "description": f"Deduction for CBF Batch {self.name}",
+                "description": f"Deduction for Broiler Batch {self.name}",
             }
         )
         history_doc.insert(ignore_permissions=True)
@@ -108,7 +108,7 @@ def update_batch_ready_for_sale(batch_name, ready_for_sale):
     :param ready_for_sale: Boolean (0 or 1) to update the status
     """
     if batch_name:
-        frappe.db.set_value("CBF Batch", batch_name, "ready_for_sale", ready_for_sale)
+        frappe.db.set_value("Broiler Batch", batch_name, "ready_for_sale", ready_for_sale)
         frappe.db.commit()
         return {"status": "success", "message": f"Batch {batch_name} updated successfully"}
     

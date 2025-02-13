@@ -13,12 +13,12 @@
  "modified": "2025-01-31 14:37:28.960515",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Mortality Report",
+ "name": "Broiler Mortality Report",
  "owner": "Administrator",
  "prepared_report": 0,
  "query": "select transaction_date, mortality_number_of_birds, batch_live_quantity, ((mortality_number_of_birds/batch_live_quantity) * 100) AS mortality_percent, (feed_consumed_quantity/average_bird_weight_in_grams) AS fcr from `tabCBF Daily Transaction`;",
- "ref_doctype": "CBF Daily Transaction",
- "report_name": "CBF Mortality Report",
+ "ref_doctype": "Broiler Daily Transaction",
+ "report_name": "Broiler Mortality Report",
  "report_type": "Query Report",
  "roles": [
   {

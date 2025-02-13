@@ -12,18 +12,18 @@
  "modified": "2025-02-10 17:34:01.145962",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Stock of Live Bird",
+ "name": "Broiler Stock of Live Bird",
  "owner": "Administrator",
  "prepared_report": 0,
- "ref_doctype": "CBF Batch",
- "report_name": "CBF Stock of Live Bird",
+ "ref_doctype": "Broiler Batch",
+ "report_name": "Broiler Stock of Live Bird",
  "report_type": "Script Report",
  "roles": [
   {
    "role": "System Manager"
   },
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   }
  ],
  "timeout": 0

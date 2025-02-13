@@ -1,7 +1,7 @@
 // Copyright (c) 2024, LogicalDNA Techno Systems Pvt Ltd and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('CBF Daily Transaction', {
+frappe.ui.form.on('Broiler Daily Transaction', {
 
     onload: function (frm) {
         // Set a query filter for the Item Name field
@@ -19,7 +19,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
             frappe.call({
                 method: 'frappe.client.get',
                 args: {
-                    doctype: 'CBF Batch',
+                    doctype: 'Broiler Batch',
                     name: frm.doc.batch // Use the batch identifier from the form
                 },
                 callback: function (batch_data) {
@@ -182,9 +182,9 @@ frappe.ui.form.on('CBF Daily Transaction', {
 
                     // Call the server method in batch.py
                     frappe.call({
-                        method: 'wh_poultryos.poultryos.doctype.cbf_batch.cbf_batch.update_batch_ready_for_sale',
+                        method: 'wh_poultryos.poultryos.doctype.broiler_batch.broiler_batch.update_batch_ready_for_sale',
                         args: {
-                            batch_name: frm.doc.batch,  // Assuming 'batch' field exists in CBF Daily Transaction
+                            batch_name: frm.doc.batch,  // Assuming 'batch' field exists in Broiler Daily Transaction
                             ready_for_sale: 1
                         },
                         callback: function (r) {
@@ -295,7 +295,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
             frappe.call({
                 method: 'frappe.client.get_value',
                 args: {
-                    doctype: 'CBF Batch',
+                    doctype: 'Broiler Batch',
                     fieldname: 'opening_date',
                     filters: { name: frm.doc.batch }
                 },
@@ -311,7 +311,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                             frappe.call({
                                 method: 'frappe.client.get_list',
                                 args: {
-                                    doctype: 'CBF Daily Transaction',
+                                    doctype: 'Broiler Daily Transaction',
                                     filters: { 'batch': frm.doc.batch }, // Filter transactions by batch
                                     fields: ['transaction_date'],
                                     order_by: 'transaction_date desc', // Order by latest transaction date
@@ -353,7 +353,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
             frappe.call({
                 method: 'frappe.client.get',
                 args: {
-                    doctype: 'CBF Batch',
+                    doctype: 'Broiler Batch',
                     name: frm.doc.batch  // Use the batch identifier from the form
                 },
                 callback: function (batch_data) {
@@ -365,7 +365,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                         frappe.call({
                             method: 'frappe.client.get_list',
                             args: {
-                                doctype: 'CBF Daily Transaction',
+                                doctype: 'Broiler Daily Transaction',
                                 filters: { 'batch': frm.doc.batch },  // Filter transactions by batch
                                 fields: ['mortality_number_of_birds'],
                                 order_by: 'transaction_date asc',  // Order transactions by date (ascending)
@@ -392,7 +392,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                                         frappe.call({
                                             method: 'frappe.client.set_value',
                                             args: {
-                                                doctype: 'CBF Batch',
+                                                doctype: 'Broiler Batch',
                                                 name: frm.doc.batch,
                                                 fieldname: 'live_quantity_number_of_birds',
                                                 value: updated_batch_live_quantity
@@ -404,7 +404,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                                                     frappe.call({
                                                         method: 'frappe.client.get',
                                                         args: {
-                                                            doctype: 'CBF Batch',
+                                                            doctype: 'Broiler Batch',
                                                             name: frm.doc.batch // Use the batch identifier from the form
                                                         },
                                                         callback: function (batch_data) {
@@ -449,7 +449,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
                                                                     frappe.call({
                                                                         method: 'frappe.client.set_value',
                                                                         args: {
-                                                                            doctype: 'CBF Batch',
+                                                                            doctype: 'Broiler Batch',
                                                                             name: frm.doc.batch,
                                                                             fieldname: {
                                                                                 live_batch_date: formatted_live_batch_date,
@@ -491,7 +491,7 @@ frappe.ui.form.on('CBF Daily Transaction', {
         }
 
         frappe.call({
-            method: 'wh_poultryos.poultryos.doctype.cbf_daily_transaction.cbf_daily_transaction.update_batch_status',
+            method: 'wh_poultryos.poultryos.doctype.broiler_daily_transaction.broiler_daily_transaction.update_batch_status',
             args: {
                 batch: frm.doc.batch  // Ensure 'batch' exists in the document
             },
