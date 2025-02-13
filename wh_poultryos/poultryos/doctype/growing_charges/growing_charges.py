@@ -35,7 +35,7 @@ def get_available_batches():
 
     # Fetch batches that are not used in Growing Charges
     available_batches = frappe.get_all(
-        "CBF Batch",
+        "Broiler Batch",
         filters={"name": ["not in", used_batch_names]},
         fields=["name", "batch_name"]
     )

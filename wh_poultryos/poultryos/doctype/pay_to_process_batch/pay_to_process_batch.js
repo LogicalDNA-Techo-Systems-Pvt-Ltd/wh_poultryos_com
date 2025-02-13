@@ -22,13 +22,13 @@ frappe.ui.form.on('Pay to Process Batch', {
                 console.log("Selected module names:", selected_module_names);
 
                 // Show/Hide fields based on the presence of module names
-                frm.set_df_property('cbf_batch_quantity', 'hidden', !selected_module_names.includes('CBF'));
+                frm.set_df_property('broiler_batch_quantity', 'hidden', !selected_module_names.includes('Broiler'));
                 frm.set_df_property('breeder_batch_quantity', 'hidden', !selected_module_names.includes('BREEDER'));
                 frm.set_df_property('layer_batch_quantity', 'hidden', !selected_module_names.includes('LAYER'));
             });
         } else {
             // If no modules are selected, hide all fields
-            frm.set_df_property('cbf_batch_quantity', 'hidden', 1);
+            frm.set_df_property('broiler_batch_quantity', 'hidden', 1);
             frm.set_df_property('breeder_batch_quantity', 'hidden', 1);
             frm.set_df_property('layer_batch_quantity', 'hidden', 1);
         }

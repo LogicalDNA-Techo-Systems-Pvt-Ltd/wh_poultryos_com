@@ -1,0 +1,285 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:BT-{YY}-{#####}",
+ "creation": "2024-12-04 13:49:56.202817",
+ "default_view": "List",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "batch_information_section",
+  "batch_name",
+  "opening_date",
+  "farmer_name",
+  "column_break_njbw",
+  "batch_type",
+  "module",
+  "breed_name",
+  "quantity_and_age_information_section",
+  "batch_age_in_days",
+  "place_quantity_number_of_birds",
+  "live_quantity_number_of_birds",
+  "column_break_pfmw",
+  "mortality",
+  "culls",
+  "financial_information_section",
+  "rate",
+  "amount",
+  "column_break_brdb",
+  "biological_value",
+  "bird_cost",
+  "location_and_shed_information_section",
+  "location",
+  "column_break_ogte",
+  "shed",
+  "transaction_related_information_section",
+  "sale_quantity",
+  "organizational_and_status_information_section",
+  "batch_status",
+  "column_break_dmdn",
+  "org_name",
+  "ready_for_sale",
+  "miscellaneous_information_section",
+  "live_batch_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "batch_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Batch Name",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "opening_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Placement Date",
+   "reqd": 1
+  },
+  {
+   "columns": 3,
+   "fieldname": "place_quantity_number_of_birds",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Place Quantity (Number of birds)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_njbw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "batch_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Batch Type",
+   "options": "Batch Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "module",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Module",
+   "link_filters": "[[\"Module\",\"module_name\",\"=\",\"BROILER\"]]",
+   "options": "Module",
+   "reqd": 1
+  },
+  {
+   "fieldname": "breed_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Breed Name",
+   "options": "Breed",
+   "reqd": 1
+  },
+  {
+   "columns": 4,
+   "default": "0",
+   "fieldname": "live_quantity_number_of_birds",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Live Quantity (Number of birds)",
+   "non_negative": 1
+  },
+  {
+   "columns": 2,
+   "default": "0",
+   "fieldname": "batch_age_in_days",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Batch Age in Days",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "farmer_name",
+   "fieldtype": "Data",
+   "label": "Farmer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "live_batch_date",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Live Batch Date"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "label": "Rate"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "label": "Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "mortality",
+   "fieldtype": "Int",
+   "label": "Mortality"
+  },
+  {
+   "default": "0",
+   "fieldname": "culls",
+   "fieldtype": "Int",
+   "label": "Culls"
+  },
+  {
+   "fieldname": "biological_value",
+   "fieldtype": "Float",
+   "label": "Biological Value"
+  },
+  {
+   "fieldname": "bird_cost",
+   "fieldtype": "Float",
+   "label": "Bird Cost"
+  },
+  {
+   "default": "0",
+   "fieldname": "sale_quantity",
+   "fieldtype": "Float",
+   "label": "Sale Quantity"
+  },
+  {
+   "fieldname": "shed",
+   "fieldtype": "Link",
+   "label": "Shed ",
+   "options": "Shed"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location"
+  },
+  {
+   "fieldname": "org_name",
+   "fieldtype": "Read Only",
+   "hidden": 1,
+   "label": "Org Name"
+  },
+  {
+   "default": "New",
+   "fieldname": "batch_status",
+   "fieldtype": "Read Only",
+   "label": "Batch Status"
+  },
+  {
+   "default": "0",
+   "fieldname": "ready_for_sale",
+   "fieldtype": "Read Only",
+   "label": "Ready for sale"
+  },
+  {
+   "fieldname": "batch_information_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Information"
+  },
+  {
+   "fieldname": "quantity_and_age_information_section",
+   "fieldtype": "Section Break",
+   "label": "Quantity and Age Information"
+  },
+  {
+   "fieldname": "column_break_pfmw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "financial_information_section",
+   "fieldtype": "Section Break",
+   "label": "Financial Information"
+  },
+  {
+   "fieldname": "column_break_brdb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location_and_shed_information_section",
+   "fieldtype": "Section Break",
+   "label": "Location and Shed Information"
+  },
+  {
+   "fieldname": "column_break_ogte",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transaction_related_information_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Related Information"
+  },
+  {
+   "fieldname": "organizational_and_status_information_section",
+   "fieldtype": "Section Break",
+   "label": "Organizational and Status Information"
+  },
+  {
+   "fieldname": "column_break_dmdn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "miscellaneous_information_section",
+   "fieldtype": "Section Break",
+   "label": "Miscellaneous Information"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "group": "Transaction",
+   "link_doctype": "Broiler Daily Transaction",
+   "link_fieldname": "batch"
+  }
+ ],
+ "modified": "2025-02-13 15:25:07.984140",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Broiler Batch",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "if_owner": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "batch_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "batch_name"
+}

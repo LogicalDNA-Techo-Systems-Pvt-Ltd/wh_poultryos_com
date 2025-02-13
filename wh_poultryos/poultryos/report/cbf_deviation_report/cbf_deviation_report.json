@@ -12,18 +12,18 @@
  "modified": "2025-02-10 17:35:57.065511",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Deviation Report",
+ "name": "Broiler Deviation Report",
  "owner": "Administrator",
  "prepared_report": 0,
- "ref_doctype": "CBF Daily Transaction",
- "report_name": "CBF Deviation Report",
+ "ref_doctype": "Broiler Daily Transaction",
+ "report_name": "Broiler Deviation Report",
  "report_type": "Script Report",
  "roles": [
   {
    "role": "Administrator"
   },
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   }
  ],
  "timeout": 0

@@ -1,37 +1,37 @@
 {
- "add_total_row": 0,
- "columns": [],
- "creation": "2025-01-31 09:47:59.764079",
- "disabled": 0,
- "docstatus": 0,
- "doctype": "Report",
- "filters": [],
- "idx": 5,
- "is_standard": "Yes",
- "letterhead": null,
- "modified": "2025-02-05 12:46:22.231475",
- "modified_by": "Administrator",
- "module": "PoultryOS",
- "name": "Batch Details Report",
- "owner": "Administrator",
- "prepared_report": 0,
- "query": "select b1.batch_name,b1.farmer_name,s1.shed_name,l1.location_name,b1.opening_date,\nb1.live_batch_date,b1.batch_age_in_days as Age,\nbr1.breed_name,b1.place_quantity_number_of_birds as Placement,b1.live_quantity_number_of_birds as Live_Quantity,\nb1.batch_category,m1.module_name as Module,b1.mortality,\nb1.culls,b1.biological_value,b1.bird_cost from `tabCBF Batch` b1 left join\n`tabLocation` l1 on l1.name = b1.location left join `tabShed` s1 on s1.name = b1.shed left join `tabModule` m1\non b1.module = m1.name left join `tabBreed` br1 on br1.name = b1.breed_name;",
- "ref_doctype": "CBF Batch",
- "report_name": "Batch Details Report",
- "report_type": "Query Report",
- "roles": [
-  {
-   "role": "System Manager"
-  },
-  {
-   "role": "CBF Farm Owner"
-  },
-  {
-   "role": "Breeder Farm Owner"
-  },
-  {
-   "role": "Layer Farm Owner"
-  }
- ],
- "timeout": 0
+    "add_total_row": 0,
+    "columns": [],
+    "creation": "2025-01-31 09:47:59.764079",
+    "disabled": 0,
+    "docstatus": 0,
+    "doctype": "Report",
+    "filters": [],
+    "idx": 5,
+    "is_standard": "Yes",
+    "letterhead": null,
+    "modified": "2025-02-05 12:46:22.231475",
+    "modified_by": "Administrator",
+    "module": "PoultryOS",
+    "name": "Batch Details Report",
+    "owner": "Administrator",
+    "prepared_report": 0,
+    "query": "select b1.batch_name,b1.farmer_name,s1.shed_name,l1.location_name,b1.opening_date,\nb1.live_batch_date,b1.batch_age_in_days as Age,\nbr1.breed_name,b1.place_quantity_number_of_birds as Placement,b1.live_quantity_number_of_birds as Live_Quantity,m1.module_name as Module,b1.mortality,\nb1.culls,b1.biological_value,b1.bird_cost from `tabCBF Batch` b1 left join\n`tabLocation` l1 on l1.name = b1.location left join `tabShed` s1 on s1.name = b1.shed left join `tabModule` m1\non b1.module = m1.name left join `tabBreed` br1 on br1.name = b1.breed_name;",
+    "ref_doctype": "Broiler Batch",
+    "report_name": "Batch Details Report",
+    "report_type": "Query Report",
+    "roles": [
+        {
+            "role": "System Manager"
+        },
+        {
+            "role": "Broiler Farm Owner"
+        },
+        {
+            "role": "Breeder Farm Owner"
+        },
+        {
+            "role": "Layer Farm Owner"
+        }
+    ],
+    "timeout": 0
 }

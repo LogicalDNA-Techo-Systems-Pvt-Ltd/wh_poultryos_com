@@ -1,5 +1,5 @@
 {
- "chart_name": "CBF Mortality Report",
+ "chart_name": "Broiler Mortality Report",
  "chart_type": "Report",
  "creation": "2024-12-06 17:59:50.044515",
  "docstatus": 0,
@@ -13,13 +13,13 @@
  "modified": "2025-02-05 15:46:58.986671",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Mortality Report",
+ "name": "Broiler Mortality Report",
  "number_of_groups": 0,
  "owner": "Administrator",
- "report_name": "CBF Mortality Report",
+ "report_name": "Broiler Mortality Report",
  "roles": [
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   }
  ],
  "time_interval": "Yearly",

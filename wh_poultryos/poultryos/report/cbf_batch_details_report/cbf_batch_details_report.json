@@ -12,18 +12,18 @@
  "modified": "2025-02-10 11:15:59.181753",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "CBF Batch Details Report",
+ "name": "Broiler Batch Details Report",
  "owner": "Administrator",
  "prepared_report": 0,
- "ref_doctype": "CBF Batch",
- "report_name": "CBF Batch Details Report",
+ "ref_doctype": "Broiler Batch",
+ "report_name": "Broiler Batch Details Report",
  "report_type": "Script Report",
  "roles": [
   {
    "role": "System Manager"
   },
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   }
  ],
  "timeout": 0

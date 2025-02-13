@@ -1,0 +1,106 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"N6L4RCGJxA\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Transactions</span>\",\"col\":12}},{\"id\":\"arpnUKvH_f\",\"type\":\"card\",\"data\":{\"card_name\":\"Batch\",\"col\":4}},{\"id\":\"hpgexItkNF\",\"type\":\"card\",\"data\":{\"card_name\":\"Daily Transaction\",\"col\":4}},{\"id\":\"athlT77xcz\",\"type\":\"card\",\"data\":{\"card_name\":\"Growing Charges\",\"col\":4}},{\"id\":\"bkaMN9yeyE\",\"type\":\"card\",\"data\":{\"card_name\":\"Sales Invoice\",\"col\":4}}]",
+ "creation": "2025-01-20 23:13:22.294478",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "sell",
+ "idx": 0,
+ "indicator_color": "",
+ "is_hidden": 0,
+ "label": "Broiler Transactions",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Growing Charges",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Growing Charges",
+   "link_count": 0,
+   "link_to": "Growing Charges",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Invoice",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Invoice",
+   "link_count": 0,
+   "link_to": "Custom Sales Invoice",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Batch",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Batch",
+   "link_count": 0,
+   "link_to": "Broiler Batch",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Daily Transaction",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Daily Transaction",
+   "link_count": 0,
+   "link_to": "Broiler Daily Transaction",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-02-13 17:05:15.803455",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Broiler Transactions",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "BROILER",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 6.0,
+ "shortcuts": [],
+ "title": "Broiler Transactions"
+}

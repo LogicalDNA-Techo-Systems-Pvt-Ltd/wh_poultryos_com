@@ -99,7 +99,7 @@ frappe.ui.form.on("Growing Charges", {
         frappe.call({
             method: "frappe.client.get",
             args: {
-                doctype: "CBF Batch",
+                doctype: "Broiler Batch",
                 name: frm.doc.batch
             },
             callback: function (response) {
@@ -119,7 +119,7 @@ frappe.ui.form.on("Growing Charges", {
                     frappe.call({
                         method: "frappe.client.get_list",
                         args: {
-                            doctype: "CBF Daily Transaction",
+                            doctype: "Broiler Daily Transaction",
                             filters: [
                                 ["batch", "=", frm.doc.batch],
                                 ["transaction_date", ">=", placement_date],
@@ -150,7 +150,7 @@ frappe.ui.form.on("Growing Charges", {
                     frappe.call({
                         method: "frappe.client.get_list",
                         args: {
-                            doctype: "CBF Daily Transaction",
+                            doctype: "Broiler Daily Transaction",
                             filters: [
                                 ["batch", "=", frm.doc.batch],
                                 ["transaction_date", ">=", placement_date],
@@ -242,7 +242,7 @@ frappe.ui.form.on("Growing Charges", {
 
                     //     method: "frappe.client.get_list",
                     //     args: {
-                    //         doctype: "CBF Daily Transaction",
+                    //         doctype: "Broiler Daily Transaction",
                     //         filters: { batch: frm.doc.batch },
                     //         fields: ["feed_consumed_quantity", "average_bird_weight_in_grams"]
                     //     },
@@ -252,7 +252,7 @@ frappe.ui.form.on("Growing Charges", {
                     //         frappe.call({
                     //             method: "frappe.client.get_list",
                     //             args: {
-                    //                 doctype: "CBF Daily Transaction",
+                    //                 doctype: "Broiler Daily Transaction",
                     //                 filters: { batch: frm.doc.batch },
                     //                 fields: ["feed_consumed_quantity", "average_bird_weight_in_grams"]
                     //             },
@@ -350,7 +350,7 @@ frappe.ui.form.on("Growing Charges", {
         frappe.call({
             method: "frappe.client.get",
             args: {
-                doctype: "CBF Batch",
+                doctype: "Broiler Batch",
                 name: frm.doc.batch
             },
             callback: function (response) {

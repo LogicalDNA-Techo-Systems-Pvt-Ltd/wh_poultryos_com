@@ -22,7 +22,7 @@ frappe.query_reports["Dummy Stock of Live Bird"] = {
             "fieldname": "Batch",
             "label": __("Batch"),
             "fieldtype": "Link",
-            "options": "CBF Batch",
+            "options": "Broiler Batch",
             "reqd": 0
         }
 	]

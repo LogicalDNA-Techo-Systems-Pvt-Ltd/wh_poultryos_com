@@ -16,7 +16,7 @@
  "owner": "Administrator",
  "prepared_report": 0,
  "query": "SELECT \n    b1.batch_name,\n    d1.batch_placed_on AS Placement_Date,\n    d1.transaction_date,\n    b1.farmer_name,\n    d1.batch_age_in_days AS Age,\n    i1.item_name,\n    d1.feed_consumed_quantity AS Feed_Quantity,\n    st.feed_consumption AS Std_Consumption,\n    (d1.feed_consumed_quantity - st.feed_consumption) AS Deviation,\n    CASE \n        WHEN st.feed_consumption > 0 THEN \n            ROUND(((d1.feed_consumed_quantity - st.feed_consumption) / st.feed_consumption) * 100, 2)\n        ELSE \n            NULL  -- Avoid division by zero\n    END AS Deviation_Percentage,\n    d1.owner \nFROM \n    `tabCBF Daily Transaction` d1 \nLEFT JOIN \n    `tabStandard Chart` st \n    ON d1.batch_age_in_days = st.age_in_days \nLEFT JOIN \n    `tabCBF Batch` b1 \n    ON b1.name = d1.batch \nLEFT JOIN \n    `tabItem Master` i1  \n    ON i1.name = d1.item_name;\n",
- "ref_doctype": "CBF Daily Transaction",
+ "ref_doctype": "Broiler Daily Transaction",
  "report_name": "Deviation Report",
  "report_type": "Query Report",
  "roles": [],

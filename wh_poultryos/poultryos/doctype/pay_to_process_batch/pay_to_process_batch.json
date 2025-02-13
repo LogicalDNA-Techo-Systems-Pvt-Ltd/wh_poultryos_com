@@ -6,8 +6,8 @@
  "engine": "InnoDB",
  "field_order": [
   "choose_modules",
-  "cbf_batch_quantity",
-  "cbf_batch_unit_price",
+  "broiler_batch_quantity",
+  "broiler_batch_unit_price",
   "breeder_batch_quantity",
   "breeder_batch_unit_price",
   "layer_batch_quantity",
@@ -23,18 +23,18 @@
   },
   {
    "default": "0",
-   "fieldname": "cbf_batch_quantity",
+   "fieldname": "broiler_batch_quantity",
    "fieldtype": "Int",
    "hidden": 1,
    "in_list_view": 1,
-   "label": "CBF Batch Quantity",
+   "label": "Broiler Batch Quantity",
    "non_negative": 1,
    "reqd": 1
   },
   {
-   "fieldname": "cbf_batch_unit_price",
+   "fieldname": "broiler_batch_unit_price",
    "fieldtype": "Float",
-   "label": "CBF Batch Unit Price",
+   "label": "Broiler Batch Unit Price",
    "non_negative": 1,
    "read_only": 1
   },
