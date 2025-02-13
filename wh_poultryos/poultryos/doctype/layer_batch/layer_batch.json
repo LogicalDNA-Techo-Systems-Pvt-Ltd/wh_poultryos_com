@@ -8,28 +8,39 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "batch_information_section",
   "batch_name",
-  "farmer_name",
-  "location",
-  "shed",
   "opening_date",
-  "live_batch_date",
-  "batch_age_in_days",
-  "breed_name",
-  "place_quantity_number_of_birds",
-  "live_quantity_number_of_birds",
-  "batch_category",
+  "farmer_name",
   "column_break_njbw",
   "batch_type",
   "module",
+  "breed_name",
+  "quantity_and_age_information_section",
+  "batch_age_in_days",
+  "place_quantity_number_of_birds",
+  "live_quantity_number_of_birds",
+  "column_break_ndek",
   "mortality",
   "culls",
+  "financial_information_section",
   "rate",
   "amount",
+  "column_break_lsms",
   "biological_value",
   "bird_cost",
+  "location_and_shed_information_section",
+  "location",
+  "column_break_zbgd",
+  "shed",
+  "transaction_related_information_section",
   "sale_quantity",
-  "org_name"
+  "organizational_and_status_information_section",
+  "batch_status",
+  "column_break_oeks",
+  "org_name",
+  "miscellaneous_information_section",
+  "live_batch_date"
  ],
  "fields": [
   {
@@ -107,12 +118,6 @@
    "non_negative": 1
   },
   {
-   "default": "Demo Batch",
-   "fieldname": "batch_category",
-   "fieldtype": "Read Only",
-   "label": "Batch Category"
-  },
-  {
    "fieldname": "column_break_njbw",
    "fieldtype": "Column Break"
   },
@@ -176,6 +181,63 @@
    "fieldtype": "Read Only",
    "hidden": 1,
    "label": "Org Name"
+  },
+  {
+   "fieldname": "batch_information_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Information"
+  },
+  {
+   "fieldname": "organizational_and_status_information_section",
+   "fieldtype": "Section Break",
+   "label": "Organizational and Status Information"
+  },
+  {
+   "fieldname": "column_break_oeks",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "New",
+   "fieldname": "batch_status",
+   "fieldtype": "Read Only",
+   "label": "Batch Status"
+  },
+  {
+   "fieldname": "miscellaneous_information_section",
+   "fieldtype": "Section Break",
+   "label": "Miscellaneous Information"
+  },
+  {
+   "fieldname": "quantity_and_age_information_section",
+   "fieldtype": "Section Break",
+   "label": "Quantity and Age Information"
+  },
+  {
+   "fieldname": "column_break_ndek",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "financial_information_section",
+   "fieldtype": "Section Break",
+   "label": "Financial Information"
+  },
+  {
+   "fieldname": "column_break_lsms",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location_and_shed_information_section",
+   "fieldtype": "Section Break",
+   "label": "Location and Shed Information"
+  },
+  {
+   "fieldname": "column_break_zbgd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transaction_related_information_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Related Information"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -191,7 +253,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-11 16:11:12.846235",
+ "modified": "2025-02-13 15:24:38.449061",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Layer Batch",

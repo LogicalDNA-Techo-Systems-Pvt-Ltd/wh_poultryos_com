@@ -10,27 +10,37 @@
  "field_order": [
   "section_break_ymub",
   "batch_name",
-  "farmer_name",
-  "location",
-  "shed",
   "opening_date",
-  "live_batch_date",
-  "batch_age_in_days",
-  "breed_name",
-  "place_quantity_number_of_birds",
-  "live_quantity_number_of_birds",
-  "batch_category",
+  "farmer_name",
   "column_break_njbw",
   "batch_type",
   "module",
+  "breed_name",
+  "quantity_and_age_information_section",
+  "batch_age_in_days",
+  "place_quantity_number_of_birds",
+  "live_quantity_number_of_birds",
+  "column_break_wrde",
   "mortality",
   "culls",
+  "financial_information_section",
   "rate",
   "amount",
+  "column_break_siwl",
   "biological_value",
   "bird_cost",
+  "location_and_shed_information_section",
+  "location",
+  "column_break_qmxb",
+  "shed",
+  "transaction_related_information_section",
   "sale_quantity",
-  "org_name"
+  "organizational_and_status_information_section",
+  "batch_status",
+  "column_break_dezn",
+  "org_name",
+  "miscellaneous_information_section",
+  "live_batch_date"
  ],
  "fields": [
   {
@@ -108,12 +118,6 @@
    "non_negative": 1
   },
   {
-   "default": "Demo Batch",
-   "fieldname": "batch_category",
-   "fieldtype": "Read Only",
-   "label": "Batch Category"
-  },
-  {
    "fieldname": "column_break_njbw",
    "fieldtype": "Column Break"
   },
@@ -180,7 +184,60 @@
   },
   {
    "fieldname": "section_break_ymub",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Batch Information"
+  },
+  {
+   "fieldname": "quantity_and_age_information_section",
+   "fieldtype": "Section Break",
+   "label": "Quantity and Age Information"
+  },
+  {
+   "fieldname": "column_break_wrde",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "financial_information_section",
+   "fieldtype": "Section Break",
+   "label": "Financial Information"
+  },
+  {
+   "fieldname": "column_break_siwl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location_and_shed_information_section",
+   "fieldtype": "Section Break",
+   "label": "Location and Shed Information"
+  },
+  {
+   "fieldname": "column_break_qmxb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transaction_related_information_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Related Information"
+  },
+  {
+   "fieldname": "organizational_and_status_information_section",
+   "fieldtype": "Section Break",
+   "label": "Organizational and Status Information"
+  },
+  {
+   "fieldname": "miscellaneous_information_section",
+   "fieldtype": "Section Break",
+   "label": "Miscellaneous Information"
+  },
+  {
+   "default": "New",
+   "fieldname": "batch_status",
+   "fieldtype": "Read Only",
+   "label": "Batch Status"
+  },
+  {
+   "fieldname": "column_break_dezn",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -196,7 +253,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-12 17:51:07.338219",
+ "modified": "2025-02-13 15:24:33.450810",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Batch",
