@@ -90,7 +90,7 @@
    "type": "Link"
   }
  ],
- "modified": "2025-02-13 23:35:29.261083",
+ "modified": "2025-02-14 11:22:07.348332",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Transactions",
@@ -102,6 +102,9 @@
  "roles": [
   {
    "role": "Administrator"
+  },
+  {
+   "role": "Broiler Farm Owner"
   }
  ],
  "sequence_id": 6.0,

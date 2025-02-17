@@ -16,25 +16,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Daily Transaction",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "CBF Daily transaction report",
-   "link_count": 0,
-   "link_to": "CBF Daily Transaction Report",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Batch Details Report",
    "link_count": 1,
    "link_type": "DocType",
@@ -44,9 +25,9 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "CBF Batch detail",
+   "label": "Batch Details Report",
    "link_count": 0,
-   "link_to": "CBF Batch Details Report",
+   "link_to": "Broiler Batch Details Report",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
@@ -63,9 +44,9 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "CBF deviation report",
+   "label": "Deviation Report",
    "link_count": 0,
-   "link_to": "CBF Deviation Report",
+   "link_to": "Broiler Deviation Report",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
@@ -82,9 +63,9 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "CBF stock of live bird",
+   "label": "Stock of Live Bird Report",
    "link_count": 0,
-   "link_to": "CBF Stock of Live Bird",
+   "link_to": "Broiler Stock of Live Bird",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
@@ -101,9 +82,9 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "GC",
+   "label": "Growing Charges Report",
    "link_count": 0,
-   "link_to": "CBF Growing Charges",
+   "link_to": "Broiler Growing Charges",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
@@ -120,9 +101,9 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "Sales",
+   "label": "Sales invoice Report",
    "link_count": 0,
-   "link_to": "CBF Sales Report",
+   "link_to": "Broiler Sales Report",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
@@ -139,72 +120,15 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "Daily transaction report",
+   "label": "Daily Transaction Report",
    "link_count": 0,
-   "link_to": "Daily Transaction Report",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Batch Details Report",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Batch Detail",
-   "link_count": 0,
-   "link_to": "Batch Details Report",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Deviation Report",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Deviation Report",
-   "link_count": 0,
-   "link_to": "Deviation Report",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Stock of Live Bird",
-   "link_count": 1,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Stock of Live Bird",
-   "link_count": 0,
-   "link_to": "Stock of Live Bird",
+   "link_to": "Broiler Daily Transaction Report - Custom",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2025-02-13 23:57:03.670916",
+ "modified": "2025-02-14 11:42:57.589374",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Reports",
@@ -216,6 +140,9 @@
  "roles": [
   {
    "role": "Administrator"
+  },
+  {
+   "role": "Broiler Farm Owner"
   }
  ],
  "sequence_id": 7.0,
