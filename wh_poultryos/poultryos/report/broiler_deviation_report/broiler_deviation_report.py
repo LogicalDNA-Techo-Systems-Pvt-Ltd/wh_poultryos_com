@@ -45,7 +45,7 @@ def execute(filters=None):
             `tabItem Master` i1  
             ON i1.name = d1.item_name
         WHERE 
-            d1.batch = %(batch)s
+            d1.batch = %(Batch)s
             AND d1.transaction_date BETWEEN %(from_date)s AND %(to_date)s
         ORDER BY 
             d1.transaction_date ASC;
