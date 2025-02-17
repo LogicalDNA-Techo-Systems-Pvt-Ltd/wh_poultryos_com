@@ -6,18 +6,130 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "shed_name"
+  "shed_name",
+  "width",
+  "length",
+  "side_wall_height",
+  "foundation_height",
+  "distance_from_branch",
+  "flooring",
+  "column_break_rlkh",
+  "total_sq_ft",
+  "wire_mash_height",
+  "center_height",
+  "side_height",
+  "distance_between_shed",
+  "distance_from_feedmill",
+  "roofing"
  ],
  "fields": [
   {
    "fieldname": "shed_name",
    "fieldtype": "Data",
-   "label": "Shed Name"
+   "in_list_view": 1,
+   "label": "Shed Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "width",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Width",
+   "non_negative": 1,
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_rlkh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "length",
+   "fieldtype": "Float",
+   "label": "Length",
+   "non_negative": 1,
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "side_wall_height",
+   "fieldtype": "Float",
+   "label": "Side Wall Height",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "foundation_height",
+   "fieldtype": "Float",
+   "label": "Foundation Height",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "distance_from_branch",
+   "fieldtype": "Float",
+   "label": "Distance from Branch",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "total_sq_ft",
+   "fieldtype": "Read Only",
+   "label": "Total Sq. Ft.",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "wire_mash_height",
+   "fieldtype": "Float",
+   "label": "Wire Mash Height",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "center_height",
+   "fieldtype": "Float",
+   "label": "Center Height",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "side_height",
+   "fieldtype": "Float",
+   "label": "Side Height",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "distance_between_shed",
+   "fieldtype": "Float",
+   "label": "Distance Between Shed",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "distance_from_feedmill",
+   "fieldtype": "Float",
+   "label": "Distance from Feedmill",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "flooring",
+   "fieldtype": "Link",
+   "label": "Flooring",
+   "options": "Shed Flooring"
+  },
+  {
+   "fieldname": "roofing",
+   "fieldtype": "Link",
+   "label": "Roofing",
+   "options": "Shed Roofing"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 12:45:01.463099",
+ "modified": "2025-02-17 17:11:03.587550",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Shed",
