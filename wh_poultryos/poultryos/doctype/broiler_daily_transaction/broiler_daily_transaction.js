@@ -189,7 +189,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
             // Fetch standard consumption from Std Chart based on item name and age
 
-            if (frm.doc.item_name && frm.doc.batch_age_in_days) {
+            if (frm.doc.item_name && frm.doc.batch_age_in_days >= 0) {
                 frappe.call({
                     method: 'frappe.client.get_value',
                     args: {
@@ -404,11 +404,11 @@ frappe.ui.form.on('Broiler Daily Transaction', {
         }
 
         // Mortality Number of Birds Validation
-        if (mortality_number_of_birds <= 0) {
-            frappe.msgprint(__('Mortality (Number of birds) must be greater than 0'));
-            frappe.validated = false;  // Prevent form submission
-            return;
-        }
+        // if (mortality_number_of_birds <= 0) {
+        //     frappe.msgprint(__('Mortality (Number of birds) must be greater than 0'));
+        //     frappe.validated = false;  // Prevent form submission
+        //     return;
+        // }
 
         if (mortality_number_of_birds > batch_live_quantity) {
             frappe.msgprint(__('Mortality (Number of birds) cannot be greater than live quantity'));

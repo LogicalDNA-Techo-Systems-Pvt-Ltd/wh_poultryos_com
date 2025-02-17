@@ -101,7 +101,7 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "GC",
+   "label": "Growing Charges Report",
    "link_count": 0,
    "link_to": "Broiler Growing Charges",
    "link_type": "Report",
@@ -120,7 +120,7 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "Sales",
+   "label": "Sales invoice Report",
    "link_count": 0,
    "link_to": "Broiler Sales Report",
    "link_type": "Report",
@@ -140,6 +140,9 @@
  "roles": [
   {
    "role": "Administrator"
+  },
+  {
+   "role": "Broiler Farm Owner"
   }
  ],
  "sequence_id": 7.0,

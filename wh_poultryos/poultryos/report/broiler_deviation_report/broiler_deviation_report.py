@@ -8,7 +8,7 @@ def execute(filters=None):
         filters = {}
 
     # Ensure the batch is selected
-    if not filters.get("batch"):
+    if not filters.get("Batch"):
         frappe.throw("Please select a Batch to view the report.")
 
     if not filters.get("from_date") or not filters.get("to_date"):
@@ -45,7 +45,7 @@ def execute(filters=None):
             `tabItem Master` i1  
             ON i1.name = d1.item_name
         WHERE 
-            d1.batch = %(batch)s
+            d1.batch = %(Batch)s
             AND d1.transaction_date BETWEEN %(from_date)s AND %(to_date)s
         ORDER BY 
             d1.transaction_date ASC;
@@ -53,7 +53,7 @@ def execute(filters=None):
 
     # Execute query
     data = frappe.db.sql(query, {
-        "batch": filters.get("batch"),
+        "Batch": filters.get("Batch"),
         "from_date": filters.get("from_date"),
         "to_date": filters.get("to_date")
     }, as_dict=True)

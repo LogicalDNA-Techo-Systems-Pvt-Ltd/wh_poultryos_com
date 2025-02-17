@@ -99,7 +99,7 @@ def setup_organization():
         frappe.db.commit()
 
         # Determine redirect URL based on selected modules
-        redirect_url = "/app/dashboard"  # Default redirect
+        redirect_url = "/app"  # Default redirect
         if len(selected_modules) == 1:
             module_pages = {
                 "broiler": "/app/broiler",
