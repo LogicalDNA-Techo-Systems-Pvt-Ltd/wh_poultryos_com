@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "item_type",
+  "item_name",
   "rate",
   "date"
  ],
@@ -26,11 +27,17 @@
    "fieldname": "date",
    "fieldtype": "Date",
    "label": "Date"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Link",
+   "label": "Item Name",
+   "options": "Item Master"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 16:32:36.338983",
+ "modified": "2025-02-17 16:57:17.565063",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Item Rate",
@@ -50,7 +57,10 @@
    "write": 1
   }
  ],
+ "search_fields": "item_name",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "item_name"
 }

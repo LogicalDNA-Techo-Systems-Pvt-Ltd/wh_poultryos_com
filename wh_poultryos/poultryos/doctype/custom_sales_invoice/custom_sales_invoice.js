@@ -80,7 +80,11 @@ frappe.ui.form.on('Batch Selection', {
         row.amount = row.quantity * row.rate;  
         update_amount(frm, cdt, cdn);    
         frm.refresh_field("batches");
-    }
+    },
+
+    weight: function (frm, cdt, cdn) {
+        calculate_total_weight(frm);
+    },
 });
 
 
@@ -120,7 +124,7 @@ function update_amount(frm, cdt, cdn) {
     row.amount = row.quantity * row.rate;
     frm.refresh_field("batches");
     calculate_total(frm);
-    calculate_total_weight(frm);
+    
 }
 
 // Function to calculate the total amount from child table

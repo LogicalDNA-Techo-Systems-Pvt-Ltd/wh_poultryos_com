@@ -101,7 +101,7 @@ class BroilerBatch(Document):
 
 
 @frappe.whitelist()
-def update_batch_ready_for_sale(batch_name, ready_for_sale):
+def update_batch_ready_for_sale(batch_name, ready_for_sale,status):
     """
     Update the ready_for_sale field in the Batch doctype.
     :param batch_name: Name of the batch to update
@@ -109,6 +109,21 @@ def update_batch_ready_for_sale(batch_name, ready_for_sale):
     """
     if batch_name:
         frappe.db.set_value("Broiler Batch", batch_name, "ready_for_sale", ready_for_sale)
+        frappe.db.set_value("Broiler Batch", batch_name, "batch_status", status)
+        frappe.db.commit()
+        return {"status": "success", "message": f"Batch {batch_name} updated successfully"}
+    
+    return {"status": "error", "message": "Batch not found"}
+
+@frappe.whitelist()
+def update_batch_status(batch_name, status):
+    """
+    Update the ready_for_sale field in the Batch doctype.
+    :param batch_name: Name of the batch to update
+    :param ready_for_sale: Boolean (0 or 1) to update the status
+    """
+    if batch_name:
+        frappe.db.set_value("Broiler Batch", batch_name, "batch_status", status)
         frappe.db.commit()
         return {"status": "success", "message": f"Batch {batch_name} updated successfully"}
     

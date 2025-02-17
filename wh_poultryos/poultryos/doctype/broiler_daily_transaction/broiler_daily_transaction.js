@@ -3,6 +3,139 @@
 
 frappe.ui.form.on('Broiler Daily Transaction', {
 
+
+    refresh: function (frm) {
+
+        frappe.call({
+            method: 'frappe.client.get_list',
+            args: {
+                doctype: 'Broiler Daily Transaction',
+                filters: {
+                    batch: frm.doc.batch,
+                    ready_for_sale: 1
+                },
+                fields: ['name'],
+                limit_page_length: 1  // Fetch only one record if exists
+            },
+            callback: function (response) {
+                if (response.message && response.message.length > 0) {
+                    // If a previous transaction has "ready_for_sale" enabled, keep it enabled and read-only
+                    frm.set_value('ready_for_sale', 1);
+                    frm.set_df_property('ready_for_sale', 'read_only', 1);
+                }
+            }
+        });
+
+        // Ensure the field is read-only if it's already enabled
+        if (frm.doc.ready_for_sale) {
+            frm.set_df_property('ready_for_sale', 'read_only', 1);
+        }
+        
+        frm.trigger('add_custom_buttons'); // Call function on refresh
+    },
+
+    add_custom_buttons: function (frm) {
+        // Add "Accept" button inside "Actions" menu
+        frm.add_custom_button(__('Ready for Sale'), () => {
+
+            if (!frm.doc.ready_for_sale && frm.doc.__prev_ready_for_sale) {
+
+                frappe.show_alert({
+                    message: __('Ready for Sale cannot be disabled once enabled'),
+                    indicator: 'red'
+                }, 5);
+
+                // Reset the toggle back to on
+                frm.set_value('ready_for_sale', 1);
+                return;
+            }
+
+             // If already ready for sale, show message and return
+             if (frm.doc.ready_for_sale) {
+                frappe.msgprint(__('Batch is already marked as Ready for Sale.'));
+                return;
+            }
+
+            // If turning on for the first time
+            frappe.confirm(
+                'Are you sure you want to mark this batch as ready for sale? This action cannot be undone.',
+                () => {
+                    // On confirm
+                    frm.doc.__prev_ready_for_sale = 1;
+
+                    // Show success message
+                    frappe.show_alert({
+                        message: __('This batch is now available for ready for sale'),
+                        indicator: 'green'
+                    }, 5);
+
+                    // Make the field read-only after enabling
+                    frm.set_df_property('ready_for_sale', 'read_only', 1);
+                    frm.set_value('ready_for_sale', 1); // Set value programmatically
+
+                    // Call the server method in batch.py
+                    frappe.call({
+                        method: 'wh_poultryos.poultryos.doctype.broiler_batch.broiler_batch.update_batch_ready_for_sale',
+                        args: {
+                            batch_name: frm.doc.batch,  // Assuming 'batch' field exists in Broiler Daily Transaction
+                            ready_for_sale: 1,
+                            status: "Ready for sale"
+                        },
+                        callback: function (r) {
+                            if (r.message.status === "success") {
+                                frappe.msgprint(__('Batch status updated successfully.'));
+                            } else {
+                                frappe.msgprint(__('Error updating batch status.'));
+                            }
+                        }
+                    });
+
+                },
+                () => {
+                    // On cancel
+                    frm.set_value('ready_for_sale', 0);
+                }
+            );
+
+
+        }, "Actions"); // Add under "Actions" group
+
+        // Add "Reject" button inside "Actions" menu
+        frm.add_custom_button(__('Batch Completed'), () => {
+
+            frappe.confirm(
+                'Are you sure you want to mark this batch as completed? This action cannot be undone.',
+                () => {
+                    // On Confirm: Call the server method
+                    frappe.call({
+                        method: 'wh_poultryos.poultryos.doctype.broiler_batch.broiler_batch.update_batch_status',
+                        args: {
+                            batch_name: frm.doc.batch,  // Assuming 'batch' field exists in Broiler Daily Transaction                           
+                            status: "Completed"
+                        },
+                        callback: function (r) {
+                            if (r.message.status === "success") {
+                                frappe.msgprint(__('Batch is Completed'));
+                            } else {
+                                frappe.msgprint(__('Error updating batch status.'));
+                            }
+                        }
+                    });
+
+
+                },
+                () => {
+                    // On Cancel: Do nothing
+                    frappe.show_alert({
+                        message: __('Batch completion was cancelled'),
+                        indicator: 'red'
+                    }, 3);
+                }
+            );
+
+        }, "Actions"); // Add under "Actions" group
+    },
+
     onload: function (frm) {
         // Set a query filter for the Item Name field
         frm.set_query('item_name', function () {
@@ -12,7 +145,18 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                 }
             };
         });
+
+        // Set a query filter for the Batch dropdown
+        frm.set_query('batch', function () {
+            return {
+                filters: {
+                    batch_status: ['!=', 'Completed'] // Exclude Completed batches
+                }
+            };
+        });
     },
+
+
 
     mortality_number_of_birds: function (frm) {
         if (frm.doc.mortality_number_of_birds) {
@@ -118,10 +262,12 @@ frappe.ui.form.on('Broiler Daily Transaction', {
             args: {
                 doctype: 'Item Rate',
                 filters: {
+
                     item_type: frm.doc.item_type, // Match the item type
+                    item_name: frm.doc.item_name,
                     date: ['<=', frm.doc.transaction_date] // Fetch rates up to the transaction date
                 },
-                fields: ['rate', 'date'],
+                fields: ['rate', 'date', 'item_name'],
                 order_by: 'date desc', // Sort by latest date first
                 limit_page_length: 1 // Fetch only the latest matching rate
             },
@@ -145,66 +291,71 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                 }
             }
         });
+
+
+
+
     },
 
-    ready_for_sale: function (frm) {
+    // ready_for_sale: function (frm) {
 
-        if (!frm.doc.ready_for_sale && frm.doc.__prev_ready_for_sale) {
-            // Prevent toggle from being turned off
-            frappe.show_alert({
-                message: __('Ready for Sale cannot be disabled once enabled'),
-                indicator: 'red'
-            }, 5);
+    //     if (!frm.doc.ready_for_sale && frm.doc.__prev_ready_for_sale) {
+    //         // Prevent toggle from being turned off
+    //         frappe.show_alert({
+    //             message: __('Ready for Sale cannot be disabled once enabled'),
+    //             indicator: 'red'
+    //         }, 5);
 
-            // Reset the toggle back to on
-            frm.set_value('ready_for_sale', 1);
+    //         // Reset the toggle back to on
+    //         frm.set_value('ready_for_sale', 1);
 
-            return;
-        }
+    //         return;
+    //     }
 
-        // If turning on for the first time
-        if (frm.doc.ready_for_sale) {
-            // Show confirmation dialog
-            frappe.confirm(
-                'Are you sure you want to mark this batch as ready for sale? This action cannot be undone.',
-                () => {
-                    // On confirm
-                    frm.doc.__prev_ready_for_sale = 1;
+    //     // If turning on for the first time
+    //     if (frm.doc.ready_for_sale) {
+    //         // Show confirmation dialog
+    //         frappe.confirm(
+    //             'Are you sure you want to mark this batch as ready for sale? This action cannot be undone.',
+    //             () => {
+    //                 // On confirm
+    //                 frm.doc.__prev_ready_for_sale = 1;
 
-                    // Show success message
-                    frappe.show_alert({
-                        message: __('This batch is now available for ready for sale'),
-                        indicator: 'green'
-                    }, 5);
+    //                 // Show success message
+    //                 frappe.show_alert({
+    //                     message: __('This batch is now available for ready for sale'),
+    //                     indicator: 'green'
+    //                 }, 5);
 
-                    // Make the field read-only after enabling
-                    frm.set_df_property('ready_for_sale', 'read_only', 1);
+    //                 // Make the field read-only after enabling
+    //                 frm.set_df_property('ready_for_sale', 'read_only', 1);
 
-                    // Call the server method in batch.py
-                    frappe.call({
-                        method: 'wh_poultryos.poultryos.doctype.broiler_batch.broiler_batch.update_batch_ready_for_sale',
-                        args: {
-                            batch_name: frm.doc.batch,  // Assuming 'batch' field exists in Broiler Daily Transaction
-                            ready_for_sale: 1
-                        },
-                        callback: function (r) {
-                            if (r.message.status === "success") {
-                                frappe.msgprint(__('Batch status updated successfully.'));
-                            } else {
-                                frappe.msgprint(__('Error updating batch status.'));
-                            }
-                        }
-                    });
+    //                 // Call the server method in batch.py
+    //                 frappe.call({
+    //                     method: 'wh_poultryos.poultryos.doctype.broiler_batch.broiler_batch.update_batch_ready_for_sale',
+    //                     args: {
+    //                         batch_name: frm.doc.batch,  // Assuming 'batch' field exists in Broiler Daily Transaction
+    //                         ready_for_sale: 1,
+    //                         status: "Ready for sale"
+    //                     },
+    //                     callback: function (r) {
+    //                         if (r.message.status === "success") {
+    //                             frappe.msgprint(__('Batch status updated successfully.'));
+    //                         } else {
+    //                             frappe.msgprint(__('Error updating batch status.'));
+    //                         }
+    //                     }
+    //                 });
 
 
-                },
-                () => {
-                    // On cancel
-                    frm.set_value('ready_for_sale', 0);
-                }
-            );
-        }
-    },
+    //             },
+    //             () => {
+    //                 // On cancel
+    //                 frm.set_value('ready_for_sale', 0);
+    //             }
+    //         );
+    //     }
+    // },
 
 
     feed_consumed_quantity: function (frm) {
