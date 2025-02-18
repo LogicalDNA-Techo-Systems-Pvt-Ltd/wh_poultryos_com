@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Layer Transaction\"}}]",
+ "content": "[{\"id\":\"yRLxfjZL05\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Layer Transaction</span>\",\"col\":12}},{\"id\":\"zF6JvRt6GO\",\"type\":\"card\",\"data\":{\"card_name\":\"Layer Batch\",\"col\":4}},{\"id\":\"ACOeorYiqw\",\"type\":\"card\",\"data\":{\"card_name\":\"Layer Transaction\",\"col\":4}},{\"id\":\"ZRd_6s7dki\",\"type\":\"card\",\"data\":{\"card_name\":\"Layer Egg Collection\",\"col\":4}}]",
  "creation": "2025-02-06 11:29:39.621343",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,8 +12,66 @@
  "indicator_color": "",
  "is_hidden": 0,
  "label": "Layer Transactions",
- "links": [],
- "modified": "2025-02-13 17:04:45.136762",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Batch",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Batch",
+   "link_count": 0,
+   "link_to": "Layer Batch",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Transaction",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Daily Transaction",
+   "link_count": 0,
+   "link_to": "Layer Daily Transaction",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Egg Collection",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Egg Collection",
+   "link_count": 0,
+   "link_to": "Layer Eggs Collection",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-02-18 17:45:14.123878",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Layer Transactions",

@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:SCH-{###}",
  "creation": "2025-02-18 12:41:27.299540",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -15,7 +16,20 @@
   "medicine_cost",
   "vaccine_cost",
   "mortality_bonus_section",
-  "bird_incentive"
+  "bird_incentive",
+  "bird_incentive_percentage",
+  "column_break_oibt",
+  "bird_incentive_per_bird",
+  "section_break_jgzg",
+  "cost_detail",
+  "deductions_section",
+  "feed_conversion_ratio_fcr_deduction",
+  "first_week_mortality_threshold",
+  "cumulative_mortality_limit",
+  "column_break_pjnt",
+  "excess_first_week_mortality_penalty",
+  "bird_short_recovery",
+  "minimum_rearing_charges"
  ],
  "fields": [
   {
@@ -29,16 +43,21 @@
    "label": "Name"
   },
   {
+   "default": "0",
    "fieldname": "chick_cost",
    "fieldtype": "Float",
    "label": "Chick Cost"
   },
   {
+   "default": "0",
    "fieldname": "administration_cost",
    "fieldtype": "Int",
-   "label": "Administration Cost"
+   "in_list_view": 1,
+   "label": "Administration Cost",
+   "reqd": 1
   },
   {
+   "default": "0",
    "fieldname": "mortality_deductions",
    "fieldtype": "Int",
    "label": "Mortality Deductions"
@@ -48,16 +67,21 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "0",
    "fieldname": "feed_cost",
    "fieldtype": "Int",
-   "label": "Feed Cost"
+   "in_list_view": 1,
+   "label": "Feed Cost",
+   "reqd": 1
   },
   {
+   "default": "0",
    "fieldname": "medicine_cost",
    "fieldtype": "Int",
    "label": "Medicine Cost"
   },
   {
+   "default": "0",
    "fieldname": "vaccine_cost",
    "fieldtype": "Int",
    "label": "Vaccine Cost"
@@ -68,17 +92,84 @@
    "label": "Mortality Bonus"
   },
   {
+   "default": "0",
    "fieldname": "bird_incentive",
    "fieldtype": "Int",
    "label": "Bird Incentive"
+  },
+  {
+   "default": "1",
+   "fieldname": "bird_incentive_per_bird",
+   "fieldtype": "Int",
+   "label": "Bird Incentive per bird"
+  },
+  {
+   "fieldname": "bird_incentive_percentage",
+   "fieldtype": "Int",
+   "label": "Bird incentive percentage"
+  },
+  {
+   "fieldname": "section_break_jgzg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "cost_detail",
+   "fieldtype": "Table",
+   "label": "Cost Detail",
+   "options": "Cost Detail",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_oibt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "deductions_section",
+   "fieldtype": "Section Break",
+   "label": "Deductions"
+  },
+  {
+   "fieldname": "feed_conversion_ratio_fcr_deduction",
+   "fieldtype": "Int",
+   "label": "Feed Conversion Ratio (FCR) Deduction"
+  },
+  {
+   "fieldname": "first_week_mortality_threshold",
+   "fieldtype": "Int",
+   "label": "First Week Mortality Threshold"
+  },
+  {
+   "fieldname": "cumulative_mortality_limit",
+   "fieldtype": "Int",
+   "label": "Cumulative Mortality Limit"
+  },
+  {
+   "fieldname": "excess_first_week_mortality_penalty",
+   "fieldtype": "Int",
+   "label": "Excess First Week Mortality Penalty"
+  },
+  {
+   "fieldname": "bird_short_recovery",
+   "fieldtype": "Int",
+   "label": "Bird Short Recovery"
+  },
+  {
+   "fieldname": "minimum_rearing_charges",
+   "fieldtype": "Int",
+   "label": "Minimum Rearing Charges"
+  },
+  {
+   "fieldname": "column_break_pjnt",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-18 13:54:35.094421",
+ "modified": "2025-02-18 15:07:39.795426",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Scheme Management",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -94,7 +185,10 @@
    "write": 1
   }
  ],
+ "search_fields": "data_npcl",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "data_npcl"
 }

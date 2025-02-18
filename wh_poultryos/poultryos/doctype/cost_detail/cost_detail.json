@@ -1,0 +1,66 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:CD-{###}",
+ "creation": "2025-02-18 14:08:19.143585",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "from_avg_body_weight",
+  "to_avg_body_weight",
+  "production_cost",
+  "rearing_charge",
+  "fcr"
+ ],
+ "fields": [
+  {
+   "fieldname": "from_avg_body_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "From Avg. Body weight"
+  },
+  {
+   "fieldname": "to_avg_body_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "To Avg. Body weight"
+  },
+  {
+   "fieldname": "production_cost",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Production Cost"
+  },
+  {
+   "fieldname": "rearing_charge",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Rearing Charge"
+  },
+  {
+   "fieldname": "fcr",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "FCR"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-02-18 14:39:47.206011",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Cost Detail",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
