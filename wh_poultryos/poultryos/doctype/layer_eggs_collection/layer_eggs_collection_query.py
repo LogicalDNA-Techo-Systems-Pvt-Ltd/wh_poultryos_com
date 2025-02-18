@@ -22,21 +22,25 @@ def layer_eggs_collection_get_list_query(user):
         )
 
         if not org_results:
-            return "No organization found for this user."
+            org_name = ""
+            print("No organization found for this user.")
 
         org_name = org_results[0].name
         print(org_name)
 
         # Fetch batches for the organization
         batch_results = frappe.get_all("Layer Batch", filters={"org_name": org_name})
-        print(batch_results)
+        
+        if not batch_results:
+            print("No batches found for this organization.")
+            return ""
 
         # Extract batch names into a list
         batch_names = [batch["name"] for batch in batch_results]
 
-        # Check if batch_names is empty
+        # Check if batch_names is empty and handle accordingly
         if not batch_names:
-            return "No batches found for this organization."
+            return "1 = 1"  # A condition that always evaluates to true (since there are no batches)
 
         # Format the query with the correct batch names
         return "(`tabLayer Eggs Collection`.batch IN ({batch_names}))".format(
