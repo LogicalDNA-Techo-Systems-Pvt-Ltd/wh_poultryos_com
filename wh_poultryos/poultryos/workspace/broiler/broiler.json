@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "BROILER",
  "links": [],
- "modified": "2025-02-17 15:41:32.325351",
+ "modified": "2025-02-18 10:13:44.036835",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "BROILER",
@@ -45,7 +45,7 @@
  "quick_lists": [],
  "roles": [
   {
-   "role": "CBF Farm Owner"
+   "role": "Broiler Farm Owner"
   },
   {
    "role": "Administrator"
