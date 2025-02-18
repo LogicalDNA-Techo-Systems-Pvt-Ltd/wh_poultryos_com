@@ -54,6 +54,7 @@ class BreederBatch(Document):
 
         # Recheck balance to prevent race conditions
         current_balance = self.get_user_balance()
+        print(current_balance)
         if current_balance < 1:
             frappe.throw("Insufficient balance for the transaction")
 
@@ -62,6 +63,7 @@ class BreederBatch(Document):
             "User Balance", filters={"user": self.user}, limit_page_length=1
         )
 
+        print(user_balance_records)
         if user_balance_records:
             # If the user balance exists, get the existing document
             user_balance = frappe.get_doc("User Balance", user_balance_records[0].name)

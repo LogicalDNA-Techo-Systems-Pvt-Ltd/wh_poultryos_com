@@ -1,0 +1,100 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-18 12:41:27.299540",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "cost_structure_section",
+  "data_npcl",
+  "chick_cost",
+  "administration_cost",
+  "mortality_deductions",
+  "column_break_mrfh",
+  "feed_cost",
+  "medicine_cost",
+  "vaccine_cost",
+  "mortality_bonus_section",
+  "bird_incentive"
+ ],
+ "fields": [
+  {
+   "fieldname": "cost_structure_section",
+   "fieldtype": "Section Break",
+   "label": "Cost Structure"
+  },
+  {
+   "fieldname": "data_npcl",
+   "fieldtype": "Data",
+   "label": "Name"
+  },
+  {
+   "fieldname": "chick_cost",
+   "fieldtype": "Float",
+   "label": "Chick Cost"
+  },
+  {
+   "fieldname": "administration_cost",
+   "fieldtype": "Int",
+   "label": "Administration Cost"
+  },
+  {
+   "fieldname": "mortality_deductions",
+   "fieldtype": "Int",
+   "label": "Mortality Deductions"
+  },
+  {
+   "fieldname": "column_break_mrfh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "feed_cost",
+   "fieldtype": "Int",
+   "label": "Feed Cost"
+  },
+  {
+   "fieldname": "medicine_cost",
+   "fieldtype": "Int",
+   "label": "Medicine Cost"
+  },
+  {
+   "fieldname": "vaccine_cost",
+   "fieldtype": "Int",
+   "label": "Vaccine Cost"
+  },
+  {
+   "fieldname": "mortality_bonus_section",
+   "fieldtype": "Section Break",
+   "label": "Mortality Bonus"
+  },
+  {
+   "fieldname": "bird_incentive",
+   "fieldtype": "Int",
+   "label": "Bird Incentive"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-18 13:54:35.094421",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Scheme Management",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

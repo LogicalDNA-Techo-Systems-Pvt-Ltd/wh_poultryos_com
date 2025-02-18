@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "BROILER",
  "links": [],
- "modified": "2025-02-17 15:41:32.325351",
+ "modified": "2025-02-17 22:40:53.014205",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "BROILER",
@@ -45,10 +45,13 @@
  "quick_lists": [],
  "roles": [
   {
-   "role": "CBF Farm Owner"
+   "role": "Administrator"
   },
   {
-   "role": "Administrator"
+   "role": "Broiler Farm Owner"
+  },
+  {
+   "role": "CBF Farm Owner"
   }
  ],
  "sequence_id": 4.0,
