@@ -11,9 +11,7 @@
   "section_break_ymub",
   "batch_name",
   "opening_date",
-  "farmer_name",
   "column_break_njbw",
-  "batch_type",
   "module",
   "breed_name",
   "quantity_and_age_information_section",
@@ -48,12 +46,6 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Batch Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "farmer_name",
-   "fieldtype": "Data",
-   "label": "Farmer Name",
    "reqd": 1
   },
   {
@@ -120,14 +112,6 @@
   {
    "fieldname": "column_break_njbw",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "batch_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Batch Type",
-   "options": "Batch Type",
-   "reqd": 1
   },
   {
    "fieldname": "module",
@@ -254,7 +238,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-14 12:25:13.593696",
+ "modified": "2025-02-18 00:11:22.302216",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Batch",

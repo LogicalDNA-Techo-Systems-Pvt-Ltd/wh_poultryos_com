@@ -1,57 +1,57 @@
 {
- "charts": [],
- "content": "[{\"id\":\"PhDA3BQMBJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"No. of Batches\",\"col\":6}},{\"id\":\"gmESmtk8I7\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Available Balance\",\"col\":6}},{\"id\":\"qiohTBeK5o\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Mortality\",\"col\":4}},{\"id\":\"OiM38rdrcD\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Average Bird Weight (In Grams)\",\"col\":4}},{\"id\":\"XKFKYYfcEU\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Feed Consumed\",\"col\":4}}]",
- "creation": "2024-12-06 16:54:43.323525",
- "custom_blocks": [],
- "docstatus": 0,
- "doctype": "Workspace",
- "for_user": "",
- "hide_custom": 0,
- "icon": "dashboard-list",
- "idx": 1,
- "indicator_color": "",
- "is_hidden": 0,
- "label": "BROILER",
- "links": [],
- "modified": "2025-02-18 10:13:44.036835",
- "modified_by": "Administrator",
- "module": "PoultryOS",
- "name": "BROILER",
- "number_cards": [
-  {
-   "label": "Available Balance",
-   "number_card_name": "Available Balance"
-  },
-  {
-   "label": "Total Mortality",
-   "number_card_name": "Total Mortality"
-  },
-  {
-   "label": "Total Feed Consumed",
-   "number_card_name": "Total Feed Consumed"
-  },
-  {
-   "label": "No. of Batches",
-   "number_card_name": "No. of Batches"
-  },
-  {
-   "label": "Total Average Bird Weight (In Grams)",
-   "number_card_name": "Total Average Bird Weight (In Grams)"
-  }
- ],
- "owner": "Administrator",
- "parent_page": "",
- "public": 1,
- "quick_lists": [],
- "roles": [
-  {
-   "role": "Broiler Farm Owner"
-  },
-  {
-   "role": "Administrator"
-  }
- ],
- "sequence_id": 4.0,
- "shortcuts": [],
- "title": "BROILER"
+   "charts": [],
+   "content": "[{\"id\":\"PhDA3BQMBJ\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"No. of Batches\",\"col\":6}},{\"id\":\"gmESmtk8I7\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Available Balance\",\"col\":6}},{\"id\":\"qiohTBeK5o\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Mortality\",\"col\":4}},{\"id\":\"OiM38rdrcD\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Average Bird Weight (In Grams)\",\"col\":4}},{\"id\":\"XKFKYYfcEU\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Feed Consumed\",\"col\":4}}]",
+   "creation": "2024-12-06 16:54:43.323525",
+   "custom_blocks": [],
+   "docstatus": 0,
+   "doctype": "Workspace",
+   "for_user": "",
+   "hide_custom": 0,
+   "icon": "dashboard-list",
+   "idx": 1,
+   "indicator_color": "",
+   "is_hidden": 0,
+   "label": "BROILER",
+   "links": [],
+   "modified": "2025-02-18 10:13:44.036835",
+   "modified_by": "Administrator",
+   "module": "PoultryOS",
+   "name": "BROILER",
+   "number_cards": [
+      {
+         "label": "Available Balance",
+         "number_card_name": "Available Balance"
+      },
+      {
+         "label": "Total Mortality",
+         "number_card_name": "Total Mortality"
+      },
+      {
+         "label": "Total Feed Consumed",
+         "number_card_name": "Total Feed Consumed"
+      },
+      {
+         "label": "No. of Batches",
+         "number_card_name": "No. of Batches"
+      },
+      {
+         "label": "Total Average Bird Weight (In Grams)",
+         "number_card_name": "Total Average Bird Weight (In Grams)"
+      }
+   ],
+   "owner": "Administrator",
+   "parent_page": "",
+   "public": 1,
+   "quick_lists": [],
+   "roles": [
+      {
+         "role": "Administrator"
+      },
+      {
+         "role": "Broiler Farm Owner"
+      }
+   ],
+   "sequence_id": 4.0,
+   "shortcuts": [],
+   "title": "BROILER"
 }

@@ -36,7 +36,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
     add_custom_buttons: function (frm) {
         // Add "Accept" button inside "Actions" menu
-        frm.add_custom_button(__('Ready for Sale'), () => {
+        frm.add_custom_button(__('Mark Ready for Sale'), () => {
 
             if (!frm.doc.ready_for_sale && frm.doc.__prev_ready_for_sale) {
 
@@ -101,7 +101,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
         }, "Actions"); // Add under "Actions" group
 
         // Add "Reject" button inside "Actions" menu
-        frm.add_custom_button(__('Batch Completed'), () => {
+        frm.add_custom_button(__('Complete the Batch'), () => {
 
             frappe.confirm(
                 'Are you sure you want to mark this batch as completed? This action cannot be undone.',

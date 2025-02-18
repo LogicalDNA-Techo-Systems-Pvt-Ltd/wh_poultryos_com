@@ -101,7 +101,7 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "Growing Charges Report",
+   "label": "GC",
    "link_count": 0,
    "link_to": "Broiler Growing Charges",
    "link_type": "Report",
@@ -120,7 +120,7 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "Sales invoice Report",
+   "label": "Sales",
    "link_count": 0,
    "link_to": "Broiler Sales Report",
    "link_type": "Report",
@@ -128,7 +128,7 @@
    "type": "Link"
   }
  ],
- "modified": "2025-02-17 15:44:45.010353",
+ "modified": "2025-02-17 22:32:28.797482",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Reports",
