@@ -6,37 +6,14 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
     refresh: function (frm) {
 
-        frappe.call({
-            method: 'frappe.client.get_list',
-            args: {
-                doctype: 'Broiler Daily Transaction',
-                filters: {
-                    batch: frm.doc.batch,
-                    ready_for_sale: 1
-                },
-                fields: ['name'],
-                limit_page_length: 1  // Fetch only one record if exists
-            },
-            callback: function (response) {
-                if (response.message && response.message.length > 0) {
-                    // If a previous transaction has "ready_for_sale" enabled, keep it enabled and read-only
-                    frm.set_value('ready_for_sale', 1);
-                    frm.set_df_property('ready_for_sale', 'read_only', 1);
-                }
-            }
-        });
 
-        // Ensure the field is read-only if it's already enabled
-        if (frm.doc.ready_for_sale) {
-            frm.set_df_property('ready_for_sale', 'read_only', 1);
-        }
-        
+
         frm.trigger('add_custom_buttons'); // Call function on refresh
     },
 
     add_custom_buttons: function (frm) {
         // Add "Accept" button inside "Actions" menu
-        frm.add_custom_button(__('Mark Ready for Sale'), () => {
+        frm.add_custom_button(__('Mark as Ready for Sale'), () => {
 
             if (!frm.doc.ready_for_sale && frm.doc.__prev_ready_for_sale) {
 
@@ -50,8 +27,8 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                 return;
             }
 
-             // If already ready for sale, show message and return
-             if (frm.doc.ready_for_sale) {
+            // If already ready for sale, show message and return
+            if (frm.doc.ready_for_sale) {
                 frappe.msgprint(__('Batch is already marked as Ready for Sale.'));
                 return;
             }
@@ -437,6 +414,9 @@ frappe.ui.form.on('Broiler Daily Transaction', {
     },
 
     batch: function (frm) {
+
+        frm.set_df_property('ready_for_sale', 'read_only',1);
+
         // Set the max date for the Transaction Date field to today
         frm.fields_dict['transaction_date'].df['max'] = frappe.datetime.get_today();
         frm.fields_dict['transaction_date'].refresh(); // Refresh to apply the change
@@ -480,6 +460,31 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                                         frm.set_value('transaction_date', batch_date);
                                     } else {
                                         frappe.msgprint(__('Batch placed date is missing.'));
+                                    }
+
+                                    frappe.call({
+                                        method: 'frappe.client.get_list',
+                                        args: {
+                                            doctype: 'Broiler Daily Transaction',
+                                            filters: {
+                                                batch: frm.doc.batch,
+                                                ready_for_sale: 1
+                                            },
+                                            fields: ['name'],
+                                            limit_page_length: 1  // Fetch only one record if exists
+                                        },
+                                        callback: function (response) {
+                                            if (response.message && response.message.length > 0) {
+                                                // If a previous transaction has "ready_for_sale" enabled, keep it enabled and read-only
+                                                frm.set_value('ready_for_sale', 1);
+                                                frm.set_df_property('ready_for_sale', 'read_only', 1);
+                                            }
+                                        }
+                                    });
+
+                                    // Ensure the field is read-only if it's already enabled
+                                    if (frm.doc.ready_for_sale) {
+                                        frm.set_df_property('ready_for_sale', 'read_only', 1);
                                     }
                                 }
                             });

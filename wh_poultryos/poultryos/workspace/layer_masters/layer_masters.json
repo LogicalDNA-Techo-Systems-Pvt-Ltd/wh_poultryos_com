@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"CDWZ5z6_eP\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Layer Master</span>\",\"col\":12}}]",
+ "content": "[{\"id\":\"CDWZ5z6_eP\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Layer Master</span>\",\"col\":12}},{\"id\":\"Zn2DIeZwP1\",\"type\":\"card\",\"data\":{\"card_name\":\"Layer Location\",\"col\":4}},{\"id\":\"2Lm838Mccv\",\"type\":\"card\",\"data\":{\"card_name\":\"Layer Shed\",\"col\":4}},{\"id\":\"XoMe_2MfIU\",\"type\":\"card\",\"data\":{\"card_name\":\"Layer Item Master\",\"col\":4}},{\"id\":\"uRQ4jDNPX9\",\"type\":\"card\",\"data\":{\"card_name\":\"Layer Item Rate\",\"col\":4}},{\"id\":\"nPD_rKxzRQ\",\"type\":\"card\",\"data\":{\"card_name\":\"Layer Standard Chart\",\"col\":4}},{\"id\":\"lnPjIqs5dn\",\"type\":\"card\",\"data\":{\"card_name\":\"Layer Egg Types\",\"col\":4}}]",
  "creation": "2025-02-06 11:29:18.274198",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,8 +12,123 @@
  "indicator_color": "",
  "is_hidden": 0,
  "label": "Layer Masters",
- "links": [],
- "modified": "2025-02-13 17:04:39.280004",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Location",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Location",
+   "link_count": 0,
+   "link_to": "Location",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Shed",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Shed",
+   "link_count": 0,
+   "link_to": "Shed",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Item Master",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Master",
+   "link_count": 0,
+   "link_to": "Item Master",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Item Rate",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Rate",
+   "link_count": 0,
+   "link_to": "Item Rate",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Standard Chart",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Std. Chart",
+   "link_count": 0,
+   "link_to": "Standard Chart",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Egg Types",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Layer Egg Types",
+   "link_count": 0,
+   "link_to": "Egg Types",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-02-18 17:59:38.746916",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Layer Masters",

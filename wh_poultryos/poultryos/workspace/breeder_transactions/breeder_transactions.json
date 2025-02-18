@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Breeder Transaction\"}}]",
+ "content": "[{\"id\":\"pnu-_sAo33\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Breeder Transaction</span>\",\"col\":12}},{\"id\":\"jB6IyV8ebp\",\"type\":\"card\",\"data\":{\"card_name\":\"Breeder Batch\",\"col\":4}},{\"id\":\"7uzw0EIRHk\",\"type\":\"card\",\"data\":{\"card_name\":\"Breeder Daily Transaction\",\"col\":4}},{\"id\":\"HO2TXIyDVp\",\"type\":\"card\",\"data\":{\"card_name\":\"Breeder Egg collection\",\"col\":4}}]",
  "creation": "2025-02-06 11:31:48.300996",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,8 +12,66 @@
  "indicator_color": "",
  "is_hidden": 0,
  "label": "Breeder Transactions",
- "links": [],
- "modified": "2025-02-13 17:04:14.738613",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Breeder Daily Transaction",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Daily Transaction",
+   "link_count": 0,
+   "link_to": "Breeder Daily Transaction",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Breeder Egg collection",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Egg Collection",
+   "link_count": 0,
+   "link_to": "Breeder Eggs Collection",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Breeder Batch",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Breeder Batch",
+   "link_count": 0,
+   "link_to": "Breeder Batch",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-02-18 18:00:14.236361",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Transactions",

@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Breeder Master\"}}]",
+ "content": "[{\"id\":\"oMHZvxJYtN\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Breeder Master</span>\",\"col\":12}},{\"id\":\"vHdZuq7stu\",\"type\":\"card\",\"data\":{\"card_name\":\"Location\",\"col\":4}},{\"id\":\"Dkex85co8D\",\"type\":\"card\",\"data\":{\"card_name\":\"Shed\",\"col\":4}},{\"id\":\"RAggrHbYFQ\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Master\",\"col\":4}},{\"id\":\"LBQx3tdKx8\",\"type\":\"card\",\"data\":{\"card_name\":\"Item Rate\",\"col\":4}},{\"id\":\"706ABfPg45\",\"type\":\"card\",\"data\":{\"card_name\":\"Standard Chart\",\"col\":4}},{\"id\":\"zK9_Ekbv8p\",\"type\":\"card\",\"data\":{\"card_name\":\"Egg Types\",\"col\":4}}]",
  "creation": "2025-02-06 11:30:50.230004",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,8 +12,123 @@
  "indicator_color": "",
  "is_hidden": 0,
  "label": "Breeder Masters",
- "links": [],
- "modified": "2025-02-13 17:04:24.687777",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Location",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Location",
+   "link_count": 0,
+   "link_to": "Location",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Shed",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Shed",
+   "link_count": 0,
+   "link_to": "Shed",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Master",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Master",
+   "link_count": 0,
+   "link_to": "Item Master",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Rate",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Rate",
+   "link_count": 0,
+   "link_to": "Item Rate",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Standard Chart",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Standard Chart",
+   "link_count": 0,
+   "link_to": "Standard Chart",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Egg Types",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Breeder Egg Types",
+   "link_count": 0,
+   "link_to": "Egg Types",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2025-02-18 17:42:23.755909",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Masters",
