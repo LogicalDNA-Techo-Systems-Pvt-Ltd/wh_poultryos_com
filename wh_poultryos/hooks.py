@@ -131,9 +131,17 @@ home_page = "login"
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
+permission_query_conditions = {
+    # "Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+    "Broiler Batch": "wh_poultryos.poultryos.doctype.broiler_batch.broiler_batch_query.broiler_batch_get_list_query",
+    "Broiler Daily Transaction": "wh_poultryos.poultryos.doctype.broiler_daily_transaction.broiler_daily_transaction_query.broiler_daily_transaction_get_list_query",
+    "Layer Batch": "wh_poultryos.poultryos.doctype.layer_batch.layer_batch_query.layer_batch_get_list_query",
+    "Layer Daily Transaction": "wh_poultryos.poultryos.doctype.layer_daily_transaction.layer_daily_transaction_query.layer_daily_transaction_get_list_query",
+    "Layer Eggs Collection": "wh_poultryos.poultryos.doctype.layer_eggs_collection.layer_eggs_collection_query.layer_eggs_collection_get_list_query",
+    "Breeder Batch": "wh_poultryos.poultryos.doctype.breeder_batch.breeder_batch_query.breeder_batch_get_list_query",
+    "Breeder Daily Transaction": "wh_poultryos.poultryos.doctype.breeder_daily_transaction.breeder_daily_transaction_query.breeder_daily_transaction_get_list_query",
+    "Breeder Eggs Collection": "wh_poultryos.poultryos.doctype.breeder_eggs_collection.breeder_eggs_collection_query.breeder_eggs_collection_get_list_query",
+}
 #
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
@@ -161,7 +169,6 @@ doc_events = {
     # 	}
     # "*": {"onload": "wh_poultryos.api.get_org_name_from_session"},
     # "User": {"on_login": "wh_poultryos.api.set_org_name_in_session"},
-    
     "Broiler Daily Transaction": {
         "after_delete": "wh_poultryos.poultryos.doctype.broiler_daily_transaction.broiler_daily_transaction.show_delete_message"
     }
