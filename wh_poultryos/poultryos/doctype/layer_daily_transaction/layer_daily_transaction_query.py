@@ -15,11 +15,11 @@ def layer_daily_transaction_get_list_query(user):
         )
 
         if not org_results:
+            org_name = ""
             print("No organization found for this user.")
-            return ""
-
-        org_name = org_results[0].name
-        print(f"Organization found: {org_name}")
+        else:
+            org_name = org_results[0].name
+            print(org_name)
 
         # Fetch batches for the organization
         batch_results = frappe.get_all("Layer Batch", filters={"org_name": org_name})
