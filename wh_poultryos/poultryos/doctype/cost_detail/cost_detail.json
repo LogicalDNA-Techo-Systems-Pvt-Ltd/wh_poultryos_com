@@ -29,6 +29,7 @@
    "label": "To Avg. Body weight"
   },
   {
+   "default": "0",
    "fieldname": "production_cost",
    "fieldtype": "Int",
    "in_list_view": 1,
@@ -36,6 +37,7 @@
    "label": "Production Cost"
   },
   {
+   "default": "0",
    "fieldname": "rearing_charge",
    "fieldtype": "Int",
    "in_list_view": 1,
@@ -53,7 +55,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-02-18 14:39:47.206011",
+ "modified": "2025-02-19 10:22:56.284074",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Cost Detail",

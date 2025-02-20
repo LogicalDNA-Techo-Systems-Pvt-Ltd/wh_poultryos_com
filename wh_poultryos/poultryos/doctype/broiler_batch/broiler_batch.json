@@ -37,6 +37,7 @@
   "sale_quantity",
   "organizational_and_status_information_section",
   "batch_status",
+  "gc_calculated",
   "column_break_dmdn",
   "org_name",
   "ready_for_sale",
@@ -135,7 +136,8 @@
   {
    "fieldname": "amount",
    "fieldtype": "Float",
-   "label": "Amount"
+   "label": "Amount",
+   "read_only": 1
   },
   {
    "default": "0",
@@ -152,18 +154,21 @@
   {
    "fieldname": "biological_value",
    "fieldtype": "Float",
-   "label": "Biological Value"
+   "label": "Biological Value",
+   "read_only": 1
   },
   {
    "fieldname": "bird_cost",
    "fieldtype": "Float",
-   "label": "Bird Cost"
+   "label": "Bird Cost",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "sale_quantity",
    "fieldtype": "Float",
-   "label": "Sale Quantity"
+   "label": "Sale Quantity",
+   "read_only": 1
   },
   {
    "fieldname": "shed",
@@ -246,6 +251,12 @@
    "fieldname": "miscellaneous_information_section",
    "fieldtype": "Section Break",
    "label": "Miscellaneous Information"
+  },
+  {
+   "default": "No",
+   "fieldname": "gc_calculated",
+   "fieldtype": "Read Only",
+   "label": "GC Calculated?"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -256,7 +267,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-14 12:24:47.708148",
+ "modified": "2025-02-20 11:12:57.127010",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Batch",

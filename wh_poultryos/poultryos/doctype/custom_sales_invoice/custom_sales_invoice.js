@@ -91,14 +91,15 @@ frappe.ui.form.on('Batch Selection', {
 frappe.ui.form.on('Custom Sales Invoice', {
 
     onload: function (frm) {
-        frm.fields_dict["batches"].grid.get_field("batch").get_query = function () {
+        frm.set_query("batch", "batches", function () {
             return {
                 filters: {
-                    ready_for_sale: 1
+                    ready_for_sale: 1,
+                    batch_status: "Ready for sale"
                 }
             };
-        };
-    },
+        });
+    },    
 
     after_save: function (frm) {
         frappe.call({

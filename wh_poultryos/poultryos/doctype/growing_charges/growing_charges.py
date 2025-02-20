@@ -42,4 +42,18 @@ def get_available_batches():
 
     return available_batches
 
+@frappe.whitelist()
+def update_batches(batch, status):
+    """
+    Update the ready_for_sale field in the Batch doctype.
+    :param batch_name: Name of the batch to update
+    :param ready_for_sale: Boolean (0 or 1) to update the status
+    """
+    if batch:
+        frappe.db.set_value("Broiler Batch", batch, "gc_calculated", status)
+        frappe.db.commit()
+        return {"status": "success", "message": f"Batch {batch} updated successfully"}
+    
+    return {"status": "error", "message": "Batch not found"}
+
 
