@@ -11,7 +11,9 @@
   "batch_information_section",
   "batch_name",
   "opening_date",
+  "farmer_name",
   "column_break_njbw",
+  "batch_type",
   "module",
   "breed_name",
   "quantity_and_age_information_section",
@@ -70,9 +72,10 @@
   },
   {
    "fieldname": "live_batch_date",
-   "fieldtype": "Read Only",
+   "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Live Batch Date"
+   "label": "Live Batch Date",
+   "read_only": 1
   },
   {
    "columns": 2,
@@ -223,6 +226,20 @@
    "fieldname": "transaction_related_information_section",
    "fieldtype": "Section Break",
    "label": "Transaction Related Information"
+  },
+  {
+   "fieldname": "farmer_name",
+   "fieldtype": "Data",
+   "label": "Farmer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "batch_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Batch Type",
+   "options": "Batch Type",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -238,7 +255,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-18 18:00:57.755159",
+ "modified": "2025-02-20 11:39:43.384753",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Layer Batch",

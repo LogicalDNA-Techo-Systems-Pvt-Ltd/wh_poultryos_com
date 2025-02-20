@@ -495,7 +495,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                                                                     let age_in_days = frappe.datetime.get_diff(live_batch_date, placement_date);
 
                                                                     // Format Live Batch Date (DD-MM-YYYY)
-                                                                    let formatted_live_batch_date = frappe.datetime.str_to_user(live_batch_date);
+                                                                    // let formatted_live_batch_date = frappe.datetime.str_to_user(live_batch_date);
 
                                                                     // Calculate Mortality
                                                                     let mortality = 0;
@@ -525,7 +525,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                                                                             doctype: 'Broiler Batch',
                                                                             name: frm.doc.batch,
                                                                             fieldname: {
-                                                                                live_batch_date: formatted_live_batch_date,
+                                                                                live_batch_date: live_batch_date,
                                                                                 batch_age_in_days: age_in_days,
                                                                                 mortality: mortality,
                                                                                 biological_value: updated_biological_value,
