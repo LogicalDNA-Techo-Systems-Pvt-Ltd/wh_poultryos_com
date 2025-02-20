@@ -204,18 +204,12 @@ frappe.ui.form.on('Broiler Daily Transaction', {
             return;
         }
 
-        // // Ensure item is selected
-        // if (!frm.doc.item_type) {
-        //     frappe.msgprint(__('Please select an item.'));
-        //     return;
-        // }   
-
         console.log("Placement date", frm.doc.batch_placed_on);
         console.log(frm.doc.transaction_date);
 
         // Get and standardize both dates
-        let placementDate = standardizeDate(frm.doc.batch_placed_on);
-        let transactionDate = standardizeDate(frm.doc.transaction_date);
+        let placementDate = new Date(frm.doc.batch_placed_on);
+        let transactionDate = new Date(frm.doc.transaction_date);
 
         console.log("Standardized Placement Date:", placementDate);
         console.log("Standardized Transaction Date:", transactionDate);
@@ -274,67 +268,6 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
     },
 
-    // ready_for_sale: function (frm) {
-
-    //     if (!frm.doc.ready_for_sale && frm.doc.__prev_ready_for_sale) {
-    //         // Prevent toggle from being turned off
-    //         frappe.show_alert({
-    //             message: __('Ready for Sale cannot be disabled once enabled'),
-    //             indicator: 'red'
-    //         }, 5);
-
-    //         // Reset the toggle back to on
-    //         frm.set_value('ready_for_sale', 1);
-
-    //         return;
-    //     }
-
-    //     // If turning on for the first time
-    //     if (frm.doc.ready_for_sale) {
-    //         // Show confirmation dialog
-    //         frappe.confirm(
-    //             'Are you sure you want to mark this batch as ready for sale? This action cannot be undone.',
-    //             () => {
-    //                 // On confirm
-    //                 frm.doc.__prev_ready_for_sale = 1;
-
-    //                 // Show success message
-    //                 frappe.show_alert({
-    //                     message: __('This batch is now available for ready for sale'),
-    //                     indicator: 'green'
-    //                 }, 5);
-
-    //                 // Make the field read-only after enabling
-    //                 frm.set_df_property('ready_for_sale', 'read_only', 1);
-
-    //                 // Call the server method in batch.py
-    //                 frappe.call({
-    //                     method: 'wh_poultryos.poultryos.doctype.broiler_batch.broiler_batch.update_batch_ready_for_sale',
-    //                     args: {
-    //                         batch_name: frm.doc.batch,  // Assuming 'batch' field exists in Broiler Daily Transaction
-    //                         ready_for_sale: 1,
-    //                         status: "Ready for sale"
-    //                     },
-    //                     callback: function (r) {
-    //                         if (r.message.status === "success") {
-    //                             frappe.msgprint(__('Batch status updated successfully.'));
-    //                         } else {
-    //                             frappe.msgprint(__('Error updating batch status.'));
-    //                         }
-    //                     }
-    //                 });
-
-
-    //             },
-    //             () => {
-    //                 // On cancel
-    //                 frm.set_value('ready_for_sale', 0);
-    //             }
-    //         );
-    //     }
-    // },
-
-
     feed_consumed_quantity: function (frm) {
 
         frm.doc.item = "Feed";
@@ -348,14 +281,12 @@ frappe.ui.form.on('Broiler Daily Transaction', {
             frappe.msgprint(__('Sorry you are not selecting feed item.'));
         }
 
-
-
     },
 
     validate: function (frm) {
         // Ensure the Transaction Date is not in the future when validating
-        let transaction_date = standardizeDate(frm.doc.transaction_date);
-        let batch_placed_on = standardizeDate(frm.doc.batch_placed_on);
+        let transaction_date = frm.doc.transaction_date;
+        let batch_placed_on = frm.doc.batch_placed_on;
         let mortality_number_of_birds = frm.doc.mortality_number_of_birds;
         let feed_consumed_quantity = frm.doc.feed_consumed_quantity;
         let batch_live_quantity = frm.doc.batch_live_quantity;
@@ -379,13 +310,6 @@ frappe.ui.form.on('Broiler Daily Transaction', {
             frappe.validated = false;  // Prevent form submission
             return;
         }
-
-        // Mortality Number of Birds Validation
-        // if (mortality_number_of_birds <= 0) {
-        //     frappe.msgprint(__('Mortality (Number of birds) must be greater than 0'));
-        //     frappe.validated = false;  // Prevent form submission
-        //     return;
-        // }
 
         if (mortality_number_of_birds > batch_live_quantity) {
             frappe.msgprint(__('Mortality (Number of birds) cannot be greater than live quantity'));
@@ -415,7 +339,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
     batch: function (frm) {
 
-        frm.set_df_property('ready_for_sale', 'read_only',1);
+        frm.set_df_property('ready_for_sale', 'read_only', 1);
 
         // Set the max date for the Transaction Date field to today
         frm.fields_dict['transaction_date'].df['max'] = frappe.datetime.get_today();
@@ -434,9 +358,9 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                     if (response.message && Object.keys(response.message).length > 0) {
                         let opening_date = response.message.opening_date;
                         if (opening_date) {
+                            let dt_opening_date = new Date(opening_date);
                             // Convert the date to user-preferred format
-                            let formatted_date = frappe.datetime.str_to_user(opening_date);
-                            frm.set_value('batch_placed_on', formatted_date);
+                            frm.set_value('batch_placed_on', dt_opening_date);
 
                             // Fetch the last transaction date for the same batch
                             frappe.call({
@@ -456,8 +380,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                                         frm.set_value('transaction_date', next_day);
                                     } else if (frm.doc.batch_placed_on) {
                                         // If no transaction exists, use the batch_placed_on date
-                                        let batch_date = frappe.datetime.user_to_str(frm.doc.batch_placed_on);
-                                        frm.set_value('transaction_date', batch_date);
+                                        frm.set_value('transaction_date', frm.doc.batch_placed_on);
                                     } else {
                                         frappe.msgprint(__('Batch placed date is missing.'));
                                     }
