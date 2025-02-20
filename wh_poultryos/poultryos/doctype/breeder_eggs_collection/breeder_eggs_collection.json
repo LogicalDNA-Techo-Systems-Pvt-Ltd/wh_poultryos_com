@@ -35,14 +35,16 @@
   {
    "fetch_from": "batch.opening_date",
    "fieldname": "batch_placed_on",
-   "fieldtype": "Read Only",
-   "label": "Batch Placed On"
+   "fieldtype": "Date",
+   "label": "Batch Placed On",
+   "read_only": 1
   },
   {
    "fetch_from": "batch.batch_age_in_days",
    "fieldname": "batch_age_in_days",
-   "fieldtype": "Read Only",
-   "label": "Batch Age (In Days)"
+   "fieldtype": "Int",
+   "label": "Batch Age (In Days)",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_enib",
@@ -51,15 +53,17 @@
   {
    "fetch_from": "batch.place_quantity_number_of_birds",
    "fieldname": "batch_placed_quantity",
-   "fieldtype": "Read Only",
-   "label": "Batch Placed Quantity"
+   "fieldtype": "Int",
+   "label": "Batch Placed Quantity",
+   "read_only": 1
   },
   {
    "fetch_from": "batch.live_quantity_number_of_birds",
    "fetch_if_empty": 1,
    "fieldname": "batch_live_quantity",
-   "fieldtype": "Read Only",
-   "label": "Batch Live Quantity"
+   "fieldtype": "Int",
+   "label": "Batch Live Quantity",
+   "read_only": 1
   },
   {
    "depends_on": "batch",
@@ -92,7 +96,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-12 12:46:38.365046",
+ "modified": "2025-02-20 17:29:24.782108",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Eggs Collection",
