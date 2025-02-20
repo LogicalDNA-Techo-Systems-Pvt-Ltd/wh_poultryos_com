@@ -40,11 +40,12 @@ frappe.ui.form.on('Layer Batch', {
 
     opening_date: function (frm) {
         if (frm.doc.opening_date) {
-            let formatted_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
-            frm.set_value('live_batch_date', formatted_date);
+            // let formatted_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
+            frm.set_value('live_batch_date', frm.doc.opening_date);
         }
 
-        let opening_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
+        // let opening_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
+        let opening_date = frm.doc.opening_date;
         let today = frm.doc.live_batch_date;
         let days_diff = frappe.datetime.get_diff(today, opening_date);
         frm.set_value("batch_age_in_days", days_diff || 0);

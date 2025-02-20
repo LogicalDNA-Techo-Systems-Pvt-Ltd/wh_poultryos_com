@@ -54,8 +54,8 @@ frappe.ui.form.on('Breeder Batch', {
 
     opening_date: function (frm) {
         if (frm.doc.opening_date) {
-            let formatted_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
-            frm.set_value('live_batch_date', formatted_date);
+            // let formatted_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
+            frm.set_value('live_batch_date', frm.doc.opening_date);
         }
 
         let opening_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
