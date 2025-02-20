@@ -42,8 +42,9 @@
   {
    "fetch_from": "batch.opening_date",
    "fieldname": "batch_placed_on",
-   "fieldtype": "Read Only",
-   "label": "Batch Placed On"
+   "fieldtype": "Date",
+   "label": "Batch Placed On",
+   "read_only": 1
   },
   {
    "fetch_from": "batch.batch_age_in_days",
@@ -146,7 +147,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-12 17:42:15.535879",
+ "modified": "2025-02-20 17:18:53.470342",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Breeder Daily Transaction",
