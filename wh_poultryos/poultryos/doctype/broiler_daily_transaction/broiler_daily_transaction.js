@@ -197,7 +197,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                     }
                 } else {
                     // No matching rate found
-                    frappe.msgprint(__('No rate found for the selected item and date.'));
+                    // frappe.msgprint(__('No rate found for the selected item and date.'));
                     frm.set_value('feed_cost', 0);
                 }
             }
