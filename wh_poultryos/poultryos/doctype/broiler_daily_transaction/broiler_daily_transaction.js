@@ -286,15 +286,15 @@ frappe.ui.form.on('Broiler Daily Transaction', {
             args: {
                 doctype: "Broiler Batch",  // Target Doctype
                 filters: { name: frm.doc.batch },  // Match the batch name
-                fieldname: ["batch_status", "ready_for_sale"]  // Fetch these fields
+                fieldname: ["batch_status"]  // Fetch these fields
             },
             callback: function (res) {
                 if (res.message) {
                     let batch_status = res.message.batch_status;
-                    let ready_for_sale = res.message.ready_for_sale;
+                   
 
                     // Check if batch is marked as Ready for Sale
-                    if (ready_for_sale === "1" && batch_status === "Ready for sale") {
+                    if (batch_status === "Ready for sale") {
                         // Make batch_status field visible
                         frm.set_value("batch_status", batch_status);
                         frm.refresh_field("batch_status");
@@ -313,7 +313,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                                             method: 'wh_poultryos.poultryos.doctype.broiler_batch.broiler_batch.update_batch_ready_for_sale',
                                             args: {
                                                 batch_name: frm.doc.batch,
-                                                ready_for_sale: 1
+                                                status: "Ready for sale"
                                             },
                                             callback: function (r) {
                                                 if (r.message.status === "success") {
@@ -415,7 +415,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                     if (batch_data && batch_data.message.live_quantity_number_of_birds !== undefined) {
                         let batch_placed_quantity = batch_data.message.place_quantity_number_of_birds;
                         let current_batch_live_quantity = batch_data.message.live_quantity_number_of_birds;
-
+                        let salequantity = batch_data.message.sale_quantity;
                         // Fetch all transactions related to the batch to calculate total mortality
                         frappe.call({
                             method: 'frappe.client.get_list',
@@ -434,8 +434,11 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                                     });
                                     console.log(batch_placed_quantity);
                                     console.log(total_mortality);
+
+
+
                                     // Deduct the total mortality from the batch placed quantity
-                                    let updated_batch_live_quantity = batch_placed_quantity - total_mortality;
+                                    let updated_batch_live_quantity = batch_placed_quantity - total_mortality - salequantity;
                                     console.log(updated_batch_live_quantity);
                                     // Prevent updating if the live bird count goes negative
                                     if (updated_batch_live_quantity < 0) {
@@ -482,7 +485,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                                                                     // Calculate Mortality
                                                                     let mortality = 0;
                                                                     if (placed_quantity && updated_batch_live_quantity !== undefined) {
-                                                                        mortality = placed_quantity - updated_batch_live_quantity;
+                                                                        mortality = placed_quantity - updated_batch_live_quantity - salequantity;
                                                                         if (mortality < 0) {
                                                                             frappe.msgprint(__('Mortality cannot be negative. Please check the data.'));
                                                                             frappe.validated = false; // Prevent form submission

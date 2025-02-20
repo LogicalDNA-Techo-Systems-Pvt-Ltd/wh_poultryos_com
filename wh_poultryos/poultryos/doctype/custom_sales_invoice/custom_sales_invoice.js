@@ -94,7 +94,6 @@ frappe.ui.form.on('Custom Sales Invoice', {
         frm.set_query("batch", "batches", function () {
             return {
                 filters: {
-                    ready_for_sale: 1,
                     batch_status: "Ready for sale"
                 }
             };

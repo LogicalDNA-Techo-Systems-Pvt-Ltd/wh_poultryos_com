@@ -39,7 +39,7 @@ def update_batch_quantities(batches):
 
         # ✅ Determine which field to update based on type
         field_to_update = "live_quantity_number_of_birds" if batch_type == "Bird" else "culls"
-
+        print(field_to_update)
         # ✅ Retrieve batch details safely
         batch_data = frappe.db.get_value("Broiler Batch", batch_id, 
                                          ["live_quantity_number_of_birds", "culls", "sale_quantity", "bird_cost", "biological_value"], 
@@ -53,6 +53,8 @@ def update_batch_quantities(batches):
         current_sale_quantity = int(batch_data.get("sale_quantity") or 0)
         bird_cost = float(batch_data.get("bird_cost") or 0.0)
         biological_value = float(batch_data.get("biological_value") or 0.0)
+        liveQTY = int(batch_data.get("live_quantity_number_of_birds") or 0)
+
 
         # ✅ Check stock before processing
         if current_quantity >= quantity_sold:
