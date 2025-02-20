@@ -144,6 +144,25 @@
             margin-bottom: 10px;
             width: 100%;
         }
+
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-container input {
+            width: 100%;
+            padding-right: 40px;
+            /* Make room for the toggle button */
+        }
+
+        #togglePassword:hover {
+            opacity: 0.8;
+        }
+
+        #togglePassword:focus {
+            outline: none;
+        }
     </style>
 </head>
 
@@ -152,14 +171,19 @@
         <h2>PoultryOS Login</h2>
 
         <input type="email" id="uemail" class="input-field" placeholder="Email">
-        <div id="emailError" class="error-message"></div> <!-- Error message for email -->
+        <div id="emailError" class="error-message"></div>
 
-        <input type="password" id="pasw" class="input-field" placeholder="Password">
-        <div id="passwordError" class="error-message"></div> <!-- Error message for password -->
-        <div id="loginError" class="error-message"></div> <!-- General login error message -->
+        <div class="password-container" style="position: relative;">
+            <input type="password" id="pasw" class="input-field" placeholder="Password">
+            <button type="button" id="togglePassword"
+                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: none; cursor: pointer;">
+                <i class="eye-icon" style="display: inline-block; width: 20px; height: 20px;">👁️</i>
+            </button>
+        </div>
+        <div id="passwordError" class="error-message"></div>
+        <div id="loginError" class="error-message"></div>
 
         <button class="button" id="loginBtn">Login</button>
-        <!-- <a href="javascript:void(0);" class="link" id="forgotPasswordLink">Forgot Password?</a> -->
 
         <div class="divider">OR</div>
 
@@ -194,9 +218,24 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            togglePasswordField();
             setupEventListeners();
             fetchSocialLoginProviders();
         });
+
+        function togglePasswordField() {
+            const passwordInput = document.getElementById('pasw');
+            const toggleButton = document.getElementById('togglePassword');
+
+            toggleButton.addEventListener('click', function () {
+                // Toggle the password visibility
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Update the eye icon (optional: you can replace with proper icons)
+                this.querySelector('.eye-icon').textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+            });
+        }
 
         function setupEventListeners() {
             document.getElementById("backtologin").addEventListener("click", showLoginForm);
