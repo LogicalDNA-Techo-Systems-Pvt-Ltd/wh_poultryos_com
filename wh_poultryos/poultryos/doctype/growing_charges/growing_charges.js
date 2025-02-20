@@ -3,7 +3,7 @@
 
 frappe.ui.form.on("Growing Charges", {
 
-    setup: function (frm) {
+    onload: function (frm) {
         // First, fetch the ID of "Contract" from Batch Type
         frappe.call({
             method: "frappe.client.get_list",
@@ -22,7 +22,11 @@ frappe.ui.form.on("Growing Charges", {
                         // Now, set the query for the Batch field using this ID
                         frm.set_query("batch", function () {
                             return {
-                                filters: { batch_type: contract_id } // Apply the contract ID filter
+                                filters: {
+                                    batch_type: contract_id,
+                                    gc_calculated: "No" // Only show batches where GC Calculated
+                                }
+
                             };
                         });
 
@@ -39,18 +43,20 @@ frappe.ui.form.on("Growing Charges", {
 
     refresh(frm) {
 
-        frappe.call({
-            method: "wh_poultryos.poultryos.doctype.growing_charges.growing_charges.get_available_batches",
-            callback: function(r) {
-                if (r.message) {
-                    frm.set_query("batch", function() {
-                        return {
-                            filters: [["name", "in", r.message.map(b => b.name)]]
-                        };
-                    });
-                }
-            }
-        });
+
+        // frappe.call({
+        //     method: "wh_poultryos.poultryos.doctype.growing_charges.growing_charges.get_available_batches",
+        //     callback: function(r) {
+        //         if (r.message) {
+        //             console.log("", r.message);
+        //             frm.set_query("batch", function() {
+        //                 return {
+        //                     filters: [["name", "in", r.message.map(b => b.name)]]
+        //                 };
+        //             });
+        //         }
+        //     }
+        // });
 
         frm.add_custom_button("Calculate GC", () => {
             // frappe.show_alert("It works")
@@ -146,7 +152,6 @@ frappe.ui.form.on("Growing Charges", {
                         }
                     });
 
-
                     frappe.call({
                         method: "frappe.client.get_list",
                         args: {
@@ -182,7 +187,7 @@ frappe.ui.form.on("Growing Charges", {
                                     // Set the calculated FCR in the form
                                     frm.set_value("fcr", fcr.toFixed(2));
 
-                                    
+
                                 }
 
                                 frappe.msgprint(__('Feed quantity and cost calculated successfully.'));
@@ -394,6 +399,24 @@ frappe.ui.form.on("Growing Charges", {
                         frappe.msgprint(__('Production Cost per kg calculated successfully: ') + production_cost_per_kg.toFixed(2));
                     }
 
+
+                }
+            }
+        });
+    },
+
+    after_save: function (frm) {
+
+        frappe.call({
+            method: 'wh_poultryos.poultryos.doctype.growing_charges.growing_charges.update_batches',
+            args: {
+                batch: frm.doc.batch,
+                status: "Yes"  // Ensure 'batch' exists in the document
+            },
+            callback: function (r) {
+                if (r.message.status === "success") {
+                    frappe.msgprint(__('GC UPDATED.'));
+                } else {
 
                 }
             }

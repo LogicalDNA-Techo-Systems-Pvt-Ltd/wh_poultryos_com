@@ -8,7 +8,6 @@
  "field_order": [
   "item_name",
   "age_in_days",
-  "mortality",
   "feed_consumption",
   "cumulative_feed",
   "body_weight",
@@ -27,11 +26,6 @@
    "fieldname": "age_in_days",
    "fieldtype": "Int",
    "label": "Age in days"
-  },
-  {
-   "fieldname": "mortality",
-   "fieldtype": "Int",
-   "label": "Mortality"
   },
   {
    "fieldname": "feed_consumption",
@@ -57,7 +51,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-06 16:51:37.446787",
+ "modified": "2025-02-20 10:50:36.178550",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Standard Chart",

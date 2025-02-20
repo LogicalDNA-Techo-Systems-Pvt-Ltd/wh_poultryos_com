@@ -13,16 +13,17 @@
   "column_break_enib",
   "batch_placed_quantity",
   "batch_live_quantity",
+  "batch_status",
   "transaction_details_section",
   "transaction_date",
   "mortality_number_of_birds",
+  "culls",
   "mortality_cost",
   "mortality_reason",
   "average_bird_weight_in_grams",
   "average_bird_weight_in_kg",
   "item_name",
   "item_type",
-  "ready_for_sale",
   "column_break_pkev",
   "feed_consumed_quantity",
   "feed_cost",
@@ -100,6 +101,7 @@
    "reqd": 1
   },
   {
+   "default": "0",
    "fieldname": "medicine_consumed_quantity",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -107,6 +109,7 @@
    "non_negative": 1
   },
   {
+   "default": "0",
    "fieldname": "vaccine_consumed_quantity",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -114,6 +117,7 @@
    "non_negative": 1
   },
   {
+   "default": "0",
    "fieldname": "vitamin_consumed_quantity",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -136,6 +140,7 @@
    "non_negative": 1
   },
   {
+   "default": "0",
    "fieldname": "mortality_number_of_birds",
    "fieldtype": "Int",
    "label": "Mortality (Number of Birds)",
@@ -179,14 +184,20 @@
   },
   {
    "default": "0",
-   "fieldname": "ready_for_sale",
-   "fieldtype": "Check",
-   "label": "Ready for sale"
+   "fieldname": "culls",
+   "fieldtype": "Int",
+   "label": "Culls",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "batch_status",
+   "fieldtype": "Read Only",
+   "label": "Batch Status"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-13 17:14:30.762713",
+ "modified": "2025-02-20 11:26:40.299041",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Daily Transaction",

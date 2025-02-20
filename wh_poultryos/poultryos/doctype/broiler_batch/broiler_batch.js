@@ -2,8 +2,16 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Broiler Batch', {
+
+    refresh: function (frm) {
+       
+    },
+
     onload: function (frm) {
         // Fetch organization name
+
+       
+
         frappe.call({
             method: 'wh_poultryos.session_getter.get_org_name_from_session',
             callback: function (r) {
