@@ -9,7 +9,7 @@ def broiler_batch_get_list_query(user):
     # Check if the user has the 'Administrator' role
     user_role = user_results.roles
 
-    if not "Administrator" in [role.role for role in user_role]:
+    if not "System Manager" in [role.role for role in user_role]:
         # Fetch organization associated with the user
         org_results = frappe.get_all(
             "Organization", filters={"organization_owner": user}, limit_page_length=1

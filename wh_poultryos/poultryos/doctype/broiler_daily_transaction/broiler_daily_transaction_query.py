@@ -8,7 +8,7 @@ def broiler_daily_transaction_get_list_query(user):
     # Check if the user has the 'Administrator' role
     user_role = user_results.roles
 
-    if not "Administrator" in [role.role for role in user_role]:
+    if not "System Manager" in [role.role for role in user_role]:
 
         # Fetch organization based on user
         org_results = frappe.get_all(
