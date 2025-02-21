@@ -24,7 +24,13 @@ def broiler_batch_get_list_query(user):
             org_name = org_results[0].name
             print("#####", org_name)
 
-        # Return the SQL query string with escaped org_name
+        # Return the SQL query string with escaped org_name for non-admin users
         return "(`tabBroiler Batch`.org_name = {org_name})".format(
             org_name=frappe.db.escape(org_name)
         )
+
+    else:
+        # For admin users, you can handle the query differently if needed
+        print("Admin user detected.")
+        # Return a query that doesn't filter by organization (or implement any other logic)
+        return "1 = 1"  # This will return all records, or you can modify the query to suit your needs
