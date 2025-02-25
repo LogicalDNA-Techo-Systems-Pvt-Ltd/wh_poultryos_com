@@ -402,151 +402,148 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
         let mortality_number_of_birds = frm.doc.mortality_number_of_birds;
 
-        // If there is mortality number of birds
-        if (mortality_number_of_birds > 0) {
-            // Get the batch data to update the live birds count, using frm.doc.batch as identifier
-            frappe.call({
-                method: 'frappe.client.get',
-                args: {
-                    doctype: 'Broiler Batch',
-                    name: frm.doc.batch  // Use the batch identifier from the form
-                },
-                callback: function (batch_data) {
-                    if (batch_data && batch_data.message.live_quantity_number_of_birds !== undefined) {
-                        let batch_placed_quantity = batch_data.message.place_quantity_number_of_birds;
-                        let current_batch_live_quantity = batch_data.message.live_quantity_number_of_birds;
-                        let salequantity = batch_data.message.sale_quantity;
-                        // Fetch all transactions related to the batch to calculate total mortality
-                        frappe.call({
-                            method: 'frappe.client.get_list',
-                            args: {
-                                doctype: 'Broiler Daily Transaction',
-                                filters: { 'batch': frm.doc.batch },  // Filter transactions by batch
-                                fields: ['mortality_number_of_birds'],
-                                order_by: 'transaction_date asc',  // Order transactions by date (ascending)
-                            },
-                            callback: function (transactions) {
-                                if (transactions && transactions.message) {
-                                    // Calculate the total mortality from all transactions
-                                    let total_mortality = 0;
-                                    transactions.message.forEach(function (transaction) {
-                                        total_mortality += transaction.mortality_number_of_birds || 0;
-                                    });
-                                    console.log(batch_placed_quantity);
-                                    console.log(total_mortality);
+        // Get the batch data to update the live birds count, using frm.doc.batch as identifier
+        frappe.call({
+            method: 'frappe.client.get',
+            args: {
+                doctype: 'Broiler Batch',
+                name: frm.doc.batch  // Use the batch identifier from the form
+            },
+            callback: function (batch_data) {
+                if (batch_data && batch_data.message.live_quantity_number_of_birds !== undefined) {
+                    let batch_placed_quantity = batch_data.message.place_quantity_number_of_birds;
+                    let current_batch_live_quantity = batch_data.message.live_quantity_number_of_birds;
+                    let salequantity = batch_data.message.sale_quantity;
+                    // Fetch all transactions related to the batch to calculate total mortality
+                    frappe.call({
+                        method: 'frappe.client.get_list',
+                        args: {
+                            doctype: 'Broiler Daily Transaction',
+                            filters: { 'batch': frm.doc.batch },  // Filter transactions by batch
+                            fields: ['mortality_number_of_birds'],
+                            order_by: 'transaction_date asc',  // Order transactions by date (ascending)
+                        },
+                        callback: function (transactions) {
+                            if (transactions && transactions.message) {
+                                // Calculate the total mortality from all transactions
+                                let total_mortality = 0;
+                                transactions.message.forEach(function (transaction) {
+                                    total_mortality += transaction.mortality_number_of_birds || 0;
+                                });
+                                console.log(batch_placed_quantity);
+                                console.log(total_mortality);
 
 
 
-                                    // Deduct the total mortality from the batch placed quantity
-                                    let updated_batch_live_quantity = batch_placed_quantity - total_mortality - salequantity;
-                                    console.log(updated_batch_live_quantity);
-                                    // Prevent updating if the live bird count goes negative
-                                    if (updated_batch_live_quantity < 0) {
-                                        frappe.msgprint(__('Total Mortality cannot be greater than the placed quantity of birds.'));
-                                        frappe.validated = false;  // Prevent form submission
-                                        return;
-                                    } else {
-                                        // Update the batch with the new live bird count
-                                        frappe.call({
-                                            method: 'frappe.client.set_value',
-                                            args: {
-                                                doctype: 'Broiler Batch',
-                                                name: frm.doc.batch,
-                                                fieldname: 'live_quantity_number_of_birds',
-                                                value: updated_batch_live_quantity
-                                            },
-                                            callback: function () {
-
-                                                if (frm.doc.transaction_date) {
-
-                                                    frappe.call({
-                                                        method: 'frappe.client.get',
-                                                        args: {
-                                                            doctype: 'Broiler Batch',
-                                                            name: frm.doc.batch // Use the batch identifier from the form
-                                                        },
-                                                        callback: function (batch_data) {
-                                                            if (batch_data && batch_data.message) {
-                                                                let placement_date = batch_data.message.opening_date; // Placement Date from Batch
-                                                                let placed_quantity = batch_data.message.place_quantity_number_of_birds; // Placed Quantity from Batch
-                                                                let biological_value = batch_data.message.biological_value || 0; // Previous Biological Value
-
-                                                                let live_batch_date = frappe.datetime.add_days(frm.doc.transaction_date, 1); // Transaction Date + 1 Day
-                                                                let feed_cost = frm.doc.feed_cost || 0; // Feed Cost from the form
-                                                                let mortality_cost = frm.doc.mortality_cost || 0; // Mortality Cost from the form
-
-                                                                // Calculate Age in Days
-                                                                if (placement_date && live_batch_date) {
-                                                                    let age_in_days = frappe.datetime.get_diff(live_batch_date, placement_date);
-
-                                                                    // Format Live Batch Date (DD-MM-YYYY)
-                                                                    // let formatted_live_batch_date = frappe.datetime.str_to_user(live_batch_date);
-
-                                                                    // Calculate Mortality
-                                                                    let mortality = 0;
-                                                                    if (placed_quantity && updated_batch_live_quantity !== undefined) {
-                                                                        mortality = placed_quantity - updated_batch_live_quantity - salequantity;
-                                                                        if (mortality < 0) {
-                                                                            frappe.msgprint(__('Mortality cannot be negative. Please check the data.'));
-                                                                            frappe.validated = false; // Prevent form submission
-                                                                            return;
-                                                                        }
-                                                                    }
-
-                                                                    // Update Biological Value
-                                                                    let updated_biological_value = biological_value + feed_cost - mortality_cost;
-
-                                                                    // Calculate Bird Cost
-                                                                    let bird_cost = 0;
-                                                                    if (updated_batch_live_quantity > 0) {
-                                                                        // bird_cost = updated_biological_value / updated_batch_live_quantity;
-                                                                        bird_cost = (updated_biological_value / updated_batch_live_quantity).toFixed(4);
-                                                                    }
-
-                                                                    // Update Batch with Live Batch Date and Age in Days
-                                                                    frappe.call({
-                                                                        method: 'frappe.client.set_value',
-                                                                        args: {
-                                                                            doctype: 'Broiler Batch',
-                                                                            name: frm.doc.batch,
-                                                                            fieldname: {
-                                                                                live_batch_date: live_batch_date,
-                                                                                batch_age_in_days: age_in_days,
-                                                                                mortality: mortality,
-                                                                                biological_value: updated_biological_value,
-                                                                                bird_cost: parseFloat(bird_cost) // Ensure it remains a numeric value
-                                                                            }
-                                                                        },
-                                                                        callback: function () {
-                                                                            frappe.msgprint(__('Batch updated successfully with live batch date and age in days.'));
-                                                                        }
-                                                                    });
-                                                                } else {
-                                                                    frappe.msgprint(__('Placement Date or Live Batch Date is missing.'));
-                                                                }
-                                                            } else {
-                                                                frappe.msgprint(__('Batch data not found.'));
-                                                            }
-                                                        }
-                                                    });
-
-                                                }
-                                            }
-                                        });
-                                    }
+                                // Deduct the total mortality from the batch placed quantity
+                                let updated_batch_live_quantity = batch_placed_quantity - total_mortality - salequantity;
+                                console.log(updated_batch_live_quantity);
+                                // Prevent updating if the live bird count goes negative
+                                if (updated_batch_live_quantity < 0) {
+                                    frappe.msgprint(__('Total Mortality cannot be greater than the placed quantity of birds.'));
+                                    frappe.validated = false;  // Prevent form submission
+                                    return;
                                 } else {
-                                    frappe.msgprint(__('No transactions found for the specified batch.'));
-                                    frappe.validated = false;  // Prevent form submission if no transactions are found
+                                    // Update the batch with the new live bird count
+                                    frappe.call({
+                                        method: 'frappe.client.set_value',
+                                        args: {
+                                            doctype: 'Broiler Batch',
+                                            name: frm.doc.batch,
+                                            fieldname: 'live_quantity_number_of_birds',
+                                            value: updated_batch_live_quantity
+                                        },
+                                        callback: function () {
+
+                                            if (frm.doc.transaction_date) {
+
+                                                frappe.call({
+                                                    method: 'frappe.client.get',
+                                                    args: {
+                                                        doctype: 'Broiler Batch',
+                                                        name: frm.doc.batch // Use the batch identifier from the form
+                                                    },
+                                                    callback: function (batch_data) {
+                                                        if (batch_data && batch_data.message) {
+                                                            let placement_date = batch_data.message.opening_date; // Placement Date from Batch
+                                                            let placed_quantity = batch_data.message.place_quantity_number_of_birds; // Placed Quantity from Batch
+                                                            let biological_value = batch_data.message.biological_value || 0; // Previous Biological Value
+
+                                                            let live_batch_date = frappe.datetime.add_days(frm.doc.transaction_date, 1); // Transaction Date + 1 Day
+                                                            let feed_cost = frm.doc.feed_cost || 0; // Feed Cost from the form
+                                                            let mortality_cost = frm.doc.mortality_cost || 0; // Mortality Cost from the form
+
+                                                            // Calculate Age in Days
+                                                            if (placement_date && live_batch_date) {
+                                                                let age_in_days = frappe.datetime.get_diff(live_batch_date, placement_date);
+
+                                                                // Format Live Batch Date (DD-MM-YYYY)
+                                                                // let formatted_live_batch_date = frappe.datetime.str_to_user(live_batch_date);
+
+                                                                // Calculate Mortality
+                                                                let mortality = 0;
+                                                                if (placed_quantity && updated_batch_live_quantity !== undefined) {
+                                                                    mortality = placed_quantity - updated_batch_live_quantity - salequantity;
+                                                                    if (mortality < 0) {
+                                                                        frappe.msgprint(__('Mortality cannot be negative. Please check the data.'));
+                                                                        frappe.validated = false; // Prevent form submission
+                                                                        return;
+                                                                    }
+                                                                }
+
+                                                                // Update Biological Value
+                                                                let updated_biological_value = biological_value + feed_cost - mortality_cost;
+
+                                                                // Calculate Bird Cost
+                                                                let bird_cost = 0;
+                                                                if (updated_batch_live_quantity > 0) {
+                                                                    // bird_cost = updated_biological_value / updated_batch_live_quantity;
+                                                                    bird_cost = (updated_biological_value / updated_batch_live_quantity).toFixed(4);
+                                                                }
+
+                                                                // Update Batch with Live Batch Date and Age in Days
+                                                                frappe.call({
+                                                                    method: 'frappe.client.set_value',
+                                                                    args: {
+                                                                        doctype: 'Broiler Batch',
+                                                                        name: frm.doc.batch,
+                                                                        fieldname: {
+                                                                            live_batch_date: live_batch_date,
+                                                                            batch_age_in_days: age_in_days,
+                                                                            mortality: mortality,
+                                                                            biological_value: updated_biological_value,
+                                                                            bird_cost: parseFloat(bird_cost) // Ensure it remains a numeric value
+                                                                        }
+                                                                    },
+                                                                    callback: function () {
+                                                                        frappe.msgprint(__('Batch updated successfully with live batch date and age in days.'));
+                                                                    }
+                                                                });
+                                                            } else {
+                                                                frappe.msgprint(__('Placement Date or Live Batch Date is missing.'));
+                                                            }
+                                                        } else {
+                                                            frappe.msgprint(__('Batch data not found.'));
+                                                        }
+                                                    }
+                                                });
+
+                                            }
+                                        }
+                                    });
                                 }
+                            } else {
+                                frappe.msgprint(__('No transactions found for the specified batch.'));
+                                frappe.validated = false;  // Prevent form submission if no transactions are found
                             }
-                        });
-                    } else {
-                        frappe.msgprint(__('Batch data not found.'));
-                        frappe.validated = false;  // Prevent form submission if batch data is missing
-                    }
+                        }
+                    });
+                } else {
+                    frappe.msgprint(__('Batch data not found.'));
+                    frappe.validated = false;  // Prevent form submission if batch data is missing
                 }
-            });
-        }
+            }
+        });
 
         frappe.call({
             method: 'wh_poultryos.poultryos.doctype.broiler_daily_transaction.broiler_daily_transaction.update_batch_status',

@@ -1,20 +1,20 @@
 // Copyright (c) 2025, LogicalDNA Techno Systems Pvt Ltd and contributors
 // For license information, please see license.txt
 frappe.listview_settings['Broiler Bird Sale Settings'] = {
-    // Initialize state to track if we've already checked settings
-    _hasCheckedSettings: false,
+    // Initialize state
+    // _hasCheckedSettings: false,
 
     refresh(listview) {
-        this.updateCreateButtonVisibility();
+        this.updateCreateButtonVisibility(listview);
     },
 
     onload(listview) {
-        this.updateCreateButtonVisibility();
+        this.updateCreateButtonVisibility(listview);
     },
 
-    updateCreateButtonVisibility: async function () {
+    updateCreateButtonVisibility: async function (listview) {
         // Avoid redundant checks if already performed in this session
-        if (this._hasCheckedSettings) return;
+        // if (this._hasCheckedSettings) return;
 
         try {
             const user = frappe.session.user;
@@ -27,12 +27,13 @@ frappe.listview_settings['Broiler Bird Sale Settings'] = {
 
             const count = await this.fetchBroilerBirdSaleSettingsCount(organizationName);
 
-            if (count >= 1) {
-                this.hideCreateButton();
+            if (count >= 1 && listview) {
+                // Use Frappe's supported API to control the button
+                this.disableCreateButton(listview);
             }
 
             // Mark as checked to avoid redundant API calls
-            this._hasCheckedSettings = true;
+            // this._hasCheckedSettings = true;
         } catch (error) {
             console.error("Failed to update create button visibility:", error);
             frappe.show_alert({
@@ -50,7 +51,7 @@ frappe.listview_settings['Broiler Bird Sale Settings'] = {
                     doctype: 'Organization',
                     filters: { organization_owner: user },
                     fields: ['name'],
-                    limit: 1 // Optimize by limiting to one result
+                    limit: 1
                 },
                 callback: function (response) {
                     if (response.message && response.message.length > 0) {
@@ -73,7 +74,7 @@ frappe.listview_settings['Broiler Bird Sale Settings'] = {
                 method: 'frappe.client.get_count',
                 args: {
                     doctype: 'Broiler Bird Sale Settings',
-                    organization: organizationName
+                    filters: { organization: organizationName }
                 },
                 callback: function (response) {
                     resolve(response.message || 0);
@@ -86,31 +87,20 @@ frappe.listview_settings['Broiler Bird Sale Settings'] = {
         });
     },
 
-    hideCreateButton: function () {
-        // Use a more reliable approach to find and hide the primary action button
-        setTimeout(() => {
-            // Try the standard page primary action button first
-            const primaryActions = document.querySelectorAll('.page-actions .btn-primary, .page-head .btn-primary, .primary-action');
+    disableCreateButton: function (listview) {
+        // Use Frappe's supported methods to control the add button visibility
 
-            primaryActions.forEach(button => {
-                // Look for buttons that might be the "New" button
-                if (button &&
-                    (button.textContent.includes('Add') ||
-                        button.classList.contains('primary-action'))) {
-                    button.style.display = 'none';
-                    console.log("Add button hidden:", button.textContent);
-                }
-            });
+        // Method 1: Set the 'can_create' property to false
+        // frappe.model.can_create = false;
 
-            // Alternative approach using Frappe's standard list view
-            if (cur_list && cur_list.page) {
-                // Try to find and disable the add button through the cur_list object
-                const addButton = cur_list.page.actions.find('.btn-primary[data-label="Add"]');
-                if (addButton.length) {
-                    addButton.hide();
-                    console.log("Add button hidden via cur_list");
-                }
+        // Method 2: Use listview's internal methods when available
+        if (listview && listview.can_create) {
+            listview.can_create = false;
+
+            // Refresh the page actions to reflect the change
+            if (listview.page) {
+                listview.page.clear_primary_action();
             }
-        }, 500); // Small delay to ensure DOM is ready
+        }
     }
 };
