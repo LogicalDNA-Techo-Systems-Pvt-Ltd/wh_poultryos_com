@@ -17,7 +17,6 @@
    "depends_on": "eval: doc.enable_ideal_age_for_selling_birds == true;",
    "fieldname": "ideal_age_for_selling_birds",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Ideal Age for Selling Birds",
    "non_negative": 1,
    "options": "28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56",
@@ -28,7 +27,6 @@
    "depends_on": "eval: doc.enable_ideal_average_weight_for_selling_birds == true;",
    "fieldname": "ideal_weight_for_selling_birds",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Ideal Average Weight for Selling Birds (In KG)",
    "non_negative": 1,
    "options": "1.5\n1.6\n1.7\n1.8\n1.9\n2.0\n2.1\n2.2\n2.3\n2.4\n2.5\n2.6\n2.7",
@@ -48,18 +46,20 @@
    "default": "0",
    "fieldname": "enable_ideal_age_for_selling_birds",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Enable Ideal Age for Selling Birds"
   },
   {
    "default": "0",
    "fieldname": "enable_ideal_average_weight_for_selling_birds",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Enable Ideal Average Weight for Selling Birds"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-24 17:44:44.374265",
+ "modified": "2025-02-25 14:38:03.584284",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Bird Sale Settings",
