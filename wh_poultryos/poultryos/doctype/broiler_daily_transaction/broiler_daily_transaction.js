@@ -291,7 +291,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
             callback: function (res) {
                 if (res.message) {
                     let batch_status = res.message.batch_status;
-                   
+
 
                     // Check if batch is marked as Ready for Sale
                     if (batch_status === "Ready for sale") {
@@ -398,7 +398,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
         }
     },
 
-    after_save: function (frm) {
+    after_save: async function (frm) {
 
         let mortality_number_of_birds = frm.doc.mortality_number_of_birds;
 
@@ -562,6 +562,36 @@ frappe.ui.form.on('Broiler Daily Transaction', {
             }
         });
 
+        let batch_age_in_days = frm.doc.batch_age_in_days;
+        let average_bird_weight_in_kg = frm.doc.average_bird_weight_in_kg;
+
+        // Only proceed if conditions are met
+        if (batch_age_in_days >= 15 || average_bird_weight_in_kg >= 1.5) {
+            try {
+                // Check if the settings are available
+                await checkBroilerBirdSaleSettings();
+
+                // Fetch the Broiler Bird Sale Settings
+                let settings = await fetchBroilerBirdSaleSettings();
+                let enable_ideal_age_for_selling_birds = settings.enable_ideal_age_for_selling_birds;
+                let enable_ideal_average_weight_for_selling_birds = settings.enable_ideal_average_weight_for_selling_birds;
+                let ideal_age_for_selling_birds = settings.ideal_age_for_selling_birds;
+                let ideal_weight_for_selling_birds = settings.ideal_weight_for_selling_birds;
+
+                // Check for ideal age for selling birds
+                if (enable_ideal_age_for_selling_birds && batch_age_in_days >= ideal_age_for_selling_birds) {
+                    await updateBatchStatus(frm, 'Ready for Sale');
+                }
+
+                // Check for ideal average weight for selling birds
+                if (enable_ideal_average_weight_for_selling_birds && average_bird_weight_in_kg >= ideal_weight_for_selling_birds) {
+                    await updateBatchStatus(frm, 'Ready for Sale');
+                }
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
     }
 
@@ -585,3 +615,71 @@ function standardizeDate(dateStr) {
     }
     return null;
 };
+
+async function checkBroilerBirdSaleSettings() {
+    return new Promise((resolve, reject) => {
+        frappe.call({
+            method: 'frappe.client.get_count',
+            args: { doctype: 'Broiler Bird Sale Settings' },
+            callback: function (response) {
+                if (response.message === 0) {
+                    showSettingsNotification();
+                    reject("No Broiler Bird Sale Settings found");
+                } else {
+                    resolve();
+                }
+            }
+        });
+    });
+}
+
+function showSettingsNotification() {
+    frappe.msgprint({
+        message: __('Please enable Ideal Age and/or Ideal Average Weight for Selling Birds from Broiler Bird Sale Settings.') +
+            '<br><br>' +
+            __('Click here to create a new record.') + ': ' +
+            '<a href="#" onclick="frappe.new_doc(\'Broiler Bird Sale Settings\')">' + __('Create New Record') + '</a>',
+        title: __('Configuration Needed'),
+        indicator: 'orange'
+    });
+}
+
+async function fetchBroilerBirdSaleSettings() {
+    return new Promise((resolve, reject) => {
+        frappe.call({
+            method: 'frappe.client.get_list',
+            args: {
+                doctype: 'Broiler Bird Sale Settings',
+                fields: ['enable_ideal_age_for_selling_birds', 'enable_ideal_average_weight_for_selling_birds', 'ideal_age_for_selling_birds', 'ideal_weight_for_selling_birds'],
+                limit_page_length: 1
+            },
+            callback: function (result) {
+                if (result.message && result.message.length > 0) {
+                    resolve(result.message[0]);
+                } else {
+                    reject("No settings found");
+                }
+            }
+        });
+    });
+}
+
+async function updateBatchStatus(frm, status) {
+    return new Promise((resolve, reject) => {
+        frappe.call({
+            method: 'wh_poultryos.poultryos.doctype.broiler_batch.broiler_batch.update_batch_status',
+            args: {
+                batch_name: frm.doc.batch,
+                status: status
+            },
+            callback: function (r) {
+                if (r.message.status === "success") {
+                    frappe.msgprint(__('This Batch has been ready for sale.'));
+                    resolve();
+                } else {
+                    reject("Failed to update batch status");
+                }
+            }
+        });
+    });
+}

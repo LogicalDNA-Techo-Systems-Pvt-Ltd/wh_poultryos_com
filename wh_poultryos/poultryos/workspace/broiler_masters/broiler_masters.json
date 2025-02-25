@@ -128,7 +128,7 @@
    "type": "Link"
   }
  ],
- "modified": "2025-02-14 09:33:47.027503",
+ "modified": "2025-02-24 12:47:49.468551",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Masters",
@@ -145,7 +145,7 @@
    "role": "Broiler Farm Owner"
   }
  ],
- "sequence_id": 5.0,
+ "sequence_id": 10.0,
  "shortcuts": [],
  "title": "Broiler Masters"
 }
