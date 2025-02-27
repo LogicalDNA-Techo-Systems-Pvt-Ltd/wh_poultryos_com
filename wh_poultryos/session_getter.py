@@ -47,7 +47,8 @@ def get_org_name_from_session():
 
         if organization:
             return {
-                "success": False,
+                "success": True,
+                "org_name": organization[0].name,
                 "message": "Organization exists but not in session. Try setting it first.",
                 "debug_info": {"user": user, "organization": organization[0]},
             }

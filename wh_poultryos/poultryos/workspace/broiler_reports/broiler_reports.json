@@ -128,7 +128,7 @@
    "type": "Link"
   }
  ],
- "modified": "2025-02-17 22:32:28.797482",
+ "modified": "2025-02-24 12:47:49.883325",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Reports",
@@ -145,7 +145,7 @@
    "role": "Broiler Farm Owner"
   }
  ],
- "sequence_id": 7.0,
+ "sequence_id": 13.0,
  "shortcuts": [],
  "title": "Broiler Reports"
 }

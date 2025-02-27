@@ -8,6 +8,8 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "activity_section",
+  "broiler_batch_daily_transactions_heatmap",
   "batch_information_section",
   "batch_name",
   "opening_date",
@@ -40,7 +42,6 @@
   "gc_calculated",
   "column_break_dmdn",
   "org_name",
-  "ready_for_sale",
   "miscellaneous_information_section",
   "live_batch_date"
  ],
@@ -124,9 +125,10 @@
   },
   {
    "fieldname": "live_batch_date",
-   "fieldtype": "Read Only",
+   "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Live Batch Date"
+   "label": "Live Batch Date",
+   "read_only": 1
   },
   {
    "fieldname": "rate",
@@ -196,12 +198,6 @@
    "label": "Batch Status"
   },
   {
-   "default": "0",
-   "fieldname": "ready_for_sale",
-   "fieldtype": "Read Only",
-   "label": "Ready for sale"
-  },
-  {
    "fieldname": "batch_information_section",
    "fieldtype": "Section Break",
    "label": "Batch Information"
@@ -254,9 +250,20 @@
   },
   {
    "default": "No",
+   "depends_on": "doc.batch_type == 'CONTRACT'",
    "fieldname": "gc_calculated",
    "fieldtype": "Read Only",
    "label": "GC Calculated?"
+  },
+  {
+   "fieldname": "activity_section",
+   "fieldtype": "Section Break",
+   "label": "Daily Transaction Activity"
+  },
+  {
+   "fieldname": "broiler_batch_daily_transactions_heatmap",
+   "fieldtype": "HTML",
+   "label": "Broiler Batch Daily Transactions Heatmap"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -267,7 +274,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-20 11:12:57.127010",
+ "modified": "2025-02-26 15:39:39.813476",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Batch",

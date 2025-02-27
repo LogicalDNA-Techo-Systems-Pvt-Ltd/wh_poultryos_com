@@ -17,7 +17,7 @@ def execute(filters=None):
             t1.transaction_date AS Transaction_Date,
             t1.batch_live_quantity AS Live_Quantity,
             t1.mortality_number_of_birds AS Mortality,
-            t2.culls as Culls,
+            t1.culls as Culls,
             t1.feed_consumed_quantity AS Feed,
             t1.feed_cost AS Feed_Cost,            
             t2.batch_status as Batch_Status
