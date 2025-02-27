@@ -38,6 +38,7 @@
   "shed",
   "transaction_related_information_section",
   "sale_quantity",
+  "column_break_zhor",
   "organizational_and_status_information_section",
   "batch_status",
   "gc_calculated",
@@ -45,7 +46,8 @@
   "org_name",
   "growing_charges",
   "miscellaneous_information_section",
-  "live_batch_date"
+  "live_batch_date",
+  "organization_logo_url"
  ],
  "fields": [
   {
@@ -294,7 +296,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-27 14:35:24.091105",
+ "modified": "2025-02-26 16:36:27.250852",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Batch",
