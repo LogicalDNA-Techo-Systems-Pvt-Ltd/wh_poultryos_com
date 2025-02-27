@@ -6,15 +6,19 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "scheme",
   "batch",
+  "shortage_birds",
   "farmer_name",
   "placed_quanity",
   "live_quantity",
   "administrative_cost",
   "rearing_charge",
+  "production_incentive",
   "scheme_production_cost",
   "first_week_mortality",
   "total_mortality",
+  "first_week_mortality_percentage",
   "total_feed_consumed",
   "feed_cost",
   "medicine_cost",
@@ -24,6 +28,7 @@
   "production_costkg",
   "column_break_fgct",
   "total_delivered_weight",
+  "batch_cost",
   "total_sale_quantity",
   "average_weight_of_birds",
   "fcr",
@@ -102,8 +107,9 @@
    "label": "Mortality Percentage"
   },
   {
+   "fetch_from": "scheme.administration_cost",
    "fieldname": "administrative_cost",
-   "fieldtype": "Int",
+   "fieldtype": "Read Only",
    "label": "Administrative Cost"
   },
   {
@@ -122,7 +128,8 @@
    "default": "0",
    "fieldname": "total_delivered_weight",
    "fieldtype": "Float",
-   "label": "Total Delivered Weight"
+   "label": "Total Delivered Weight",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_fgct",
@@ -133,61 +140,100 @@
    "fetch_from": "batch.sale_quantity",
    "fieldname": "total_sale_quantity",
    "fieldtype": "Read Only",
-   "label": "Total Sale Quantity"
+   "label": "Total Sale Quantity",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "average_weight_of_birds",
-   "fieldtype": "Float",
-   "label": "Average weight of birds"
+   "fieldtype": "Read Only",
+   "label": "Average weight of birds",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "fcr",
    "fieldtype": "Read Only",
-   "label": "FCR"
+   "label": "FCR",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "actual_rearing_chargekg",
-   "fieldtype": "Float",
-   "label": "Actual Rearing Charges"
+   "fieldtype": "Read Only",
+   "label": "Actual Rearing Charges",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "rearing_chargebird",
-   "fieldtype": "Float",
-   "label": "Rearing Charge/Bird"
+   "fieldtype": "Read Only",
+   "label": "Rearing Charge/Bird",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "total_rearing_charges",
    "fieldtype": "Float",
-   "label": "Total Rearing Charges"
+   "label": "Total Rearing Charges",
+   "read_only": 1
   },
   {
    "bold": 1,
    "default": "0",
    "fieldname": "net_payable_amount",
    "fieldtype": "Read Only",
-   "label": "Net Payable Amount"
+   "label": "Net Payable Amount",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "rearing_charge",
    "fieldtype": "Float",
-   "label": "Rearing Charge"
+   "label": "Rearing Charge",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "scheme_production_cost",
    "fieldtype": "Float",
-   "label": "Scheme Production Cost"
+   "label": "Scheme Production Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "scheme",
+   "fieldtype": "Link",
+   "label": "Scheme",
+   "options": "Scheme Management",
+   "reqd": 1
+  },
+  {
+   "fieldname": "batch_cost",
+   "fieldtype": "Float",
+   "label": "Batch Cost",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "batch.shortage_birds",
+   "fieldname": "shortage_birds",
+   "fieldtype": "Read Only",
+   "label": "Shortage Birds"
+  },
+  {
+   "fieldname": "first_week_mortality_percentage",
+   "fieldtype": "Read Only",
+   "label": "First Week Mortality Percentage"
+  },
+  {
+   "fetch_from": "scheme.production_incentive",
+   "fieldname": "production_incentive",
+   "fieldtype": "Read Only",
+   "label": "Production Incentive"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-13 11:46:21.884752",
+ "modified": "2025-02-26 23:59:18.110875",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Growing Charges",

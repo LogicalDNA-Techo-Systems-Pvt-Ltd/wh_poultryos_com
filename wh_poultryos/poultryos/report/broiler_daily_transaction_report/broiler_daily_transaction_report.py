@@ -48,9 +48,9 @@ def execute(filters=None):
         {"label": "Farmer Name", "fieldname": "farmer_name", "fieldtype": "Data", "width": 120},
         {"label": "Placement Date", "fieldname": "Placement_Date", "fieldtype": "Date", "width": 120},
         {"label": "Transaction Date", "fieldname": "Transaction_Date", "fieldtype": "Date", "width": 120},
-        {"label": "Live Quantity", "fieldname": "Live_Quantity", "fieldtype": "Int", "width": 120},
-        {"label": "Mortality", "fieldname": "Mortality", "fieldtype": "Int", "width": 100},
-        {"label": "Culls", "fieldname": "Culls", "fieldtype": "Int", "width": 100},
+        {"label": "Live Quantity", "fieldname": "Live_Quantity", "fieldtype": "Float", "width": 120},
+        {"label": "Mortality", "fieldname": "Mortality", "fieldtype": "Float", "width": 100},
+        {"label": "Culls", "fieldname": "culls", "fieldtype": "int", "width": 80},
         {"label": "Feed", "fieldname": "Feed", "fieldtype": "Float", "width": 100},
         {"label": "Feed Cost", "fieldname": "Feed_Cost", "fieldtype": "Currency", "width": 120},
      

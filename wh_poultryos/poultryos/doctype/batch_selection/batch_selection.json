@@ -11,8 +11,9 @@
   "type",
   "instock",
   "quantity",
+  "rate",
   "weight",
-  "rate"
+  "unit"
  ],
  "fields": [
   {
@@ -63,12 +64,19 @@
    "label": "Weight",
    "non_negative": 1,
    "reqd": 1
+  },
+  {
+   "default": "KG",
+   "fieldname": "unit",
+   "fieldtype": "Select",
+   "label": "Unit",
+   "options": "KG"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-02-13 11:46:21.617288",
+ "modified": "2025-02-26 14:47:13.101911",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Batch Selection",
