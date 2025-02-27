@@ -17,6 +17,7 @@ def execute(filters=None):
             t1.transaction_date AS Transaction_Date,
             t1.batch_live_quantity AS Live_Quantity,
             t1.mortality_number_of_birds AS Mortality,
+            t2.culls as Culls,
             t1.feed_consumed_quantity AS Feed,
             t1.feed_cost AS Feed_Cost,            
             t2.batch_status as Batch_Status
@@ -49,6 +50,7 @@ def execute(filters=None):
         {"label": "Transaction Date", "fieldname": "Transaction_Date", "fieldtype": "Date", "width": 120},
         {"label": "Live Quantity", "fieldname": "Live_Quantity", "fieldtype": "Float", "width": 120},
         {"label": "Mortality", "fieldname": "Mortality", "fieldtype": "Float", "width": 100},
+        {"label": "Culls", "fieldname": "culls", "fieldtype": "int", "width": 80},
         {"label": "Feed", "fieldname": "Feed", "fieldtype": "Float", "width": 100},
         {"label": "Feed Cost", "fieldname": "Feed_Cost", "fieldtype": "Currency", "width": 120},
      

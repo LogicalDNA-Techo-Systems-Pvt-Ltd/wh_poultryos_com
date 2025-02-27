@@ -1,0 +1,58 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:SELL-{###}",
+ "creation": "2025-02-21 12:49:23.489829",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "from_selling_rate",
+  "to_selling_rate",
+  "incentive",
+  "maximum_incentive"
+ ],
+ "fields": [
+  {
+   "fieldname": "from_selling_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "From Selling Rate"
+  },
+  {
+   "fieldname": "incentive",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Incentive"
+  },
+  {
+   "fieldname": "maximum_incentive",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Maximum Incentive"
+  },
+  {
+   "fieldname": "to_selling_rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "To Selling Rate"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-02-25 16:29:40.486718",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Selling",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

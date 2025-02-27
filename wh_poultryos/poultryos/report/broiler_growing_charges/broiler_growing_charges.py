@@ -25,7 +25,8 @@ def execute(filters=None):
             g1.production_cost,
             g1.total_sale_quantity,
             g1.total_delivered_weight,
-            g1.net_payable_amount AS Final_Amount
+            g1.net_payable_amount AS Final_Amount,
+            t2.culls as Culls
         FROM `tabGrowing Charges` g1 
         LEFT JOIN `tabBroiler Batch` AS t2 ON g1.batch = t2.name
         WHERE t2.name = %(Batch)s

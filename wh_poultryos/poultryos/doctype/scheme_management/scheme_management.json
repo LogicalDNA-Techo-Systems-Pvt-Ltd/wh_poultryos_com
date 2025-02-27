@@ -20,6 +20,7 @@
   "bird_incentive_percentage",
   "column_break_oibt",
   "bird_incentive_per_bird",
+  "production_incentive",
   "section_break_jgzg",
   "cost_detail",
   "deductions_section",
@@ -29,7 +30,13 @@
   "column_break_pjnt",
   "excess_first_week_mortality_penalty",
   "bird_short_recovery",
-  "minimum_rearing_charges"
+  "minimum_rearing_charges",
+  "additional_incentive_section",
+  "excess_bird_incentive_per_kg",
+  "if_total_mortality_is_less_than",
+  "company_vehicle_incentive_per_kg",
+  "section_break_dere",
+  "selling_incentive"
  ],
  "fields": [
   {
@@ -95,7 +102,7 @@
    "default": "0",
    "fieldname": "bird_incentive",
    "fieldtype": "Int",
-   "label": "Bird Incentive"
+   "label": "Bird Incentive per kg"
   },
   {
    "default": "1",
@@ -136,17 +143,17 @@
   {
    "fieldname": "first_week_mortality_threshold",
    "fieldtype": "Int",
-   "label": "First Week Mortality Threshold"
+   "label": "Mortality Percentage"
   },
   {
    "fieldname": "cumulative_mortality_limit",
    "fieldtype": "Int",
-   "label": "Cumulative Mortality Limit"
+   "label": "Cumulative Mortality Percentage"
   },
   {
    "fieldname": "excess_first_week_mortality_penalty",
-   "fieldtype": "Int",
-   "label": "Excess First Week Mortality Penalty"
+   "fieldtype": "Percent",
+   "label": "Excess First Week Mortality Percentage"
   },
   {
    "fieldname": "bird_short_recovery",
@@ -161,11 +168,48 @@
   {
    "fieldname": "column_break_pjnt",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "production_incentive",
+   "fieldtype": "Int",
+   "label": "Production Incentive"
+  },
+  {
+   "fieldname": "additional_incentive_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Incentive"
+  },
+  {
+   "default": "1",
+   "fieldname": "excess_bird_incentive_per_kg",
+   "fieldtype": "Float",
+   "label": "Excess Bird Incentive per Kg"
+  },
+  {
+   "fieldname": "if_total_mortality_is_less_than",
+   "fieldtype": "Int",
+   "label": "If Total Mortality is less than"
+  },
+  {
+   "fieldname": "company_vehicle_incentive_per_kg",
+   "fieldtype": "Int",
+   "label": "Company vehicle Incentive per kg"
+  },
+  {
+   "fieldname": "section_break_dere",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "selling_incentive",
+   "fieldtype": "Table",
+   "label": "Selling Incentive",
+   "options": "Selling"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-18 15:07:39.795426",
+ "modified": "2025-02-21 22:55:56.994124",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Scheme Management",
