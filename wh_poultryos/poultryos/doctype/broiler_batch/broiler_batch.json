@@ -25,6 +25,7 @@
   "column_break_pfmw",
   "mortality",
   "culls",
+  "total_feed",
   "financial_information_section",
   "rate",
   "amount",
@@ -42,6 +43,7 @@
   "gc_calculated",
   "column_break_dmdn",
   "org_name",
+  "growing_charges",
   "miscellaneous_information_section",
   "live_batch_date"
  ],
@@ -145,13 +147,15 @@
    "default": "0",
    "fieldname": "mortality",
    "fieldtype": "Int",
-   "label": "Mortality"
+   "label": "Mortality",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "culls",
    "fieldtype": "Int",
-   "label": "Culls"
+   "label": "Culls",
+   "read_only": 1
   },
   {
    "fieldname": "biological_value",
@@ -189,7 +193,8 @@
    "fieldtype": "Read Only",
    "hidden": 1,
    "in_list_view": 1,
-   "label": "Org Name"
+   "label": "Org Name",
+   "set_only_once": 1
   },
   {
    "default": "New",
@@ -253,7 +258,8 @@
    "depends_on": "doc.batch_type == 'CONTRACT'",
    "fieldname": "gc_calculated",
    "fieldtype": "Read Only",
-   "label": "GC Calculated?"
+   "label": "GC Calculated?",
+   "read_only": 1
   },
   {
    "fieldname": "activity_section",
@@ -264,6 +270,20 @@
    "fieldname": "broiler_batch_daily_transactions_heatmap",
    "fieldtype": "HTML",
    "label": "Broiler Batch Daily Transactions Heatmap"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_feed",
+   "fieldtype": "Float",
+   "label": "Total Feed",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "growing_charges",
+   "fieldtype": "Float",
+   "label": "Growing Charges",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -274,7 +294,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-26 15:39:39.813476",
+ "modified": "2025-02-27 14:35:24.091105",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Batch",

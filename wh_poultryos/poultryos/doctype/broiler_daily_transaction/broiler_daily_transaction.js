@@ -420,7 +420,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                         args: {
                             doctype: 'Broiler Daily Transaction',
                             filters: { 'batch': frm.doc.batch },  // Filter transactions by batch
-                            fields: ['mortality_number_of_birds'],
+                            fields: ['mortality_number_of_birds','feed_consumed_quantity'],
                             order_by: 'transaction_date asc',  // Order transactions by date (ascending)
                         },
                         callback: function (transactions) {
@@ -433,6 +433,10 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                                 console.log(batch_placed_quantity);
                                 console.log(total_mortality);
 
+                                let feedtotal = 0;
+                                transactions.message.forEach(function (transaction) {
+                                    feedtotal += transaction.feed_consumed_quantity || 0;
+                                });   
 
 
                                 // Deduct the total mortality from the batch placed quantity
@@ -450,8 +454,12 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                                         args: {
                                             doctype: 'Broiler Batch',
                                             name: frm.doc.batch,
-                                            fieldname: 'live_quantity_number_of_birds',
-                                            value: updated_batch_live_quantity
+                                            // fieldname: 'live_quantity_number_of_birds',
+                                            // value: updated_batch_live_quantity
+                                            fieldname: {
+                                                live_quantity_number_of_birds: updated_batch_live_quantity,
+                                                total_feed: feedtotal
+                                            }
                                         },
                                         callback: function () {
 
