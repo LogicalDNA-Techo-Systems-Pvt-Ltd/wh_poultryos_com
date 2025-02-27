@@ -350,15 +350,9 @@ frappe.ui.form.on("Growing Charges", {
                     }
                 }
             })
-
-
-
-
             // let totalMortalityDeduction = frm.doc.total_mortality_deduction || 0;
             // let fcrDeductions = frm.doc.fcr_deductions || 0;
             // let shortageAmount = frm.doc.shortage_amount || 0;
-
-
 
         })
     },
