@@ -10,6 +10,7 @@
  "field_order": [
   "activity_section",
   "broiler_batch_daily_transactions_heatmap",
+  "broiler_batch_kpis",
   "batch_information_section",
   "batch_name",
   "opening_date",
@@ -38,7 +39,6 @@
   "shed",
   "transaction_related_information_section",
   "sale_quantity",
-  "column_break_zhor",
   "organizational_and_status_information_section",
   "batch_status",
   "gc_calculated",
@@ -46,8 +46,7 @@
   "org_name",
   "growing_charges",
   "miscellaneous_information_section",
-  "live_batch_date",
-  "organization_logo_url"
+  "live_batch_date"
  ],
  "fields": [
   {
@@ -142,7 +141,7 @@
   {
    "fieldname": "amount",
    "fieldtype": "Float",
-   "label": "Amount",
+   "label": "Bird Purchase Amount",
    "read_only": 1
   },
   {
@@ -286,6 +285,11 @@
    "fieldtype": "Float",
    "label": "Growing Charges",
    "read_only": 1
+  },
+  {
+   "fieldname": "broiler_batch_kpis",
+   "fieldtype": "HTML",
+   "label": "Broiler Batch KPIs"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -296,7 +300,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-26 16:36:27.250852",
+ "modified": "2025-02-28 10:51:45.740274",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Batch",
