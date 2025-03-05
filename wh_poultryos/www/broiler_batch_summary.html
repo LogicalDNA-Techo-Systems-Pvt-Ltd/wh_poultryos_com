@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Broiler Batch Dashboard</title>
+    <!-- Include Frappe's JS and CSS (this is a part of the Frappe framework) -->
+    <link rel="stylesheet" href="{{ frappe.local.scripts_url }}">
+    <script src="{{ frappe.local.scripts_url }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Broiler Batch Dashboard</h2>
+
+        <!-- Filters Section: List of Broiler Batch -->
+        <div class="filters">
+            <select id="batch-filter">
+                <option value="">Select Broiler Batch</option>
+                <!-- Dropdown will be populated dynamically -->
+            </select>
+        </div>
+
+        <!-- Heatmap Section -->
+        <div class="heatmap-section">
+            <canvas id="heatmap" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Number Cards -->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="number-card" id="card-count">Count: 0</div>
+            </div>
+            <div class="col-md-3">
+                <div class="number-card" id="card-total">Total Weight: 0</div>
+            </div>
+            <div class="col-md-3">
+                <div class="number-card" id="card-avg">Avg Weight: 0</div>
+            </div>
+        </div>
+
+        <!-- Line Charts Section -->
+        <div class="row">
+            <div class="col-md-3">
+                <canvas id="lineChart1"></canvas>
+            </div>
+            <div class="col-md-3">
+                <canvas id="lineChart2"></canvas>
+            </div>
+            <div class="col-md-3">
+                <canvas id="lineChart3"></canvas>
+            </div>
+            <div class="col-md-3">
+                <canvas id="lineChart4"></canvas>
+            </div>
+        </div>
+
+        <!-- Associated Transactions Section -->
+        <div class="transaction-list">
+            <h4>Associated Transactions</h4>
+            <ul id="transaction-list">
+                <!-- Transaction items will appear here -->
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Fetch and populate the Broiler Batch filter dropdown
+            frappe.call({
+                method: "your_custom_app.dashboard.get_broiler_batches",
+                callback: function (response) {
+                    const batches = response.message;
+                    batches.forEach(batch => {
+                        $('#batch-filter').append(`<option value="${batch.name}">${batch.name}</option>`);
+                    });
+                }
+            });
+
+            // Handle Broiler Batch filter change
+            $('#batch-filter').change(function () {
+                const batch_name = $(this).val();
+                if (batch_name) {
+                    fetchData(batch_name);
+                }
+            });
+
+            // Fetch Data from Backend for the selected Broiler Batch
+            function fetchData(batch_name) {
+                // Get dashboard data for the selected Broiler Batch
+                frappe.call({
+                    method: "your_custom_app.dashboard.get_dashboard_data",
+                    args: { batch_name: batch_name },
+                    callback: function (response) {
+                        const data = response.message;
+                        // Update number cards
+                        $('#card-count').text("Count: " + data.count);
+                        $('#card-total').text("Total Weight: " + data.total_weight);
+                        $('#card-avg').text("Avg Weight: " + data.avg_weight);
+
+                        // Update transactions list
+                        const transactions = data.transactions.map(transaction => {
+                            return `<li>${transaction.name} - ${transaction.transaction_date}</li>`;
+                        }).join('');
+                        $('#transaction-list').html(transactions);
+
+                        // Update Heatmap
+                        updateHeatmap(batch_name);
+
+                        // Update Line Charts (This is an example, you can adjust data accordingly)
+                        updateLineCharts(data);
+                    }
+                });
+            }
+
+            // Update Heatmap
+            function updateHeatmap(batch_name) {
+                frappe.call({
+                    method: "your_custom_app.dashboard.get_heatmap_data",
+                    args: { batch_name: batch_name },
+                    callback: function (response) {
+                        const heatmapData = response.message;
+                        const labels = heatmapData.map(d => d.creation);
+                        const data = heatmapData.map(d => d['COUNT(*)']);
+
+                        var ctx = document.getElementById('heatmap').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Activity',
+                                    data: data,
+                                    fill: false,
+                                    borderColor: 'rgb(75, 192, 192)',
+                                    tension: 0.1
+                                }]
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Update Line Charts
+            function updateLineCharts(data) {
+                const chartData = {
+                    labels: ['January', 'February', 'March', 'April'],
+                    datasets: [{
+                        label: 'Example Line Chart',
+                        data: [65, 59, 80, 81],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                };
+
+                var ctx1 = document.getElementById('lineChart1').getContext('2d');
+                new Chart(ctx1, { type: 'line', data: chartData });
+
+                // Repeat for other line charts
+            }
+        });
+    </script>
+</body>
+
+</html>

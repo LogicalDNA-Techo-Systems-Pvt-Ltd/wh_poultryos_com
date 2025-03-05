@@ -1,0 +1,24 @@
+{
+ "content": null,
+ "creation": "2025-03-03 18:17:16.488540",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "",
+ "idx": 0,
+ "modified": "2025-03-04 11:44:36.823838",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Broiler Batch Summary",
+ "owner": "Administrator",
+ "page_name": "Broiler Batch Summary",
+ "roles": [
+  {
+   "role": "Broiler Farm Owner"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Broiler Batch Summary"
+}
