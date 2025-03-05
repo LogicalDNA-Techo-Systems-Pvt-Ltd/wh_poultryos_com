@@ -28,9 +28,11 @@
   "feed_consumed_quantity",
   "feed_cost",
   "standard_consumption",
+  "fcr",
   "medicine_consumed_quantity",
   "vaccine_consumed_quantity",
-  "vitamin_consumed_quantity"
+  "vitamin_consumed_quantity",
+  "production_cost"
  ],
  "fields": [
   {
@@ -52,27 +54,31 @@
   },
   {
    "fieldname": "batch_placed_on",
-   "fieldtype": "Read Only",
-   "label": "Batch Placed On"
+   "fieldtype": "Date",
+   "label": "Batch Placed On",
+   "read_only": 1
   },
   {
    "fetch_from": "batch.place_quantity_number_of_birds",
    "fieldname": "batch_placed_quantity",
-   "fieldtype": "Read Only",
-   "label": "Batch Placed Quantity"
+   "fieldtype": "Int",
+   "label": "Batch Placed Quantity",
+   "read_only": 1
   },
   {
    "fetch_from": "batch.live_quantity_number_of_birds",
    "fetch_if_empty": 1,
    "fieldname": "batch_live_quantity",
-   "fieldtype": "Read Only",
-   "label": "Batch Live Quantity"
+   "fieldtype": "Int",
+   "label": "Batch Live Quantity",
+   "read_only": 1
   },
   {
    "fetch_from": "batch.batch_age_in_days",
    "fieldname": "batch_age_in_days",
-   "fieldtype": "Read Only",
-   "label": "Batch Age (In Days)"
+   "fieldtype": "Int",
+   "label": "Batch Age (In Days)",
+   "read_only": 1
   },
   {
    "depends_on": "batch",
@@ -186,18 +192,31 @@
    "default": "0",
    "fieldname": "culls",
    "fieldtype": "Int",
-   "label": "Culls",
-   "non_negative": 1
+   "label": "Culls"
   },
   {
    "fieldname": "batch_status",
    "fieldtype": "Read Only",
    "label": "Batch Status"
+  },
+  {
+   "default": "0",
+   "fieldname": "fcr",
+   "fieldtype": "Float",
+   "label": "FCR",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "production_cost",
+   "fieldtype": "Float",
+   "label": "Production Cost",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-20 11:26:40.299041",
+ "modified": "2025-03-04 16:36:20.488570",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Daily Transaction",

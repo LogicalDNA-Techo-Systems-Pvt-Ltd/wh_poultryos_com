@@ -38,7 +38,7 @@
 //         frm.refresh_field("batches");
 //     },
 
-    
+
 // });
 
 frappe.ui.form.on('Batch Selection', {
@@ -72,13 +72,13 @@ frappe.ui.form.on('Batch Selection', {
             frappe.msgprint(__('Quantity cannot exceed available quantity'));
             frappe.model.set_value(cdt, cdn, "quantity", row.instock);
             return;
-        }   
+        }
     },
 
     rate: function (frm, cdt, cdn) {
         let row = locals[cdt][cdn];
-        row.amount = row.quantity * row.rate;  
-        update_amount(frm, cdt, cdn);    
+        row.amount = row.quantity * row.rate;
+        update_amount(frm, cdt, cdn);
         frm.refresh_field("batches");
     },
 
@@ -98,7 +98,18 @@ frappe.ui.form.on('Custom Sales Invoice', {
                 }
             };
         });
-    },    
+    },
+
+    sales_type: function (frm) {
+
+        if (frm.doc.sales_type === "Sales by Bird") {
+            
+            frm.set_df_property('batches', 'hidden', 0);  // Show the child table
+        } else {
+            frm.set_df_property('batches', 'hidden', 1);  // Hide the child table
+        }
+
+    },
 
     after_save: function (frm) {
         frappe.call({
@@ -109,13 +120,42 @@ frappe.ui.form.on('Custom Sales Invoice', {
             callback: function (r) {
                 if (r.message.status === "success") {
                     frappe.msgprint(__('Batch quantities updated successfully.'));
+
+                    frappe.call({
+                        method: 'wh_poultryos.poultryos.doctype.custom_sales_invoice.custom_sales_invoice.get_total_weight',
+                        args: {
+                            batches: JSON.stringify(frm.doc.batches)
+                        },
+                        callback: function (res) {
+
+                            if (res.message) {
+
+                                res.message.forEach(batch => {
+                                    frappe.call({
+                                        method: 'frappe.client.set_value',
+                                        args: {
+                                            doctype: 'Broiler Batch',
+                                            name: batch.batch_name,
+                                            fieldname: {
+                                                total_delivered_weight: batch.total_weight
+                                            }
+                                        },
+                                        callback: function () {
+                                            console.log("Updated Total Delivered Weight for:", batch.batch_name);
+                                        }
+                                    });
+                                });
+                            }
+                        }
+                    })
+
                 } else {
                     frappe.msgprint(__('Error updating batch quantities.'));
                 }
             }
         });
     }
-      
+
 });
 
 // Function to calculate individual row amount
@@ -124,7 +164,7 @@ function update_amount(frm, cdt, cdn) {
     row.amount = row.quantity * row.rate;
     frm.refresh_field("batches");
     calculate_total(frm);
-    
+
 }
 
 // Function to calculate the total amount from child table
@@ -141,7 +181,7 @@ function calculate_total(frm) {
 // Function to calculate the total weight from the child table
 function calculate_total_weight(frm) {
     let total_weight = 0;
-    
+
     frm.doc.batches.forEach(row => {
         total_weight += row.weight || 0; // Sum up all row weights
     });

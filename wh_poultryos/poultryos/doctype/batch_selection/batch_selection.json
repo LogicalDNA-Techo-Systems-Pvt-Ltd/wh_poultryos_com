@@ -13,7 +13,9 @@
   "quantity",
   "rate",
   "weight",
-  "unit"
+  "unit",
+  "age",
+  "body_weight"
  ],
  "fields": [
   {
@@ -54,7 +56,7 @@
    "fieldtype": "Read Only",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Instock"
+   "label": "Live Quantity"
   },
   {
    "fieldname": "weight",
@@ -71,12 +73,24 @@
    "fieldtype": "Select",
    "label": "Unit",
    "options": "KG"
+  },
+  {
+   "fieldname": "age",
+   "fieldtype": "Int",
+   "label": "Age",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "batch.body_weight",
+   "fieldname": "body_weight",
+   "fieldtype": "Read Only",
+   "label": "Body Weight"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-02-26 14:47:13.101911",
+ "modified": "2025-03-05 10:20:47.530455",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Batch Selection",

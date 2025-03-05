@@ -6,6 +6,51 @@ from frappe.model.document import Document
 class BroilerDailyTransaction(Document):
     pass
 
+from datetime import datetime, timedelta
+
+@frappe.whitelist()
+def get_first_week_mortality(batch_name):
+    """Fetches and returns the total mortality sum for the first 7 days of the given batch."""
+    
+    # Check if the batch exists
+    batch_exists = frappe.db.exists("Broiler Batch", batch_name)
+
+    if not batch_exists:
+        frappe.throw(f"Batch '{batch_name}' not found!")
+
+    batch_details = frappe.get_all(
+        "Broiler Batch",
+        filters={"name": batch_name},
+        fields=["*"]  # Fetch all fields
+    )   
+
+    if batch_details:
+        print(batch_details[0])  # Print batch details         
+    
+    batch_start_date = batch_details[0].opening_date  # Ensure this field exists       
+    
+    if not batch_start_date:
+        frappe.throw("Placed On date is missing in the Broiler Batch")
+
+    # Convert to date format
+    if isinstance(batch_start_date, str):
+        batch_start_date = batch_start_date
+       
+
+    # Calculate the end date (first 7 days)
+    first_week_end = batch_start_date + timedelta(days=6)
+   
+
+    
+    # Fetch the mortality sum for the first 7 days
+    mortality_sum = frappe.db.sql("""
+        SELECT SUM(mortality_number_of_birds) 
+        FROM `tabBroiler Daily Transaction`
+        WHERE batch = %s AND transaction_date BETWEEN %s AND %s
+    """, (batch_name, batch_start_date, first_week_end))
+
+    return mortality_sum[0][0] if mortality_sum and mortality_sum[0][0] else 0
+
 @frappe.whitelist()
 def update_batch_status(batch):
     if batch:  # Use the correct parameter name
