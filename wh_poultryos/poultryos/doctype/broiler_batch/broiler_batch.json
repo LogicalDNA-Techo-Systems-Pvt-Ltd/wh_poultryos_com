@@ -10,6 +10,7 @@
  "field_order": [
   "activity_section",
   "broiler_batch_daily_transactions_heatmap",
+  "broiler_batch_kpis",
   "batch_information_section",
   "batch_name",
   "opening_date",
@@ -144,7 +145,7 @@
   {
    "fieldname": "amount",
    "fieldtype": "Float",
-   "label": "Amount",
+   "label": "Bird Purchase Amount",
    "read_only": 1
   },
   {
@@ -328,6 +329,11 @@
    "fieldtype": "Int",
    "label": "Medicine Rate",
    "non_negative": 1
+  },
+  {
+   "fieldname": "broiler_batch_kpis",
+   "fieldtype": "HTML",
+   "label": "Broiler Batch KPIs"
   }
  ],
  "index_web_pages_for_search": 1,

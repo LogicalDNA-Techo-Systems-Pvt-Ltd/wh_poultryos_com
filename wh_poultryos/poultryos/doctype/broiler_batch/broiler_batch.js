@@ -6,6 +6,7 @@ frappe.ui.form.on('Broiler Batch', {
     refresh: function (frm) {
         // Fetch the transaction data and process for heatmap
         fetchTransactionData(frm);
+        renderKPIs(frm);
     },
 
     onload: function (frm) {
@@ -350,4 +351,234 @@ function renderHeatmap(frm, { dataPoints, startDate, endDate }) {
     } else {
         console.error("Heatmap container not found");
     }
+}
+
+// Function to render the KPI chart
+function renderKPIs(frm) {
+    const KPIContainer = frm.fields_dict['broiler_batch_kpis'].wrapper;
+
+    // Ensure KPI container is available
+    if (KPIContainer && frm.fields_dict.broiler_batch_kpis.$wrapper) {
+        // Apply styles to center the chart
+        $(KPIContainer).css({
+            "width": "100%",
+            "display": "block",
+            "justify-content": "center"
+        });
+
+        // Clear any existing KPI
+        frm.fields_dict.broiler_batch_kpis.$wrapper.empty();
+
+        // Add CSS styles
+        const kpiStyles = `
+            <style>
+                /* KPI dashboard styles */
+                .kpi-dashboard {
+                    width: 100%;
+                    margin-bottom: 10px;
+                    border-collapse: collapse;
+                    flex-wrap: wrap; /* Allows wrapping when there's not enough space */
+                    justify-content: space-between; /* Ensures even spacing between cards */
+                }
+
+                .kpi-dashboard td {
+                    width: 25%; /* Force 4 columns */
+                    padding: 5px;
+                    vertical-align: top;
+                    box-sizing: border-box; /* Ensure padding and border are included in width */
+                }
+
+                .kpi-card {
+                    background: white;
+                    border: 1px solid #ddd;
+                    padding: 10px; /* Increase padding to make cards look more uniform */
+                    text-align: center;
+                    margin-bottom: 10px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                    height: 180px; /* Fixed height for uniform card size */
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between; /* Ensures spacing between title, value, and subtitle */
+                    box-sizing: border-box;
+                }
+
+                .kpi-card h3 {
+                    font-size: 12px; /* Slightly larger font size for headings */
+                    margin: 0 0 5px 0;
+                    color: #555;
+                }
+
+                .kpi-value {
+                    font-size: 14px; /* Increased size for values */
+                    font-weight: bold;
+                    margin: 5px 0;
+                }
+
+                .kpi-subtitle {
+                    font-size: 10px;
+                    color: #777;
+                }
+
+                /* Color indicators */
+                .mortality { color: #e74c3c; }
+                .culls { color: #f39c12; }
+                .sales { color: #27ae60; }
+                .profit { color: #3498db; }
+                .loss { color: #e74c3c; }
+                .feed { color: #3498db; }
+
+                /* Negative value indicator */
+                .negative-amount:before {
+                    content: "-";
+                }
+
+            </style>
+        `;
+
+        // Get batch data from the form
+        const batchData = {
+            place_quantity: frm.doc.place_quantity_number_of_birds || 0,
+            mortality: frm.doc.mortality || 0,
+            culls: frm.doc.culls || 0,
+            sale_quantity: frm.doc.sale_quantity || 0,
+            total_feed: frm.doc.total_feed || 0,
+            batch_age_in_days: frm.doc.batch_age_in_days || 1,
+            rate: frm.doc.rate || 0,
+            bird_cost: frm.doc.bird_cost || 0,
+            avg_weight: 2.5 // Standard assumption, could be calculated from actual data
+        };
+
+        // Add KPI HTML (with included CSS) to the container
+        $(frm.fields_dict.broiler_batch_kpis.$wrapper.get(0)).html(`
+            ${kpiStyles}
+            <div id='kpi-container'>
+                <table class="kpi-dashboard">
+                    <tr>
+                        <td>
+                            <div class="kpi-card">
+                                <h3>Mortality Rate</h3>
+                                <div class="kpi-value mortality" id="mortality-rate">${calculateMortalityRate(batchData)}%</div>
+                                <div class="kpi-subtitle" id="mortality-count">${Math.round(batchData.mortality)} birds</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="kpi-card">
+                                <h3>Cull Rate</h3>
+                                <div class="kpi-value culls" id="cull-rate">${calculateCullRate(batchData)}%</div>
+                                <div class="kpi-subtitle" id="cull-count">${Math.round(batchData.culls)} birds</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="kpi-card">
+                                <h3>Sale-to-Bird Ratio</h3>
+                                <div class="kpi-value sales" id="sale-ratio">${calculateSaleRatio(batchData)}%</div>
+                                <div class="kpi-subtitle" id="sale-count">${Math.round(batchData.sale_quantity)} birds sold</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="kpi-card">
+                                <h3>Total Feed</h3>
+                                <div class="kpi-value feed" id="total-feed">${Math.round(batchData.total_feed)} kg</div>
+                                <div class="kpi-subtitle" id="feed-per-bird">Per Bird: ${calculateFeedPerBird(batchData)} kg</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="kpi-card">
+                                <h3>Feed Conversion Ratio</h3>
+                                <div class="kpi-value" id="fcr">${calculateFCR(batchData)}</div>
+                                <div class="kpi-subtitle">kg feed per kg meat</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="kpi-card">
+                                <h3>Daily Growth Rate</h3>
+                                <div class="kpi-value" id="daily-growth">${calculateDailyGrowth(batchData)} g</div>
+                                <div class="kpi-subtitle">Average daily weight gain</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="kpi-card">
+                                <h3 id="profit-loss-title">${calculateProfit(batchData) >= 0 ? 'Profit Margin' : 'Loss Margin'}</h3>
+                                <div class="kpi-value ${calculateProfit(batchData) >= 0 ? 'profit' : 'loss negative-amount'}" id="profit-loss-value">₹${formatCurrency(Math.abs(calculateProfit(batchData)))}</div>
+                                <div class="kpi-subtitle">Return on Investment</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="kpi-card">
+                                <h3>ROI Percentage</h3>
+                                <div class="kpi-value ${calculateROIPercent(batchData) >= 0 ? 'profit' : 'loss negative-amount'}" id="roi-percent">${formatNumber(Math.abs(calculateROIPercent(batchData)))}%</div>
+                                <div class="kpi-subtitle">Return on Investment %</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        `);
+    } else {
+        console.error("HTML field not found or not fully rendered");
+    }
+}
+
+// Calculate Mortality Rate
+function calculateMortalityRate(data) {
+    if (data.place_quantity <= 0) return "0.00";
+    return ((data.mortality / data.place_quantity) * 100).toFixed(2);
+}
+
+// Calculate Cull Rate
+function calculateCullRate(data) {
+    if (data.place_quantity <= 0) return "0.00";
+    return ((data.culls / data.place_quantity) * 100).toFixed(2);
+}
+
+// Calculate Sale-to-Bird Ratio
+function calculateSaleRatio(data) {
+    if (data.place_quantity <= 0) return "0.00";
+    return ((data.sale_quantity / data.place_quantity) * 100).toFixed(2);
+}
+
+// Calculate Feed Per Bird
+function calculateFeedPerBird(data) {
+    if (data.place_quantity <= 0) return "0.00";
+    return (data.total_feed / data.place_quantity).toFixed(2);
+}
+
+// Calculate Feed Conversion Ratio (FCR)
+function calculateFCR(data) {
+    if (data.sale_quantity <= 0 || data.avg_weight <= 0) return "0.00";
+    return (data.total_feed / (data.sale_quantity * data.avg_weight)).toFixed(2);
+}
+
+// Calculate Daily Growth Rate
+function calculateDailyGrowth(data) {
+    if (data.batch_age_in_days <= 0) return "0.00";
+    const dailyGrowth = (data.avg_weight / data.batch_age_in_days) * 1000;
+    return dailyGrowth.toFixed(2);
+}
+
+// Calculate Profit/Loss
+function calculateProfit(data) {
+    const salesIncome = data.sale_quantity * data.rate;
+    const investment = data.bird_cost * data.place_quantity;
+    return salesIncome - investment;
+}
+
+// Calculate ROI Percentage
+function calculateROIPercent(data) {
+    const investment = data.bird_cost * data.place_quantity;
+    if (investment <= 0) return 0;
+    const profit = calculateProfit(data);
+    return (profit / investment * 100).toFixed(2);
+}
+
+// Format currency values
+function formatCurrency(value) {
+    return parseFloat(value).toFixed(2);
+}
+
+// Format numbers
+function formatNumber(value) {
+    return parseFloat(value).toFixed(2);
 }
