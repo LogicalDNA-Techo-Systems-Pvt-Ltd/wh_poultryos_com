@@ -701,6 +701,8 @@ frappe.ui.form.on("Growing Charges", {
             callback: function (r) {
                 if (r.message.status === "success") {
                     frappe.msgprint(__('GC UPDATED.'));
+
+                    console.log("", frm.doc.net_payable_amount);
                 } else {
 
                 }

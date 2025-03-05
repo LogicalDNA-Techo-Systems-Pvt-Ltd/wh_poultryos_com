@@ -47,15 +47,28 @@ frappe.ui.form.on('Broiler Batch', {
     },
 
     opening_date: function (frm) {
-        if (frm.doc.opening_date) {
-            // let formatted_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
-            frm.set_value('live_batch_date', frm.doc.opening_date);
-        }
+        // if (frm.doc.opening_date) {
+        //     // let formatted_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
+        //     frm.set_value('live_batch_date', frm.doc.opening_date);
+        // }
 
-        let opening_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
-        let today = frm.doc.live_batch_date;
-        let days_diff = frappe.datetime.get_diff(today, opening_date);
-        frm.set_value("batch_age_in_days", days_diff || 0);
+        // let opening_date = frappe.datetime.obj_to_user(frm.doc.opening_date);
+        // let today = frm.doc.live_batch_date;
+        // let days_diff = frappe.datetime.get_diff(today, opening_date);
+        // frm.set_value("batch_age_in_days", days_diff || 0);
+
+        if (frm.doc.opening_date) {
+            // Convert opening date to system format (YYYY-MM-DD)
+            let opening_date = frappe.datetime.str_to_obj(frm.doc.opening_date);  
+            frm.set_value('live_batch_date', frm.doc.opening_date);
+            
+            let today = frappe.datetime.str_to_obj(frm.doc.live_batch_date); 
+        
+            // Calculate difference in days
+            let days_diff = frappe.datetime.get_diff(today, opening_date);
+            frm.set_value("batch_age_in_days", days_diff || 0);
+        }
+        
     },
 
     rate: function (frm) {
@@ -226,10 +239,68 @@ function fetchTransactionData(frm) {
 }
 
 // Function to process transaction data for heatmap
+// function processTransactionData(transactions, openingDate) {
+//     let dataPoints = {};
+//     let startDate = openingDate || frappe.datetime.get_today();
+//     let endDate = frappe.datetime.add_days(startDate, 70);
+
+//     // Convert transaction data to heatmap-friendly format
+//     transactions.forEach(function (transaction) {
+//         let date = transaction.transaction_date;
+
+//         // Initialize if not exists
+//         if (!dataPoints[date]) {
+//             dataPoints[date] = 0;
+//         }
+
+//         // Increment count for this date
+//         dataPoints[date]++;
+//     });
+
+//     return { dataPoints, startDate, endDate };
+// }
+
+// // Function to render the heatmap chart
+// function renderHeatmap(frm, { dataPoints, startDate, endDate }) {
+//     const heatmapContainer = frm.fields_dict['broiler_batch_daily_transactions_heatmap'].wrapper;
+
+//     // Ensure heatmap container is available
+//     if (heatmapContainer && frm.fields_dict.broiler_batch_daily_transactions_heatmap.$wrapper) {
+//         // Apply styles to center the chart
+//         $(heatmapContainer).css({
+//             "width": "100%",
+//             "display": "flex",
+//             "justify-content": "center"
+//         });
+
+//         // Clear any existing heatmap
+//         frm.fields_dict.broiler_batch_daily_transactions_heatmap.$wrapper.empty();
+
+//         // Render the new heatmap chart
+//         new frappe.Chart(frm.fields_dict.broiler_batch_daily_transactions_heatmap.$wrapper.get(0), {
+//             type: 'heatmap',
+//             width: 500,
+//             data: {
+//                 dataPoints: dataPoints,
+//                 start: new Date(startDate),
+//                 end: new Date(endDate)
+//             },
+//             countLabel: 'Daily Transaction',
+//             discreteDomains: 1,
+//             showLegend: 0
+//         });
+//     } else {
+//         console.error("Heatmap HTML field not found or not fully rendered");
+//     }
+// }
+
 function processTransactionData(transactions, openingDate) {
     let dataPoints = {};
-    let startDate = openingDate || frappe.datetime.get_today();
-    let endDate = frappe.datetime.add_days(startDate, 70);
+    
+    // Ensure start date is set to January 1st of the current year
+    let currentYear = new Date().getFullYear();
+    let startDate = new Date(currentYear, 0, 1);  // January 1st
+    let endDate = new Date(currentYear, 11, 31); // December 31st
 
     // Convert transaction data to heatmap-friendly format
     transactions.forEach(function (transaction) {
@@ -251,9 +322,8 @@ function processTransactionData(transactions, openingDate) {
 function renderHeatmap(frm, { dataPoints, startDate, endDate }) {
     const heatmapContainer = frm.fields_dict['broiler_batch_daily_transactions_heatmap'].wrapper;
 
-    // Ensure heatmap container is available
-    if (heatmapContainer && frm.fields_dict.broiler_batch_daily_transactions_heatmap.$wrapper) {
-        // Apply styles to center the chart
+    if (heatmapContainer) {
+        // Apply full-width styles to container
         $(heatmapContainer).css({
             "width": "100%",
             "display": "flex",
@@ -261,22 +331,23 @@ function renderHeatmap(frm, { dataPoints, startDate, endDate }) {
         });
 
         // Clear any existing heatmap
-        frm.fields_dict.broiler_batch_daily_transactions_heatmap.$wrapper.empty();
+        $(heatmapContainer).empty();
 
-        // Render the new heatmap chart
-        new frappe.Chart(frm.fields_dict.broiler_batch_daily_transactions_heatmap.$wrapper.get(0), {
+        // Render the heatmap
+        new frappe.Chart(heatmapContainer, {
             type: 'heatmap',
-            width: 500,
+            width: "100%",  // Use full width
+            height: 180,    // Adjust height
             data: {
                 dataPoints: dataPoints,
-                start: new Date(startDate),
-                end: new Date(endDate)
+                start: startDate,
+                end: endDate                
             },
-            countLabel: 'Daily Transaction',
+            countLabel: 'Daily Transactions',
             discreteDomains: 1,
             showLegend: 0
         });
     } else {
-        console.error("Heatmap HTML field not found or not fully rendered");
+        console.error("Heatmap container not found");
     }
 }

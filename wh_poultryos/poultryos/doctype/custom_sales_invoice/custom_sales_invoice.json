@@ -8,6 +8,7 @@
  "field_order": [
   "date",
   "party",
+  "sales_type",
   "batches",
   "total_amount",
   "total_weight"
@@ -29,6 +30,7 @@
   {
    "fieldname": "batches",
    "fieldtype": "Table",
+   "hidden": 1,
    "label": "Batches",
    "options": "Batch Selection"
   },
@@ -45,11 +47,17 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Total Weight"
+  },
+  {
+   "fieldname": "sales_type",
+   "fieldtype": "Select",
+   "label": "Sales Type",
+   "options": "\nSales by Bird\nSales by Weight"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-07 13:46:52.552240",
+ "modified": "2025-03-04 18:10:24.823626",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Custom Sales Invoice",

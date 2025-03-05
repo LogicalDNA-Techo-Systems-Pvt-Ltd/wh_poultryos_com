@@ -11,6 +11,66 @@ class CustomSalesInvoice(Document):
 import frappe
 import json
 
+
+@frappe.whitelist()
+def get_total_weight(batches):
+    """
+    Fetch total weight for given batch names in 'Custom Sales Invoice'.
+    
+    :param batches: List of batch names (JSON formatted string)
+    :return: Total weight sum
+    """
+    
+    print(batches)    
+        
+    if not batches:
+        return {"error": "Batches parameter is required."}
+
+    try:
+        # Convert JSON string to list if it's not already a list
+        if isinstance(batches, str):
+            import json
+            batches = json.loads(batches)
+
+        total_weight = 0  # Initialize total weight
+
+        # # Loop through each batch and fetch its weight
+        # for batch in batches:            
+            
+        #     batch_name = batch.get("batch")
+        #     print(batch_name)
+        #     weight_entry = frappe.get_value("Batch Selection", {"batch": batch_name}, "weight")
+        #     print(weight_entry)
+            
+        #     # If weight exists, add it to total
+        #     if weight_entry:
+        #         total_weight += float(weight_entry) if weight_entry else 0
+
+        # return {"total_weight": total_weight}
+        
+        batch_weights = []  # Dictionary to store batch names and their total weights
+
+        # Loop through each batch and fetch its weight
+        for batch in batches:            
+            batch_name = batch.get("batch")
+            print("Processing Batch:", batch_name)
+
+            weight_entry = frappe.get_value("Batch Selection", {"batch": batch_name}, "weight")
+            print("Weight:", weight_entry)
+
+             # If weight exists, add it to the result list
+            batch_weights.append({
+                "batch_name": batch_name,
+                "total_weight": float(weight_entry) if weight_entry else 0
+            })
+
+        return batch_weights
+
+    except Exception as e:
+        frappe.log_error(f"Error in get_total_weight: {str(e)}", "Batch Weight Fetch")
+        return {"error": str(e)}
+    
+
 @frappe.whitelist()
 def update_batch_quantities(batches):
     if not batches:

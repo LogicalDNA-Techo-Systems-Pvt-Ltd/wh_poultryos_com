@@ -22,10 +22,16 @@
   "batch_age_in_days",
   "place_quantity_number_of_birds",
   "live_quantity_number_of_birds",
+  "total_delivered_weight",
+  "body_weight",
+  "feed_rate",
+  "medicine_rate",
   "column_break_pfmw",
   "mortality",
   "culls",
   "total_feed",
+  "total_feed_cost",
+  "first_week_mortality",
   "financial_information_section",
   "rate",
   "amount",
@@ -38,7 +44,6 @@
   "shed",
   "transaction_related_information_section",
   "sale_quantity",
-  "column_break_zhor",
   "organizational_and_status_information_section",
   "batch_status",
   "gc_calculated",
@@ -46,8 +51,7 @@
   "org_name",
   "growing_charges",
   "miscellaneous_information_section",
-  "live_batch_date",
-  "organization_logo_url"
+  "live_batch_date"
  ],
  "fields": [
   {
@@ -69,7 +73,6 @@
    "columns": 3,
    "fieldname": "place_quantity_number_of_birds",
    "fieldtype": "Int",
-   "in_list_view": 1,
    "label": "Place Quantity (Number of birds)",
    "non_negative": 1,
    "reqd": 1
@@ -108,7 +111,6 @@
    "default": "0",
    "fieldname": "live_quantity_number_of_birds",
    "fieldtype": "Read Only",
-   "in_list_view": 1,
    "label": "Live Quantity (Number of birds)",
    "non_negative": 1
   },
@@ -257,9 +259,10 @@
   },
   {
    "default": "No",
-   "depends_on": "doc.batch_type == 'CONTRACT'",
+   "depends_on": "doc.batch_type == 'Contract'",
    "fieldname": "gc_calculated",
    "fieldtype": "Read Only",
+   "in_list_view": 1,
    "label": "GC Calculated?",
    "read_only": 1
   },
@@ -286,6 +289,45 @@
    "fieldtype": "Float",
    "label": "Growing Charges",
    "read_only": 1
+  },
+  {
+   "fieldname": "total_feed_cost",
+   "fieldtype": "Float",
+   "label": "Total Feed Cost",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "total_delivered_weight",
+   "fieldtype": "Float",
+   "label": "Total Delivered Weight",
+   "read_only": 1
+  },
+  {
+   "fieldname": "first_week_mortality",
+   "fieldtype": "Int",
+   "label": "First Week Mortality",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "body_weight",
+   "fieldtype": "Float",
+   "label": "Body Weight",
+   "read_only": 1
+  },
+  {
+   "fieldname": "feed_rate",
+   "fieldtype": "Int",
+   "label": "Feed Rate",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "medicine_rate",
+   "fieldtype": "Int",
+   "label": "Medicine Rate",
+   "non_negative": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -296,27 +338,13 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-26 16:36:27.250852",
+ "modified": "2025-03-04 16:03:31.980988",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Batch",
  "naming_rule": "Expression",
  "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "if_owner": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
+ "permissions": [],
  "search_fields": "batch_name",
  "show_title_field_in_link": 1,
  "sort_field": "modified",
