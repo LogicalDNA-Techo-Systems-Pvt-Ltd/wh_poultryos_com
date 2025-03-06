@@ -1,9 +1,17 @@
 {
- "cards": [],
+ "cards": [
+  {
+   "card": "Available Balance"
+  }
+ ],
  "charts": [
   {
    "chart": "Breeder DT HeatMap",
    "width": "Full"
+  },
+  {
+   "chart": "Broiler Batch Heatmap",
+   "width": "Half"
   }
  ],
  "creation": "2025-02-11 15:25:38.321344",
@@ -13,7 +21,7 @@
  "idx": 0,
  "is_default": 1,
  "is_standard": 1,
- "modified": "2025-02-12 18:23:31.001337",
+ "modified": "2025-03-03 14:28:28.302137",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Test Demo",
