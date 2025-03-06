@@ -322,7 +322,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
             // Ensure valid values before FCR calculation
             if (total_birds > 0 && avg_weight_kg > 0) {
-                let fcr = (total_feed_kg / (avg_weight_kg * total_birds)).toFixed(2);
+                let fcr = (total_feed_kg / (avg_weight_kg * total_birds)).toFixed(3);
                 frm.set_value('fcr', fcr);
             } else {
                 frappe.msgprint(__('Invalid values: Live Quantity or Average Bird Weight must be greater than 0 for FCR calculation.'));
