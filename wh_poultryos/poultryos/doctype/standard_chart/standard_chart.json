@@ -6,8 +6,10 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "breed_name",
   "item_name",
   "age_in_days",
+  "mortality",
   "feed_consumption",
   "cumulative_feed",
   "body_weight",
@@ -47,11 +49,23 @@
    "fieldname": "fcr",
    "fieldtype": "Float",
    "label": "FCR"
+  },
+  {
+   "fieldname": "breed_name",
+   "fieldtype": "Link",
+   "label": "Breed Name",
+   "options": "Breed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mortality",
+   "fieldtype": "Int",
+   "label": "Mortality"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-20 10:50:36.178550",
+ "modified": "2025-03-06 17:25:52.926006",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Standard Chart",
