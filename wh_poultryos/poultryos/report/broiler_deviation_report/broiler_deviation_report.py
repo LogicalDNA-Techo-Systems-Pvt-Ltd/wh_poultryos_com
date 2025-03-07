@@ -11,8 +11,6 @@ def execute(filters=None):
     if not filters.get("Batch"):
         frappe.throw("Please select a Batch to view the report.")
 
-    if not filters.get("from_date") or not filters.get("to_date"):
-        frappe.throw("Please select From Date and To Date.")
 
     # Fetch filtered batch data
     query = """
@@ -54,16 +52,14 @@ def execute(filters=None):
             ON i1.name = d1.item_name
         WHERE 
             d1.batch = %(Batch)s
-            AND d1.transaction_date BETWEEN %(from_date)s AND %(to_date)s
+         
         ORDER BY 
             d1.transaction_date ASC;
     """
 
     # Execute query
     data = frappe.db.sql(query, {
-        "Batch": filters.get("Batch"),
-        "from_date": filters.get("from_date"),
-        "to_date": filters.get("to_date")
+        "Batch": filters.get("Batch")        
     }, as_dict=True)
 
     # Define table columns

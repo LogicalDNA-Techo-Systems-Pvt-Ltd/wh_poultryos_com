@@ -73,32 +73,6 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
     },
 
-    // mortality_number_of_birds: function (frm) {
-
-    //     if (frm.doc.mortality_number_of_birds) {
-    //         frappe.call({
-    //             method: 'frappe.client.get',
-    //             args: {
-    //                 doctype: 'Broiler Batch',
-    //                 name: frm.doc.batch // Use the batch identifier from the form
-    //             },
-    //             callback: function (batch_data) {
-
-    //                 console.log(batch_data);
-    //                 if (batch_data && batch_data.message) {
-
-    //                     let cost = batch_data.message.bird_cost;
-    //                     let mcost = ((frm.doc.mortality_number_of_birds * cost).toFixed(4));
-    //                     frm.set_value('mortality_cost', mcost);
-    //                     frm.trigger('calculate_production_cost');
-    //                 }
-
-    //             }
-    //         });
-    //     }
-
-
-    // },
 
     mortality_number_of_birds: function (frm) {
         if (frm.doc.mortality_number_of_birds > 0) {  // Ensure mortality is valid
@@ -237,69 +211,6 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
     feed_consumed_quantity: function (frm) {
 
-        // if (frm.doc.item_type === "Feed") {
-        //     frm.trigger('transaction_date');
-
-        //     // Ensure values exist before calculating
-        //     if (frm.doc.feed_consumed_quantity > 0 && frm.doc.average_bird_weight_in_grams > 0) {
-
-        //         let total_feed_kg = frm.doc.feed_consumed_quantity; // Assuming in kg
-        //         let avg_weight_kg = frm.doc.average_bird_weight_in_grams / 1000; // Convert grams to kg
-        //         let total_birds = frm.doc.batch_live_quantity - (frm.doc.mortality_number_of_birds || 0); // Exclude mortality
-
-        //         if (total_birds > 0 && avg_weight_kg > 0) {
-        //             let fcr = (total_feed_kg / (avg_weight_kg * total_birds)).toFixed(2);
-        //             frm.set_value('fcr', fcr);
-        //         } else {
-        //             frappe.msgprint(__('Total birds or average weight is invalid for FCR calculation.'));
-        //         }
-
-        //     } else {
-        //         frappe.msgprint(__('Feed consumed quantity or average bird weight is missing.'));
-        //     }
-
-        //     if (!frm.doc.feed_consumed_quantity || !frm.doc.average_bird_weight_in_grams || !frm.doc.mortality_number_of_birds) {
-
-        //         frappe.msgprint(__('Please fill in all required fields: Feed Consumed Quantity, Feed Rate and Average Bird Weight.'));
-        //         frappe.validated = false;
-        //         return;
-        //     }
-
-        //     frappe.call({
-        //         method: "frappe.client.get_value",
-        //         args: {
-        //             doctype: "Broiler Batch",
-        //             filters: { name: frm.doc.batch },
-        //             fieldname: ["feed_rate", "rate", "medicine_rate"]  // Fetch multiple fields
-        //         },
-        //         callback: function (r) {
-        //             if (r.message) {
-
-        //                 let feed_rate = r.message.feed_rate;
-        //                 let medicine_rate = r.message.medicine_rate;
-        //                 let rate = r.message.rate;
-        //                 let live_q = (frm.doc.batch_live_quantity - frm.doc.mortality_number_of_birds);
-        //                 // Convert bird weight from grams to kg
-        //                 let body_weight_kg = frm.doc.average_bird_weight_in_grams / 1000;
-
-        //                 // Calculate production cost
-        //                 let production_cost = ((frm.doc.batch_placed_quantity * rate) +
-        //                     (frm.doc.feed_consumed_quantity * feed_rate)) /
-        //                     (live_q * body_weight_kg);
-
-        //                 // Set the calculated production cost in the "production_cost" field
-        //                 frm.set_value('production_cost', production_cost.toFixed(2));
-
-        //             } else {
-        //                 console.log("Feed Rate not found");
-        //             }
-        //         }
-        //     });
-
-
-        // } else {
-        //     frappe.msgprint(__('Sorry, you are not selecting a feed item.'));
-        // }
 
         frm.trigger('calculate_production_cost');
         

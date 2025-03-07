@@ -57,9 +57,6 @@ def update_batch_status(batch):
         # Check the current status of the batch
         batch_status = frappe.db.get_value('Broiler Batch', batch, 'batch_status')
         
-        frappe.logger().info(f"Triggered update_batch_status for batch: {batch}")
-        frappe.logger().info(f"Batch status before update: {batch_status}")
-
         # Update status ONLY if it's still 'New'
         if batch_status == "New":
             frappe.db.set_value('Broiler Batch', batch, 'batch_status', 'Batch Started')
