@@ -1,77 +1,109 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "format:STD-{###}",
- "creation": "2025-02-06 14:59:29.254040",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "item_name",
-  "age_in_days",
-  "feed_consumption",
-  "cumulative_feed",
-  "body_weight",
-  "fcr"
- ],
- "fields": [
-  {
-   "fieldname": "item_name",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Item Name",
-   "options": "Item Master",
-   "reqd": 1
-  },
-  {
-   "fieldname": "age_in_days",
-   "fieldtype": "Int",
-   "label": "Age in days"
-  },
-  {
-   "fieldname": "feed_consumption",
-   "fieldtype": "Float",
-   "label": "Feed Consumption"
-  },
-  {
-   "default": "0",
-   "fieldname": "cumulative_feed",
-   "fieldtype": "Read Only",
-   "label": "Cumulative Feed"
-  },
-  {
-   "fieldname": "body_weight",
-   "fieldtype": "Float",
-   "label": "Body weight"
-  },
-  {
-   "fieldname": "fcr",
-   "fieldtype": "Float",
-   "label": "FCR"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2025-02-20 10:50:36.178550",
- "modified_by": "Administrator",
- "module": "PoultryOS",
- "name": "Standard Chart",
- "naming_rule": "Expression",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:STDCHRT-{breed}-{###}",
+    "creation": "2025-03-11 10:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "breed",
+        "age_details_section",
+        "age_in_days",
+        "performance_metrics_section",
+        "standard_mortality",
+        "standard_culls",
+        "standard_avg_bird_weight",
+        "standard_total_feed_consumption",
+        "calculated_metrics_section",
+        "standard_fcr"
+    ],
+    "fields": [
+        {
+            "fieldname": "breed",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Breed",
+            "options": "Breed",
+            "reqd": 1
+        },
+        {
+            "fieldname": "age_details_section",
+            "fieldtype": "Section Break",
+            "label": "Age Details"
+        },
+        {
+            "fieldname": "age_in_days",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "label": "Age in Days",
+            "reqd": 1
+        },
+        {
+            "fieldname": "performance_metrics_section",
+            "fieldtype": "Section Break",
+            "label": "Performance Metrics"
+        },
+        {
+            "fieldname": "standard_mortality",
+            "fieldtype": "Float",
+            "label": "Standard Mortality (%)",
+            "precision": 2
+        },
+        {
+            "fieldname": "standard_culls",
+            "fieldtype": "Float",
+            "label": "Standard Culls (%)",
+            "precision": 2
+        },
+        {
+            "fieldname": "standard_avg_bird_weight",
+            "fieldtype": "Float",
+            "label": "Standard Average Bird Weight (In Grams)",
+            "precision": 1
+        },
+        {
+            "fieldname": "standard_total_feed_consumption",
+            "fieldtype": "Float",
+            "label": "Standard Total Feed Consumption (In Grams)",
+            "precision": 1
+        },
+        {
+            "fieldname": "calculated_metrics_section",
+            "fieldtype": "Section Break",
+            "label": "Calculated Metrics"
+        },
+        {
+            "fieldname": "standard_fcr",
+            "fieldtype": "Float",
+            "label": "Standard FCR",
+            "read_only": 1,
+            "precision": 3,
+            "description": "Feed Conversion Ratio (automatically calculated)"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-03-11 10:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "PoultryOS",
+    "name": "Standard Chart",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "age_in_days",
+    "sort_order": "ASC",
+    "states": []
 }

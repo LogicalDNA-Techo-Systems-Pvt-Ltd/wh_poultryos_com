@@ -60,16 +60,16 @@ frappe.ui.form.on('Broiler Batch', {
 
         if (frm.doc.opening_date) {
             // Convert opening date to system format (YYYY-MM-DD)
-            let opening_date = frappe.datetime.str_to_obj(frm.doc.opening_date);  
+            let opening_date = frappe.datetime.str_to_obj(frm.doc.opening_date);
             frm.set_value('live_batch_date', frm.doc.opening_date);
-            
-            let today = frappe.datetime.str_to_obj(frm.doc.live_batch_date); 
-        
+
+            let today = frappe.datetime.str_to_obj(frm.doc.live_batch_date);
+
             // Calculate difference in days
             let days_diff = frappe.datetime.get_diff(today, opening_date);
             frm.set_value("batch_age_in_days", days_diff || 0);
         }
-        
+
     },
 
     rate: function (frm) {
@@ -297,7 +297,7 @@ function fetchTransactionData(frm) {
 
 function processTransactionData(transactions, openingDate) {
     let dataPoints = {};
-    
+
     // Ensure start date is set to January 1st of the current year
     let currentYear = new Date().getFullYear();
     let startDate = new Date(currentYear, 0, 1);  // January 1st
@@ -342,7 +342,7 @@ function renderHeatmap(frm, { dataPoints, startDate, endDate }) {
             data: {
                 dataPoints: dataPoints,
                 start: startDate,
-                end: endDate                
+                end: endDate
             },
             countLabel: 'Daily Transactions',
             discreteDomains: 1,
@@ -389,29 +389,31 @@ function renderKPIs(frm) {
                 }
 
                 .kpi-card {
-                    background: white;
-                    border: 1px solid #ddd;
-                    padding: 10px; /* Increase padding to make cards look more uniform */
-                    text-align: center;
-                    margin-bottom: 10px;
-                    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-                    height: 180px; /* Fixed height for uniform card size */
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between; /* Ensures spacing between title, value, and subtitle */
-                    box-sizing: border-box;
+                    border: 1px solid var(--border-color);
+                    border-radius: 8px;
+                    cursor: pointer;
+                    min-height: 84px;
+                    padding: var(--number-card-padding);
                 }
 
                 .kpi-card h3 {
-                    font-size: 12px; /* Slightly larger font size for headings */
-                    margin: 0 0 5px 0;
-                    color: #555;
+                    font-weight: var(--weight-medium);
+                    color: var(--text-muted);
+                    text-transform: uppercase;
+                    font-size: var(--text-tiny);
+                    margin-top: var(--margin-xs);
                 }
 
                 .kpi-value {
-                    font-size: 14px; /* Increased size for values */
-                    font-weight: bold;
-                    margin: 5px 0;
+                    font-size: var(--text-2xl);
+                    font-weight: var(--weight-semibold);
+                    letter-spacing: 0.01em;
+                    line-height: var(--text-line-height-3xl);
+                    color: var(--text-color);
+                    display: flex;
+                    justify-content: space-between;
+                    flex-direction: column;
+                    padding-top: var(--padding-md);
                 }
 
                 .kpi-subtitle {
@@ -445,7 +447,7 @@ function renderKPIs(frm) {
             batch_age_in_days: frm.doc.batch_age_in_days || 1,
             rate: frm.doc.rate || 0,
             bird_cost: frm.doc.bird_cost || 0,
-            avg_weight: 2.5 // Standard assumption, could be calculated from actual data
+            avg_weight: frm.doc.body_weight || 0
         };
 
         // Add KPI HTML (with included CSS) to the container
@@ -548,13 +550,13 @@ function calculateFeedPerBird(data) {
 // Calculate Feed Conversion Ratio (FCR)
 function calculateFCR(data) {
     if (data.sale_quantity <= 0 || data.avg_weight <= 0) return "0.00";
-    return (data.total_feed / (data.sale_quantity * data.avg_weight)).toFixed(2);
+    return (data.total_feed / (data.sale_quantity * data.avg_weight)).toFixed(3);
 }
 
 // Calculate Daily Growth Rate
 function calculateDailyGrowth(data) {
     if (data.batch_age_in_days <= 0) return "0.00";
-    const dailyGrowth = (data.avg_weight / data.batch_age_in_days) * 1000;
+    const dailyGrowth = (data.avg_weight / data.batch_age_in_days);
     return dailyGrowth.toFixed(2);
 }
 

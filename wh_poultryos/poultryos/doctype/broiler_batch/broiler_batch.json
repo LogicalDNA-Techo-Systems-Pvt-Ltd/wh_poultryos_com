@@ -1,362 +1,386 @@
 {
-   "actions": [],
-   "allow_import": 1,
-   "allow_rename": 1,
-   "autoname": "format:BT-{YY}-{#####}",
-   "creation": "2024-12-04 13:49:56.202817",
-   "default_view": "List",
-   "doctype": "DocType",
-   "engine": "InnoDB",
-   "field_order": [
-      "activity_section",
-      "broiler_batch_daily_transactions_heatmap",
-      "broiler_batch_kpis",
-      "batch_information_section",
-      "batch_name",
-      "opening_date",
-      "farmer_name",
-      "column_break_njbw",
-      "batch_type",
-      "module",
-      "breed_name",
-      "quantity_and_age_information_section",
-      "batch_age_in_days",
-      "place_quantity_number_of_birds",
-      "live_quantity_number_of_birds",
-      "total_delivered_weight",
-      "body_weight",
-      "feed_rate",
-      "medicine_rate",
-      "column_break_pfmw",
-      "mortality",
-      "culls",
-      "total_feed",
-      "total_feed_cost",
-      "first_week_mortality",
-      "financial_information_section",
-      "rate",
-      "amount",
-      "column_break_brdb",
-      "biological_value",
-      "bird_cost",
-      "location_and_shed_information_section",
-      "location",
-      "column_break_ogte",
-      "shed",
-      "transaction_related_information_section",
-      "sale_quantity",
-      "organizational_and_status_information_section",
-      "batch_status",
-      "gc_calculated",
-      "column_break_dmdn",
-      "org_name",
-      "growing_charges",
-      "miscellaneous_information_section",
-      "live_batch_date"
-   ],
-   "fields": [
-      {
-         "fieldname": "batch_name",
-         "fieldtype": "Data",
-         "in_list_view": 1,
-         "label": "Batch Name",
-         "reqd": 1
-      },
-      {
-         "columns": 1,
-         "fieldname": "opening_date",
-         "fieldtype": "Date",
-         "in_list_view": 1,
-         "label": "Placement Date",
-         "reqd": 1
-      },
-      {
-         "columns": 3,
-         "fieldname": "place_quantity_number_of_birds",
-         "fieldtype": "Int",
-         "label": "Place Quantity (Number of birds)",
-         "non_negative": 1,
-         "reqd": 1
-      },
-      {
-         "fieldname": "column_break_njbw",
-         "fieldtype": "Column Break"
-      },
-      {
-         "fieldname": "batch_type",
-         "fieldtype": "Link",
-         "in_list_view": 1,
-         "label": "Batch Type",
-         "options": "Batch Type",
-         "reqd": 1
-      },
-      {
-         "fieldname": "module",
-         "fieldtype": "Link",
-         "in_list_view": 1,
-         "label": "Module",
-         "link_filters": "[[\"Module\",\"module_name\",\"=\",\"BROILER\"]]",
-         "options": "Module",
-         "reqd": 1
-      },
-      {
-         "fieldname": "breed_name",
-         "fieldtype": "Link",
-         "in_list_view": 1,
-         "label": "Breed Name",
-         "options": "Breed",
-         "reqd": 1
-      },
-      {
-         "columns": 4,
-         "default": "0",
-         "fieldname": "live_quantity_number_of_birds",
-         "fieldtype": "Int",
-         "in_list_view": 1,
-         "label": "Live Quantity (Number of birds)",
-         "non_negative": 1,
-         "read_only": 1
-      },
-      {
-         "columns": 2,
-         "default": "0",
-         "fieldname": "batch_age_in_days",
-         "fieldtype": "Read Only",
-         "in_list_view": 1,
-         "label": "Batch Age in Days",
-         "non_negative": 1
-      },
-      {
-         "fieldname": "farmer_name",
-         "fieldtype": "Data",
-         "label": "Farmer Name",
-         "reqd": 1
-      },
-      {
-         "fieldname": "live_batch_date",
-         "fieldtype": "Date",
-         "in_list_view": 1,
-         "label": "Live Batch Date",
-         "read_only": 1
-      },
-      {
-         "fieldname": "rate",
-         "fieldtype": "Float",
-         "label": "Rate"
-      },
-      {
-         "fieldname": "amount",
-         "fieldtype": "Float",
-         "label": "Bird Purchase Amount",
-         "read_only": 1
-      },
-      {
-         "default": "0",
-         "fieldname": "mortality",
-         "fieldtype": "Int",
-         "label": "Mortality",
-         "read_only": 1
-      },
-      {
-         "default": "0",
-         "fieldname": "culls",
-         "fieldtype": "Int",
-         "label": "Culls",
-         "read_only": 1
-      },
-      {
-         "fieldname": "biological_value",
-         "fieldtype": "Float",
-         "label": "Biological Value",
-         "read_only": 1
-      },
-      {
-         "fieldname": "bird_cost",
-         "fieldtype": "Float",
-         "label": "Bird Cost",
-         "read_only": 1
-      },
-      {
-         "default": "0",
-         "fieldname": "sale_quantity",
-         "fieldtype": "Float",
-         "label": "Sale Quantity",
-         "read_only": 1
-      },
-      {
-         "fieldname": "shed",
-         "fieldtype": "Link",
-         "label": "Shed ",
-         "options": "Shed"
-      },
-      {
-         "fieldname": "location",
-         "fieldtype": "Link",
-         "label": "Location",
-         "options": "Location"
-      },
-      {
-         "fieldname": "org_name",
-         "fieldtype": "Read Only",
-         "hidden": 1,
-         "in_list_view": 1,
-         "label": "Org Name",
-         "set_only_once": 1
-      },
-      {
-         "default": "New",
-         "fieldname": "batch_status",
-         "fieldtype": "Read Only",
-         "label": "Batch Status"
-      },
-      {
-         "fieldname": "batch_information_section",
-         "fieldtype": "Section Break",
-         "label": "Batch Information"
-      },
-      {
-         "fieldname": "quantity_and_age_information_section",
-         "fieldtype": "Section Break",
-         "label": "Quantity and Age Information"
-      },
-      {
-         "fieldname": "column_break_pfmw",
-         "fieldtype": "Column Break"
-      },
-      {
-         "fieldname": "financial_information_section",
-         "fieldtype": "Section Break",
-         "label": "Financial Information"
-      },
-      {
-         "fieldname": "column_break_brdb",
-         "fieldtype": "Column Break"
-      },
-      {
-         "fieldname": "location_and_shed_information_section",
-         "fieldtype": "Section Break",
-         "label": "Location and Shed Information"
-      },
-      {
-         "fieldname": "column_break_ogte",
-         "fieldtype": "Column Break"
-      },
-      {
-         "fieldname": "transaction_related_information_section",
-         "fieldtype": "Section Break",
-         "label": "Transaction Related Information"
-      },
-      {
-         "fieldname": "organizational_and_status_information_section",
-         "fieldtype": "Section Break",
-         "label": "Organizational and Status Information"
-      },
-      {
-         "fieldname": "column_break_dmdn",
-         "fieldtype": "Column Break"
-      },
-      {
-         "fieldname": "miscellaneous_information_section",
-         "fieldtype": "Section Break",
-         "label": "Miscellaneous Information"
-      },
-      {
-         "default": "No",
-         "depends_on": "doc.batch_type == 'Contract'",
-         "fieldname": "gc_calculated",
-         "fieldtype": "Read Only",
-         "in_list_view": 1,
-         "label": "GC Calculated?",
-         "read_only": 1
-      },
-      {
-         "fieldname": "activity_section",
-         "fieldtype": "Section Break",
-         "label": "Daily Transaction Activity"
-      },
-      {
-         "fieldname": "broiler_batch_daily_transactions_heatmap",
-         "fieldtype": "HTML",
-         "label": "Broiler Batch Daily Transactions Heatmap"
-      },
-      {
-         "default": "0",
-         "fieldname": "total_feed",
-         "fieldtype": "Float",
-         "label": "Total Feed",
-         "read_only": 1
-      },
-      {
-         "default": "0",
-         "fieldname": "growing_charges",
-         "fieldtype": "Float",
-         "label": "Growing Charges",
-         "read_only": 1
-      },
-      {
-         "fieldname": "total_feed_cost",
-         "fieldtype": "Float",
-         "label": "Total Feed Cost",
-         "read_only": 1
-      },
-      {
-         "default": "0",
-         "fieldname": "total_delivered_weight",
-         "fieldtype": "Float",
-         "label": "Total Delivered Weight",
-         "read_only": 1
-      },
-      {
-         "fieldname": "first_week_mortality",
-         "fieldtype": "Int",
-         "label": "First Week Mortality",
-         "read_only": 1
-      },
-      {
-         "default": "0",
-         "fieldname": "body_weight",
-         "fieldtype": "Float",
-         "label": "Body Weight",
-         "read_only": 1
-      },
-      {
-         "fieldname": "feed_rate",
-         "fieldtype": "Int",
-         "label": "Feed Rate",
-         "non_negative": 1,
-         "reqd": 1
-      },
-      {
-         "fieldname": "medicine_rate",
-         "fieldtype": "Int",
-         "label": "Medicine Rate",
-         "non_negative": 1
-      },
-      {
-         "fieldname": "broiler_batch_kpis",
-         "fieldtype": "HTML",
-         "label": "Broiler Batch KPIs"
-      }
-   ],
-   "index_web_pages_for_search": 1,
-   "links": [
-      {
-         "group": "Transaction",
-         "link_doctype": "Broiler Daily Transaction",
-         "link_fieldname": "batch"
-      }
-   ],
-   "modified": "2025-02-28 15:20:09.971720",
-   "modified_by": "Administrator",
-   "module": "PoultryOS",
-   "name": "Broiler Batch",
-   "naming_rule": "Expression",
-   "owner": "Administrator",
-   "permissions": [],
-   "search_fields": "batch_name",
-   "show_title_field_in_link": 1,
-   "sort_field": "modified",
-   "sort_order": "DESC",
-   "states": [],
-   "title_field": "batch_name"
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:BT-{YY}-{#####}",
+ "creation": "2024-12-04 13:49:56.202817",
+ "default_view": "List",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "activity_section",
+  "broiler_batch_daily_transactions_heatmap",
+  "broiler_batch_kpis",
+  "batch_information_section",
+  "batch_name",
+  "opening_date",
+  "farmer_name",
+  "column_break_njbw",
+  "batch_type",
+  "module",
+  "breed_name",
+  "quantity_and_age_information_section",
+  "batch_age_in_days",
+  "place_quantity_number_of_birds",
+  "live_quantity_number_of_birds",
+  "total_delivered_weight",
+  "body_weight",
+  "feed_rate",
+  "medicine_rate",
+  "column_break_pfmw",
+  "mortality",
+  "culls",
+  "total_feed",
+  "total_feed_cost",
+  "first_week_mortality",
+  "financial_information_section",
+  "rate",
+  "amount",
+  "column_break_brdb",
+  "biological_value",
+  "bird_cost",
+  "total_cost",
+  "location_and_shed_information_section",
+  "location",
+  "column_break_ogte",
+  "shed",
+  "transaction_related_information_section",
+  "sale_quantity",
+  "organizational_and_status_information_section",
+  "batch_status",
+  "gc_calculated",
+  "column_break_dmdn",
+  "org_name",
+  "growing_charges",
+  "miscellaneous_information_section",
+  "live_batch_date",
+  "current_fcr",
+  "current_eef",
+  "production_cost"
+ ],
+ "fields": [
+  {
+   "fieldname": "batch_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Batch Name",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "opening_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Placement Date",
+   "reqd": 1
+  },
+  {
+   "columns": 3,
+   "fieldname": "place_quantity_number_of_birds",
+   "fieldtype": "Int",
+   "label": "Place Quantity (Number of birds)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_njbw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "batch_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Batch Type",
+   "options": "Batch Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "module",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Module",
+   "link_filters": "[[\"Module\",\"module_name\",\"=\",\"BROILER\"]]",
+   "options": "Module",
+   "reqd": 1
+  },
+  {
+   "fieldname": "breed_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Breed Name",
+   "options": "Breed",
+   "reqd": 1
+  },
+  {
+   "columns": 4,
+   "default": "0",
+   "fieldname": "live_quantity_number_of_birds",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Live Quantity (Number of birds)",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "default": "0",
+   "fieldname": "batch_age_in_days",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Batch Age in Days",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "farmer_name",
+   "fieldtype": "Data",
+   "label": "Farmer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "live_batch_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Live Batch Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "label": "Rate"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "label": "Bird Purchase Amount",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "mortality",
+   "fieldtype": "Int",
+   "label": "Mortality",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "culls",
+   "fieldtype": "Int",
+   "label": "Culls",
+   "read_only": 1
+  },
+  {
+   "fieldname": "biological_value",
+   "fieldtype": "Float",
+   "label": "Biological Value",
+   "read_only": 1
+  },
+  {
+   "fieldname": "bird_cost",
+   "fieldtype": "Float",
+   "label": "Bird Cost",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "sale_quantity",
+   "fieldtype": "Float",
+   "label": "Sale Quantity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "shed",
+   "fieldtype": "Link",
+   "label": "Shed ",
+   "options": "Shed"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location"
+  },
+  {
+   "fieldname": "org_name",
+   "fieldtype": "Read Only",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Org Name",
+   "set_only_once": 1
+  },
+  {
+   "default": "New",
+   "fieldname": "batch_status",
+   "fieldtype": "Read Only",
+   "label": "Batch Status"
+  },
+  {
+   "fieldname": "batch_information_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Information"
+  },
+  {
+   "fieldname": "quantity_and_age_information_section",
+   "fieldtype": "Section Break",
+   "label": "Quantity and Age Information"
+  },
+  {
+   "fieldname": "column_break_pfmw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "financial_information_section",
+   "fieldtype": "Section Break",
+   "label": "Financial Information"
+  },
+  {
+   "fieldname": "column_break_brdb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location_and_shed_information_section",
+   "fieldtype": "Section Break",
+   "label": "Location and Shed Information"
+  },
+  {
+   "fieldname": "column_break_ogte",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transaction_related_information_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Related Information"
+  },
+  {
+   "fieldname": "organizational_and_status_information_section",
+   "fieldtype": "Section Break",
+   "label": "Organizational and Status Information"
+  },
+  {
+   "fieldname": "column_break_dmdn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "miscellaneous_information_section",
+   "fieldtype": "Section Break",
+   "label": "Miscellaneous Information"
+  },
+  {
+   "default": "No",
+   "depends_on": "doc.batch_type == 'Contract'",
+   "fieldname": "gc_calculated",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "GC Calculated?",
+   "read_only": 1
+  },
+  {
+   "fieldname": "activity_section",
+   "fieldtype": "Section Break",
+   "label": "Daily Transaction Activity"
+  },
+  {
+   "fieldname": "broiler_batch_daily_transactions_heatmap",
+   "fieldtype": "HTML",
+   "label": "Broiler Batch Daily Transactions Heatmap"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_feed",
+   "fieldtype": "Float",
+   "label": "Total Feed",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "growing_charges",
+   "fieldtype": "Float",
+   "label": "Growing Charges",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_feed_cost",
+   "fieldtype": "Float",
+   "label": "Total Feed Cost",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "total_delivered_weight",
+   "fieldtype": "Float",
+   "label": "Total Delivered Weight",
+   "read_only": 1
+  },
+  {
+   "fieldname": "first_week_mortality",
+   "fieldtype": "Int",
+   "label": "First Week Mortality",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "body_weight",
+   "fieldtype": "Float",
+   "label": "Body Weight",
+   "read_only": 1
+  },
+  {
+   "fieldname": "feed_rate",
+   "fieldtype": "Int",
+   "label": "Feed Rate",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "medicine_rate",
+   "fieldtype": "Int",
+   "label": "Medicine Rate",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "broiler_batch_kpis",
+   "fieldtype": "HTML",
+   "label": "Broiler Batch KPIs"
+  },
+  {
+   "fieldname": "current_fcr",
+   "fieldtype": "Float",
+   "label": "Current FCR"
+  },
+  {
+   "fieldname": "current_eef",
+   "fieldtype": "Float",
+   "label": "Current EEF"
+  },
+  {
+   "fieldname": "production_cost",
+   "fieldtype": "Currency",
+   "label": "Production Cost"
+  },
+  {
+   "fieldname": "total_cost",
+   "fieldtype": "Currency",
+   "label": "Total Cost"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "group": "Transaction",
+   "link_doctype": "Broiler Daily Transaction",
+   "link_fieldname": "batch"
+  }
+ ],
+ "modified": "2025-03-06 15:47:37.340346",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Broiler Batch",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [],
+ "search_fields": "batch_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "batch_name"
 }
