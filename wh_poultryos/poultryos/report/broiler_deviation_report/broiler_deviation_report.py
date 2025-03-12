@@ -11,8 +11,6 @@ def execute(filters=None):
     if not filters.get("Batch"):
         frappe.throw("Please select a Batch to view the report.")
 
-    if not filters.get("from_date") or not filters.get("to_date"):
-        frappe.throw("Please select From Date and To Date.")
 
     # Fetch filtered batch data
     query = """
@@ -23,15 +21,23 @@ def execute(filters=None):
             b1.farmer_name AS "Farmer Name",
             d1.batch_age_in_days AS "Age",
             i1.item_name AS "Item Name",
-            d1.feed_consumed_quantity AS "Feed Quantity",
-            st.feed_consumption AS "Standard Consumption",
-            (d1.feed_consumed_quantity - st.feed_consumption) AS "Deviation",
+            COALESCE(d1.mortality_number_of_birds, 0) AS "Mortality",
+            COALESCE(st.mortality, 0) AS "mortality",
+            COALESCE(st.feed_consumption, 0) AS "Standard Consumption",
+            COALESCE((d1.feed_consumed_quantity - st.feed_consumption), 0) AS "Deviation",
             CASE 
-                WHEN st.feed_consumption > 0 THEN 
+                WHEN COALESCE(st.feed_consumption, 0) > 0 THEN 
                     ROUND(((d1.feed_consumed_quantity - st.feed_consumption) / st.feed_consumption) * 100, 2)
                 ELSE 
-                    NULL
-            END AS "Deviation Percentage",
+                    0
+            END AS "Deviation P",
+            COALESCE((d1.mortality_number_of_birds - st.mortality), 0) AS "Mor Deviation",
+            CASE 
+                WHEN COALESCE(st.mortality, 0) > 0 THEN 
+                    ROUND(((d1.mortality_number_of_birds - st.mortality) / st.mortality) * 100, 2)
+                ELSE 
+                    0
+            END AS "Mortality P",
             d1.owner AS "Owner"
         FROM 
             `tabBroiler Daily Transaction` d1 
@@ -46,30 +52,32 @@ def execute(filters=None):
             ON i1.name = d1.item_name
         WHERE 
             d1.batch = %(Batch)s
-            AND d1.transaction_date BETWEEN %(from_date)s AND %(to_date)s
+         
         ORDER BY 
             d1.transaction_date ASC;
     """
 
     # Execute query
     data = frappe.db.sql(query, {
-        "Batch": filters.get("Batch"),
-        "from_date": filters.get("from_date"),
-        "to_date": filters.get("to_date")
+        "Batch": filters.get("Batch")        
     }, as_dict=True)
 
     # Define table columns
     columns = [
-        {"fieldname": "Batch Name", "label": "Batch Name", "fieldtype": "Data", "width": 150},
+        {"fieldname": "Batch Name", "label": "Batch Name", "fieldtype": "Data", "width": 100},
         {"fieldname": "Placement Date", "label": "Placement Date", "fieldtype": "Date", "width": 120},
         {"fieldname": "Transaction Date", "label": "Transaction Date", "fieldtype": "Date", "width": 120},
-        {"fieldname": "Farmer Name", "label": "Farmer Name", "fieldtype": "Data", "width": 150},
-        {"fieldname": "Age", "label": "Age", "fieldtype": "Int", "width": 80},
+        {"fieldname": "Farmer Name", "label": "Farmer Name", "fieldtype": "Data", "width": 110},
+        {"fieldname": "Age", "label": "Age", "fieldtype": "Int", "width": 70},
         {"fieldname": "Item Name", "label": "Item Name", "fieldtype": "Data", "width": 100},
-        {"fieldname": "Feed Quantity", "label": "Feed Quantity", "fieldtype": "Float", "width": 120},
-        {"fieldname": "Standard Consumption", "label": "Standard Consumption", "fieldtype": "Float", "width": 140},
-        {"fieldname": "Deviation", "label": "Deviation", "fieldtype": "Float", "width": 120},
-        {"fieldname": "Deviation Percentage", "label": "Deviation %", "fieldtype": "Percent", "width": 120},
+        {"fieldname": "Mortality", "label": "Mortality", "fieldtype": "Int", "width": 100},
+        {"fieldname": "mortality", "label": "Mortality Std.", "fieldtype": "Float", "width": 120},
+        {"fieldname": "Mor Deviation", "label": "Mortality Deviation", "fieldtype": "Float", "width": 130},
+        {"fieldname": "Mortality P", "label": "Mortality Deviation %", "fieldtype": "Percent", "width": 120},
+        {"fieldname": "Feed", "label": "Feed", "fieldtype": "Float", "width": 90},
+        {"fieldname": "Standard Consumption", "label": "Feed Std.", "fieldtype": "Float", "width": 100},
+        {"fieldname": "Deviation", "label": "Deviation", "fieldtype": "Float", "width": 100},
+        {"fieldname": "Deviation P", "label": "Deviation %", "fieldtype": "Percent", "width": 120},
         {"fieldname": "Owner", "label": "Owner", "fieldtype": "Data", "width": 150},
     ]
 

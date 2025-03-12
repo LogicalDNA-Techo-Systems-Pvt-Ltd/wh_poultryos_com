@@ -13,7 +13,7 @@ import json
 
 
 @frappe.whitelist()
-def get_total_weight(batches):
+def get_total_weight(batches,sales_type):
     """
     Fetch total weight for given batch names in 'Custom Sales Invoice'.
     
@@ -33,21 +33,7 @@ def get_total_weight(batches):
             batches = json.loads(batches)
 
         total_weight = 0  # Initialize total weight
-
-        # # Loop through each batch and fetch its weight
-        # for batch in batches:            
-            
-        #     batch_name = batch.get("batch")
-        #     print(batch_name)
-        #     weight_entry = frappe.get_value("Batch Selection", {"batch": batch_name}, "weight")
-        #     print(weight_entry)
-            
-        #     # If weight exists, add it to total
-        #     if weight_entry:
-        #         total_weight += float(weight_entry) if weight_entry else 0
-
-        # return {"total_weight": total_weight}
-        
+              
         batch_weights = []  # Dictionary to store batch names and their total weights
 
         # Loop through each batch and fetch its weight
@@ -55,9 +41,12 @@ def get_total_weight(batches):
             batch_name = batch.get("batch")
             print("Processing Batch:", batch_name)
 
-            weight_entry = frappe.get_value("Batch Selection", {"batch": batch_name}, "weight")
-            print("Weight:", weight_entry)
-
+            if sales_type == "Sales by Bird":
+                weight_entry = frappe.get_value("Batch Selection", {"batch": batch_name}, "weight")              
+            else:
+                weight_entry = frappe.get_value("Batch Selection Weight", {"batch": batch_name}, "weights")
+              
+                
              # If weight exists, add it to the result list
             batch_weights.append({
                 "batch_name": batch_name,
@@ -72,7 +61,7 @@ def get_total_weight(batches):
     
 
 @frappe.whitelist()
-def update_batch_quantities(batches):
+def update_batch_quantities(batches,sales_type):
     if not batches:
         return {"status": "error", "message": "No batches found in the invoice"}
 
@@ -91,9 +80,13 @@ def update_batch_quantities(batches):
             return {"status": "error", "message": "Invalid batch data format"}
 
         batch_id = batch.get("batch")
-        quantity_sold = batch.get("quantity")
-        batch_type = batch.get("type")  # "Bird" or "Culls"
-
+        # quantity_sold = batch.get("quantity")
+        quantity_sold = batch.get("birdquantity") if batch.get("quantity") is None else batch.get("quantity")
+        print(quantity_sold)
+        frappe.msgprint(f"Quantity Sold: {quantity_sold}")
+        
+        batch_type = batch.get("type") if sales_type == "Sales by Bird" else batch.get("item_type")
+       
         if not batch_id or quantity_sold is None:
             return {"status": "error", "message": "Batch ID or quantity missing"}
 
@@ -114,13 +107,18 @@ def update_batch_quantities(batches):
         bird_cost = float(batch_data.get("bird_cost") or 0.0)
         biological_value = float(batch_data.get("biological_value") or 0.0)
         liveQTY = int(batch_data.get("live_quantity_number_of_birds") or 0)
-
+       
 
         # ✅ Check stock before processing
         if current_quantity >= quantity_sold:
             # 1️⃣ Deduct sold quantity from live batch
             new_quantity = current_quantity - quantity_sold
             frappe.db.set_value("Broiler Batch", batch_id, field_to_update, new_quantity)
+            print(current_quantity)
+            frappe.msgprint(f"Quantity Sold: {current_quantity}")
+            frappe.msgprint(f"Quantity Sold: {new_quantity}")
+        
+            
 
             # 2️⃣ Update sale quantity
             new_sale_quantity = current_sale_quantity + quantity_sold
