@@ -23,12 +23,6 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
                         <button id="print-page" class="btn btn-outline-secondary">
                             <i class="fa fa-print"></i> Print
                         </button>
-                        <button id="download-pdf" class="btn btn-outline-primary">
-                            <i class="fa fa-file-pdf-o"></i> PDF
-                        </button>
-                        <button id="download-excel" class="btn btn-outline-success">
-                            <i class="fa fa-file-excel-o"></i> Excel
-                        </button>
                     </div>
                 </div>
             </div>
@@ -55,49 +49,51 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <div class="tile tile-placed-qty">
-                                    <h4>Placed Quantity</h4>
+                                    <span>Placed Quantity</span>
                                     <div class="tile-value" id="placed-quantity">0</div>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <div class="tile tile-live-qty">
-                                    <h4>Live Quantity</h4>
+                                    <span>Live Quantity</span>
                                     <div class="tile-value" id="live-quantity">0</div>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <div class="tile tile-first-week-mortality">
-                                    <h4>First Week Mortality</h4>
+                                    <span>First Week Mortality</span>
                                     <div class="tile-value" id="first-week-mortality">0%</div>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <div class="tile tile-total-mortality">
-                                    <h4>Total Mortality</h4>
+                                    <span>Total Mortality</span>
                                     <div class="tile-value" id="total-mortality">0%</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-3 mb-3">
                                 <div class="tile tile-fcr">
-                                    <h4>FCR</h4>
+                                    <span>FCR</span>
                                     <div class="tile-value" id="fcr">0</div>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <div class="tile tile-body-weight">
-                                    <h4>Body Weight</h4>
+                                    <span>Body Weight</span>
                                     <div class="tile-value" id="body-weight">0 kg</div>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <div class="tile tile-eef">
-                                    <h4>EEF</h4>
+                                    <span>EEF</span>
                                     <div class="tile-value" id="eef">0</div>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <div class="tile tile-production-cost">
-                                    <h4>Production Cost</h4>
+                                    <span>Production Cost</span>
                                     <div class="tile-value" id="production-cost">0</div>
                                 </div>
                             </div>
@@ -110,33 +106,59 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
             <div class="section comparative-charts mb-4">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Performance Comparison</h3>
+                        <h3 class="card-title">Performance Comparison - Mortality: Standard vs Actual</h3>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <h5>Mortality: Standard vs Actual</h5>
+                        <div class="row chart-row">
+                            <div class="col-md-12 mb-12">
                                 <canvas id="mortality-chart"></canvas>
                             </div>
                         </div>
-                            
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <h5>Feed Consumption: Standard vs Actual</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparative Charts Section -->
+            <div class="section comparative-charts mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Performance Comparison - Feed Consumption: Standard vs Actual</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row chart-row">
+                            <div class="col-md-12 mb-12">
                                 <canvas id="feed-consumption-chart"></canvas>
                             </div>
                         </div>
-                            
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <h5>FCR: Standard vs Actual</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparative Charts Section -->
+            <div class="section comparative-charts mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Performance Comparison - FCR: Standard vs Actual</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row chart-row">
+                            <div class="col-md-12 mb-12">
                                 <canvas id="fcr-chart"></canvas>
                             </div>
                         </div>
-                            
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <h5>Avg Body Weight: Standard vs Actual</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparative Charts Section -->
+            <div class="section comparative-charts mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Performance Comparison - Avg Body Weight: Standard vs Actual</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row chart-row">
+                            <div class="col-md-12 mb-12">
                                 <canvas id="body-weight-chart"></canvas>
                             </div>
                         </div>
@@ -156,9 +178,12 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
                                 <thead>
                                     <tr>
                                         <th>Date</th>
-                                        <th>Transaction Type</th>
-                                        <th>Quantity</th>
-                                        <th>Details</th>
+                                        <th>Mortality</th>
+                                        <th>Culls</th>
+                                        <th>Feed Consumed (In Grams)</th>
+                                        <th>Avg. Bird Weight (In Grams)</th>
+                                        <th>FCR</th>
+                                        <th>EEF</th>
                                     </tr>
                                 </thead>
                                 <tbody id="daily-transactions-body">
@@ -172,32 +197,48 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
         </div>
 
         <style>
+            .tile span {
+                font-weight: var(--weight-medium);
+                color: var(--text-muted);
+                text-transform: uppercase;
+                font-size: var(--text-tiny);
+                margin-top: var(--margin-xs);
+            }
+
+           .card-body {
+                justify-content: center;  /* Centers content horizontally */
+                align-items: center;      /* Centers content vertically */
+                height: 100%;             /* Ensures that the container has a defined height */
+            }
+
+            .card-body .activity-heatmap, .card-body .chart-row div {
+                display: flex;
+                align-items: center;      /* Aligns items vertically inside the heatmap */
+                justify-content: center;  /* Optionally centers the content horizontally inside */
+                width: 100%;              /* Make sure the heatmap spans the full width */
+                height: 100%;             /* Make sure the heatmap spans the full height of the container */
+                box-sizing: border-box;   /* Ensures padding/borders don't overflow */
+            }
+            
             /* Performance Tiles Styling */
             .tile {
-                border: 1px solid #e0e0e0;
+                border: 1px solid var(--border-color);
                 border-radius: 8px;
-                padding: 15px;
-                text-align: center;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                transition: all 0.3s ease;
-            }
-
-            .tile:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-            }
-
-            .tile h4 {
-                color: #6c757d;
-                margin-bottom: 10px;
-                font-size: 14px;
-                text-transform: uppercase;
+                cursor: pointer;
+                min-height: 84px;
+                padding: var(--number-card-padding);
             }
 
             .tile-value {
-                font-size: 24px;
-                font-weight: bold;
-                color: #007bff;
+                font-size: var(--text-2xl);
+                font-weight: var(--weight-semibold);
+                letter-spacing: 0.01em;
+                line-height: var(--text-line-height-3xl);
+                color: var(--text-color);
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                padding-top: var(--padding-md);
             }
 
             /* Responsive Adjustments */
@@ -214,6 +255,9 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
                 }
                 .card {
                     border: 1px solid #ddd;
+                }
+                .row {
+                    display: flex;
                 }
             }
         </style>
@@ -261,7 +305,7 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
                     const data = response.message;
 
                     // Update Performance Tiles
-                    updatePerformanceTiles(data);
+                    updatePerformanceTiles(data.performance_metrics);
 
                     // Render Activity Heatmap
                     renderActivityHeatmap(data.activity_data);
@@ -279,8 +323,8 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
         function updatePerformanceTiles(data) {
             $('#placed-quantity').text(data.placed_quantity || 0);
             $('#live-quantity').text(data.live_quantity || 0);
-            $('#first-week-mortality').text(`${data.first_week_mortality || 0}%`);
-            $('#total-mortality').text(`${data.total_mortality || 0}%`);
+            $('#first-week-mortality').text(`${data.first_week_mortality || 0}`);
+            $('#total-mortality').text(`${data.total_mortality || 0}`);
             $('#fcr').text(data.fcr || 0);
             $('#body-weight').text(`${data.body_weight || 0} kg`);
             $('#eef').text(data.eef || 0);
@@ -288,21 +332,32 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
         }
 
         // Render Activity Heatmap
+        // Render Activity Heatmap using Frappe Charts
         function renderActivityHeatmap(activityData) {
             const heatmapContainer = $('#batch-activity-heatmap');
             heatmapContainer.empty();
 
-            if (activityData && activityData.length) {
+            if (activityData && activityData.dataPoints) {
+                // Prepare data for Frappe Heatmap
+                const chartData = {
+                    dataPoints: activityData.dataPoints,
+                    start: new Date(activityData.start),
+                    end: new Date(activityData.end)
+                };
+
+                // Create Frappe Heatmap
                 new frappe.Chart(heatmapContainer[0], {
                     type: 'heatmap',
                     width: 960,
-                    data: {
-                        dataPoints: activityData,
-                        start: new Date(activityData[0].date),
-                        end: new Date(activityData[activityData.length - 1].date)
-                    },
-                    discreteDomains: 1
+                    data: chartData,
+                    // Optional customizations
+                    discreteDomains: 1,
+                    color: 'green',
+                    radius: 3,
+                    showLegend: 0
                 });
+            } else {
+                heatmapContainer.html('<p>No activity data available</p>');
             }
         }
 
@@ -310,76 +365,109 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
         function updateComparativeCharts(chartsData) {
             // Ensure default values if data is missing
             const defaultChartData = {
-                mortality_std: [0, 0, 0, 0, 0, 0],
-                mortality_actual: [0, 0, 0, 0, 0, 0],
-                feed_std: [0, 0, 0, 0, 0, 0],
-                feed_actual: [0, 0, 0, 0, 0, 0],
-                fcr_std: [0, 0, 0, 0, 0, 0],
-                fcr_actual: [0, 0, 0, 0, 0, 0],
-                weight_std: [0, 0, 0, 0, 0, 0],
-                weight_actual: [0, 0, 0, 0, 0, 0]
+                transaction_date: [],
+                mortality_std: [],
+                mortality_actual: [],
+                feed_std: [],
+                feed_actual: [],
+                fcr_std: [],
+                fcr_actual: [],
+                weight_std: [],
+                weight_actual: []
             };
 
             // Merge provided data with defaults
             const mergedChartsData = { ...defaultChartData, ...chartsData };
 
-            // Store global data for export
-            window.mortalityStdData = mergedChartsData.mortality_std;
-            window.mortalityActualData = mergedChartsData.mortality_actual;
-            window.feedStdData = mergedChartsData.feed_std;
-            window.feedActualData = mergedChartsData.feed_actual;
-            window.fcrStdData = mergedChartsData.fcr_std;
-            window.fcrActualData = mergedChartsData.fcr_actual;
-            window.weightStdData = mergedChartsData.weight_std;
-            window.weightActualData = mergedChartsData.weight_actual;
+            // Extract dates and values from the new data structure
+            const getFormattedData = (dataArray) => {
+                if (!dataArray || !Array.isArray(dataArray)) return [];
+                return dataArray.map(item => item.value || 0);
+            };
+
+            // Format date labels for x-axis - convert YYYY-MM-DD to more readable format
+            const formatDateLabels = (dates) => {
+                if (!dates || !Array.isArray(dates)) return [];
+
+                return dates.map(dateStr => {
+                    const date = new Date(dateStr);
+                    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                });
+            };
+
+            // Store global data for export (formatted to just values for compatibility)
+            window.mortalityStdData = getFormattedData(mergedChartsData.mortality_std);
+            window.mortalityActualData = getFormattedData(mergedChartsData.mortality_actual);
+            window.feedStdData = getFormattedData(mergedChartsData.feed_std);
+            window.feedActualData = getFormattedData(mergedChartsData.feed_actual);
+            window.fcrStdData = getFormattedData(mergedChartsData.fcr_std);
+            window.fcrActualData = getFormattedData(mergedChartsData.fcr_actual);
+            window.weightStdData = getFormattedData(mergedChartsData.weight_std);
+            window.weightActualData = getFormattedData(mergedChartsData.weight_actual);
+
+            // Get formatted date labels or use default week labels if no dates
+            const dateLabels = mergedChartsData.transaction_date && mergedChartsData.transaction_date.length > 0
+                ? formatDateLabels(mergedChartsData.transaction_date)
+                : ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
 
             const chartConfigs = [
                 {
                     id: 'mortality-chart',
                     label: 'Mortality',
-                    standardData: mergedChartsData.mortality_std,
-                    actualData: mergedChartsData.mortality_actual
+                    standardData: getFormattedData(mergedChartsData.mortality_std),
+                    actualData: getFormattedData(mergedChartsData.mortality_actual),
+                    yAxisLabel: 'Birds'
                 },
                 {
                     id: 'feed-consumption-chart',
                     label: 'Feed Consumption',
-                    standardData: mergedChartsData.feed_std,
-                    actualData: mergedChartsData.feed_actual
+                    standardData: getFormattedData(mergedChartsData.feed_std),
+                    actualData: getFormattedData(mergedChartsData.feed_actual),
+                    yAxisLabel: 'Grams'
                 },
                 {
                     id: 'fcr-chart',
                     label: 'Feed Conversion Ratio',
-                    standardData: mergedChartsData.fcr_std,
-                    actualData: mergedChartsData.fcr_actual
+                    standardData: getFormattedData(mergedChartsData.fcr_std),
+                    actualData: getFormattedData(mergedChartsData.fcr_actual),
+                    yAxisLabel: 'Ratio'
                 },
                 {
                     id: 'body-weight-chart',
                     label: 'Body Weight',
-                    standardData: mergedChartsData.weight_std,
-                    actualData: mergedChartsData.weight_actual
+                    standardData: getFormattedData(mergedChartsData.weight_std),
+                    actualData: getFormattedData(mergedChartsData.weight_actual),
+                    yAxisLabel: 'Grams'
                 }
             ];
+
+            // Destroy existing charts to prevent duplicates
+            Chart.helpers.each(Chart.instances, function (instance) {
+                instance.destroy();
+            });
 
             chartConfigs.forEach(config => {
                 const ctx = document.getElementById(config.id).getContext('2d');
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                        labels: dateLabels,
                         datasets: [
                             {
                                 label: 'Standard',
                                 data: config.standardData,
                                 borderColor: 'blue',
                                 backgroundColor: 'rgba(0,0,255,0.1)',
-                                borderWidth: 2
+                                borderWidth: 2,
+                                tension: 0.2 // Add slight curve to the lines
                             },
                             {
                                 label: 'Actual',
                                 data: config.actualData,
                                 borderColor: 'red',
                                 backgroundColor: 'rgba(255,0,0,0.1)',
-                                borderWidth: 2
+                                borderWidth: 2,
+                                tension: 0.2 // Add slight curve to the lines
                             }
                         ]
                     },
@@ -388,13 +476,48 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
                         plugins: {
                             title: {
                                 display: true,
-                                text: config.label
+                                text: config.label,
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    label: function (context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += parseFloat(context.raw).toFixed(2);
+                                        return label;
+                                    }
+                                }
+                            },
+                            legend: {
+                                position: 'top'
                             }
                         },
                         scales: {
                             y: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: config.yAxisLabel
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                }
                             }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'nearest'
                         }
                     }
                 });
@@ -410,9 +533,12 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
                 transactionBody.append(`
 					<tr>
 						<td>${transaction.date}</td>
-						<td>${transaction.type}</td>
-						<td>${transaction.quantity}</td>
-						<td>${transaction.details || 'N/A'}</td>
+						<td>${transaction.total_mortality_qty}</td>
+						<td>${transaction.total_cull_qty}</td>
+						<td>${transaction.actual_total_feed_consumption} gm</td>
+						<td>${transaction.actual_avg_bird_weight} gm</td>
+						<td>${transaction.fcr}</td>
+						<td>${transaction.eef}</td>
 					</tr>
 				`);
             });
@@ -614,7 +740,6 @@ function updateComparativeCharts(chartsData) {
             standardData: chartsData.weight_std,
             actualData: chartsData.weight_actual
         },
-        // ... (rest of the existing chart configs)
     ];
 
     chartConfigs.forEach(config => {
@@ -663,7 +788,6 @@ function updateComparativeCharts(chartsData) {
     });
 }
 
-// Add some additional error handling and logging
 $(document).ready(function () {
     // Global error handler
     window.addEventListener('error', function (event) {
@@ -675,12 +799,16 @@ $(document).ready(function () {
         });
     });
 
-    // Network status indicators
-    $(document).ajaxStart(function () {
-        frappe.show_progress('Loading', 0, 100, 'Please wait...');
-    });
+    // // Network status indicators
+    // $(document).ajaxStart(function () {
+    //     console.log('AJAX Request Started');
+    //     frappe.show_progress('Loading', 0, 100, 'Please wait...');
+    // });
 
-    $(document).ajaxStop(function () {
-        frappe.hide_progress();
-    });
+    // $(document).ajaxStop(function () {
+    //     console.log('AJAX Request Finished');
+    //     setTimeout(function () {
+    //         frappe.hide_progress();
+    //     }, 500); // delay of 500ms
+    // });
 });

@@ -39,6 +39,10 @@
   "column_break_brdb",
   "biological_value",
   "bird_cost",
+<<<<<<< HEAD
+=======
+  "total_cost",
+>>>>>>> 5fedd9f9338768013408fe8578fc88dfd8c72240
   "location_and_shed_information_section",
   "location",
   "column_break_ogte",
@@ -52,7 +56,14 @@
   "org_name",
   "growing_charges",
   "miscellaneous_information_section",
+<<<<<<< HEAD
   "live_batch_date"
+=======
+  "live_batch_date",
+  "current_fcr",
+  "current_eef",
+  "production_cost"
+>>>>>>> 5fedd9f9338768013408fe8578fc88dfd8c72240
  ],
  "fields": [
   {
@@ -331,13 +342,32 @@
    "fieldname": "medicine_rate",
    "fieldtype": "Int",
    "label": "Medicine Rate",
-   "non_negative": 1,
-   "set_only_once": 1
+   "non_negative": 1
   },
   {
    "fieldname": "broiler_batch_kpis",
    "fieldtype": "HTML",
    "label": "Broiler Batch KPIs"
+  },
+  {
+   "fieldname": "current_fcr",
+   "fieldtype": "Float",
+   "label": "Current FCR"
+  },
+  {
+   "fieldname": "current_eef",
+   "fieldtype": "Float",
+   "label": "Current EEF"
+  },
+  {
+   "fieldname": "production_cost",
+   "fieldtype": "Currency",
+   "label": "Production Cost"
+  },
+  {
+   "fieldname": "total_cost",
+   "fieldtype": "Currency",
+   "label": "Total Cost"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -348,7 +378,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-03-07 17:56:47.047535",
+ "modified": "2025-03-06 15:47:37.340346",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Batch",
