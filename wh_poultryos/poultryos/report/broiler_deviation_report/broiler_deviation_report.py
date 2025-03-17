@@ -16,25 +16,26 @@ def execute(filters=None):
     query = """
         SELECT 
             b1.batch_name AS "Batch Name",
-            d1.batch_placed_on AS "Placement Date",
+            b1.opening_date AS "Placement Date",
             d1.transaction_date AS "Transaction Date",
             b1.farmer_name AS "Farmer Name",
-            d1.batch_age_in_days AS "Age",
+            d1.batch_age AS "Age",
             i1.item_name AS "Item Name",
-            COALESCE(d1.mortality_number_of_birds, 0) AS "Mortality",
-            COALESCE(st.mortality, 0) AS "mortality",
-            COALESCE(st.feed_consumption, 0) AS "Standard Consumption",
-            COALESCE((d1.feed_consumed_quantity - st.feed_consumption), 0) AS "Deviation",
+            COALESCE(d1.total_mortality_qty, 0) AS "Mortality",
+            COALESCE(d1.actual_total_feed_consumption, 0) AS "Feed",
+            COALESCE(st.standard_mortality, 0) AS "mortality",
+            COALESCE(st.standard_total_feed_consumption, 0) AS "Standard Consumption",
+            COALESCE((d1.actual_total_feed_consumption - st.standard_total_feed_consumption), 0) AS "Deviation",
             CASE 
-                WHEN COALESCE(st.feed_consumption, 0) > 0 THEN 
-                    ROUND(((d1.feed_consumed_quantity - st.feed_consumption) / st.feed_consumption) * 100, 2)
+                WHEN COALESCE(st.standard_total_feed_consumption, 0) > 0 THEN 
+                    ROUND(((d1.actual_total_feed_consumption - st.standard_total_feed_consumption) / st.standard_total_feed_consumption) * 100, 2)
                 ELSE 
                     0
             END AS "Deviation P",
-            COALESCE((d1.mortality_number_of_birds - st.mortality), 0) AS "Mor Deviation",
+            COALESCE((d1.total_mortality_qty - st.standard_mortality), 0) AS "Mor Deviation",
             CASE 
-                WHEN COALESCE(st.mortality, 0) > 0 THEN 
-                    ROUND(((d1.mortality_number_of_birds - st.mortality) / st.mortality) * 100, 2)
+                WHEN COALESCE(st.standard_mortality, 0) > 0 THEN 
+                    ROUND(((d1.total_mortality_qty - st.standard_mortality) / st.standard_mortality) * 100, 2)
                 ELSE 
                     0
             END AS "Mortality P",
@@ -43,13 +44,16 @@ def execute(filters=None):
             `tabBroiler Daily Transaction` d1 
         LEFT JOIN 
             `tabStandard Chart` st 
-            ON d1.batch_age_in_days = st.age_in_days 
+            ON d1.batch_age = st.age_in_days 
         LEFT JOIN 
             `tabBroiler Batch` b1 
             ON b1.name = d1.batch 
+        LEFT JOIN
+            `tabBroiler Consumption Detail` TC
+            ON TC.parent = d1.name     
         LEFT JOIN 
             `tabItem Master` i1  
-            ON i1.name = d1.item_name
+            ON i1.name = TC.consumption_item
         WHERE 
             d1.batch = %(Batch)s
          

@@ -21,6 +21,7 @@ def execute(filters=None):
             b1.place_quantity_number_of_birds AS Placement,
             b1.live_quantity_number_of_birds AS Live_Quantity,
             m1.module_name AS Module,
+            b1.first_week_mortality,
             b1.mortality,
             b1.culls,
             b1.biological_value,
@@ -64,16 +65,16 @@ def execute(filters=None):
             "width": 150,
         },
         {
-            "label": "Shed Name",
+            "label": "Shed",
             "fieldname": "shed_name",
             "fieldtype": "Data",
-            "width": 120,
+            "width": 90,
         },
         {
-            "label": "Location Name",
+            "label": "Location",
             "fieldname": "location_name",
             "fieldtype": "Data",
-            "width": 120,
+            "width": 100,
         },
         {
             "label": "Opening Date",
@@ -107,6 +108,12 @@ def execute(filters=None):
             "width": 120,
         },
         {"label": "Module", "fieldname": "Module", "fieldtype": "Data", "width": 90},
+        {
+            "label": "FWM",
+            "fieldname": "first_week_mortality",
+            "fieldtype": "Int",
+            "width": 90,
+        },
         {
             "label": "Mortality",
             "fieldname": "mortality",
