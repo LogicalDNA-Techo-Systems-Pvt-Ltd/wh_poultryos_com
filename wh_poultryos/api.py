@@ -57,6 +57,7 @@ def update_batch_stats(batch):
                 "actual_total_feed_consumption",
                 "total_daily_cost",
                 "batch_age",
+                "feed_cost",
             ],
         )
 
@@ -64,7 +65,7 @@ def update_batch_stats(batch):
         total_mortality = sum([t.total_mortality_qty or 0 for t in transactions])
         total_culls = sum([t.total_cull_qty or 0 for t in transactions])
         total_feed = sum([t.actual_total_feed_consumption or 0 for t in transactions])
-        total_cost = sum([t.total_daily_cost or 0 for t in transactions])
+        total_cost = sum([t.feed_cost or 0 for t in transactions])
 
         # Get the latest weight
         latest_weight = 0
@@ -98,7 +99,7 @@ def update_batch_stats(batch):
 
         batch_doc.body_weight = latest_weight
         batch_doc.total_feed = total_feed
-        batch_doc.total_cost = total_cost
+        batch_doc.total_feed_cost = total_cost
         batch_doc.batch_age_in_days = diff_days
         batch_doc.live_batch_date = transaction_date
 
@@ -137,9 +138,12 @@ def update_batch_stats(batch):
                     total_live_weight_kg
                 )
 
+       
         # Save the batch document
         batch_doc.save()
-
+        frappe.db.commit()  # Ensure commit happens
+        print("Batch doc saved successfully!")  
+                
         return {
             "success": True,
             "message": _("Batch statistics updated successfully"),

@@ -1,0 +1,51 @@
+{
+ "charts": [
+  {
+   "chart_name": "Broiler Batch Heatmap",
+   "label": "Batch Activity"
+  }
+ ],
+ "content": "[{\"id\":\"1f09eLADbn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Broiler Batch Summary</span>\",\"col\":12}},{\"id\":\"3mpYtqvtV-\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Batch Activity\",\"col\":12}},{\"id\":\"8GHkr0R4gF\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Placed Quantity\",\"col\":3}},{\"id\":\"PtYZNV526R\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"First Week Mortality\",\"col\":3}},{\"id\":\"A_pyCrF5lI\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Mortality\",\"col\":3}},{\"id\":\"a6D3ZjeLDY\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Average Bird Weight (In Grams)\",\"col\":3}}]",
+ "creation": "2025-02-28 15:02:20.307214",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "",
+ "idx": 0,
+ "indicator_color": "",
+ "is_hidden": 1,
+ "label": "Broiler Batch Summary Workspace",
+ "links": [],
+ "modified": "2025-03-13 09:52:18.110101",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Broiler Batch Summary Workspace",
+ "number_cards": [
+  {
+   "label": "First Week Mortality",
+   "number_card_name": "First Week Mortality"
+  },
+  {
+   "label": "Placed Quantity",
+   "number_card_name": "Placed Quantity"
+  },
+  {
+   "label": "Average Bird Weight (In Grams)",
+   "number_card_name": "Average Bird Weight (In Grams)"
+  },
+  {
+   "label": "Total Mortality",
+   "number_card_name": "Total Mortality-2"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 23.0,
+ "shortcuts": [],
+ "title": "Broiler Batch Summary Workspace"
+}

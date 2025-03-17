@@ -2,18 +2,21 @@
 from frappe import _
 import frappe
 from frappe.model.document import Document
-
+from datetime import datetime, timedelta
 
 class BroilerDailyTransaction(Document):
     def validate(self):
+        
         self.calculate_totals()
+        
         self.calculate_mortality_stats()
         self.calculate_weight_stats()
         self.calculate_consumption_stats()
-        # Update batch statistics after all calculations
-        self.update_batch_statistics()
+        # # Update batch statistics after all calculations
+        # self.update_batch_statistics()
 
     def calculate_totals(self):
+        
         # Calculate mortality and cull quantities
         self.total_mortality_qty = (
             sum(
@@ -25,27 +28,32 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-
+   
+        
         self.total_cull_qty = (
-            sum([d.qty for d in self.mortality_details if d.transaction_type == "Cull"])
+            sum([float(d.qty or 0) for d in self.mortality_details if d.transaction_type == "Cull"])
             or 0
         )
-
+       
+        
+        
         # Calculate mortality and cull costs
+        
         self.total_mortality_cost = (
             sum(
                 [
-                    d.cost
+                    float(d.cost or 0)
                     for d in self.mortality_details
                     if d.transaction_type == "Mortality"
                 ]
             )
             or 0
         )
-
+   
+        
         self.total_cull_cost = (
             sum(
-                [d.cost for d in self.mortality_details if d.transaction_type == "Cull"]
+                [float(d.cost or 0) for d in self.mortality_details if d.transaction_type == "Cull"]
             )
             or 0
         )
@@ -61,7 +69,8 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-
+    
+        
         # Calculate consumption costs
         self.total_feed_cost = (
             sum(
@@ -73,7 +82,8 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-
+     
+        
         self.total_medicine_cost = (
             sum(
                 [
@@ -84,7 +94,7 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-
+      
         self.total_vaccine_cost = (
             sum(
                 [
@@ -95,7 +105,7 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-
+    
         self.total_vitamin_cost = (
             sum(
                 [
@@ -106,16 +116,19 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-
+       
+        
         # Calculate total daily cost
         self.total_daily_cost = (
-            self.total_mortality_cost
-            + self.total_cull_cost
-            + self.total_feed_cost
-            + self.total_medicine_cost
-            + self.total_vaccine_cost
-            + self.total_vitamin_cost
+        (self.total_mortality_cost or 0) +
+        (self.total_cull_cost or 0) +
+        (self.total_feed_cost or 0) +
+        (self.total_medicine_cost or 0) +
+        (self.total_vaccine_cost or 0) +
+        (self.total_vitamin_cost or 0)
         )
+     
+
 
     def calculate_mortality_stats(self):
         # Get batch details
@@ -137,7 +150,9 @@ class BroilerDailyTransaction(Document):
 
         self.mortality_variance = self.total_mortality_qty - self.standard_mortality
         self.cull_variance = self.total_cull_qty - self.standard_culls
-
+      
+    
+    
     def calculate_weight_stats(self):
         # Ensure values are not None to avoid calculation errors
         self.actual_avg_bird_weight = self.actual_avg_bird_weight or 0
@@ -155,6 +170,7 @@ class BroilerDailyTransaction(Document):
             )
         else:
             self.weight_variance_percentage = 0
+       
 
     def calculate_consumption_stats(self):
         # Ensure values are not None
@@ -175,6 +191,7 @@ class BroilerDailyTransaction(Document):
             )
         else:
             self.feed_consumption_variance_percentage = 0
+     
 
     def update_batch_statistics(self):
         """Update batch statistics using the centralized API function"""
@@ -204,3 +221,110 @@ class BroilerDailyTransaction(Document):
                 _("Error updating batch statistics. Please check the error log."),
                 alert=True,
             )
+
+
+
+@frappe.whitelist()
+def get_first_week_mortality(batch_name):
+        """Fetches and returns the total mortality sum for the first 7 days of the given batch."""
+        
+        # Check if the batch exists
+        batch_exists = frappe.db.exists("Broiler Batch", batch_name)
+
+        if not batch_exists:
+            frappe.throw(f"Batch '{batch_name}' not found!")
+
+        batch_details = frappe.get_all(
+            "Broiler Batch",
+            filters={"name": batch_name},
+            fields=["*"]  # Fetch all fields
+        )   
+
+        if batch_details:
+            print(batch_details[0])  # Print batch details         
+        
+        batch_start_date = batch_details[0].opening_date  # Ensure this field exists       
+        
+        if not batch_start_date:
+            frappe.throw("Placed On date is missing in the Broiler Batch")
+
+        # Convert to date format
+        if isinstance(batch_start_date, str):
+            batch_start_date = batch_start_date        
+
+        # Calculate the end date (first 7 days)
+        first_week_end = batch_start_date + timedelta(days=6)
+        
+        mortality_sum = frappe.db.sql("""
+            SELECT SUM(md.qty) 
+            FROM `tabBroiler Daily Transaction` AS bdt
+            LEFT JOIN `tabBroiler Mortality Detail` AS md 
+                ON md.parent = bdt.name
+                AND md.transaction_type = 'Mortality'
+            WHERE bdt.batch = %s 
+            AND bdt.transaction_date BETWEEN %s AND %s
+        """, (batch_name, batch_start_date, first_week_end))        
+          
+        return mortality_sum[0][0] if mortality_sum and mortality_sum[0][0] else 0 
+    
+@frappe.whitelist()
+def update_first_week_mortality(batch_name, mortality_value):
+    frappe.db.set_value("Broiler Batch", batch_name, "first_week_mortality", mortality_value, update_modified=False)
+    frappe.db.commit()
+
+
+@frappe.whitelist()
+def update_batch_status(batch):
+    if batch:  # Use the correct parameter name
+        # Check the current status of the batch
+        batch_status = frappe.db.get_value('Broiler Batch', batch, 'batch_status')
+        
+        # Update status ONLY if it's still 'New'
+        if batch_status == "New":
+            frappe.db.set_value('Broiler Batch', batch, 'batch_status', 'Batch Started')
+            frappe.db.commit()
+            
+            return {"status": "success", "message": f"Batch {batch} updated successfully"}
+
+    return {"status": "error", "message": "Batch not found or status not updated"}
+
+@frappe.whitelist()
+def scrap_batch(batch_name):
+    try:
+        # Fetch Broiler Batch details
+        batch_doc = frappe.get_doc("Broiler Batch", batch_name)
+        
+        if batch_doc.batch_status == "Scrapped":
+            return "Batch is already scrapped."
+
+        # Calculate remaining live quantity
+        # live_quantity = batch_doc.place_quantity_number_of_birds - (
+        #     batch_doc.total_mortality_qty + batch_doc.total_cull_qty + batch_doc.sale_quantity
+        # )
+        
+        live_quantity = batch_doc.live_quantity_number_of_birds
+
+        # Update batch status and culls
+        batch_doc.batch_status = "Completed"
+        batch_doc.culls += live_quantity  # Add live birds to culls
+        batch_doc.save()
+
+        frappe.db.commit()
+        return "success"
+
+    except Exception as e:
+        frappe.log_error(frappe.get_traceback(), "Scrap Batch Error")
+        return str(e)
+    
+    
+@frappe.whitelist()
+def check_daily_transaction(batch, transaction_date):
+    """Check if a daily transaction exists for the given batch and date."""
+
+    exists = frappe.db.exists(
+        "Broiler Daily Transaction",
+        {"batch": batch, "transaction_date": transaction_date}
+    )
+
+    return {"exists": bool(exists)}
+

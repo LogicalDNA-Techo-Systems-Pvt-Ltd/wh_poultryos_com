@@ -1,67 +1,61 @@
 {
-    "actions": [],
-    "autoname": "hash",
-    "creation": "2023-01-01 00:00:00.000000",
-    "doctype": "DocType",
-    "editable_grid": 1,
-    "engine": "InnoDB",
-    "field_order": [
-        "consumption_type",
-        "consumption_item",
-        "consumption_qty",
-        "consumption_rate",
-        "consumption_cost"
-    ],
-    "fields": [
-        {
-            "fieldname": "consumption_type",
-            "fieldtype": "Select",
-            "in_list_view": 1,
-            "label": "Consumption Type",
-            "options": "Feed\nMedicine\nVaccine\nVitamin",
-            "reqd": 1
-        },
-        {
-            "fieldname": "consumption_item",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "label": "Item",
-            "options": "Item Master",
-            "reqd": 1
-        },
-        {
-            "fieldname": "consumption_qty",
-            "fieldtype": "Float",
-            "in_list_view": 1,
-            "label": "Quantity",
-            "precision": 3,
-            "reqd": 1
-        },
-        {
-            "fieldname": "consumption_rate",
-            "fieldtype": "Currency",
-            "in_list_view": 1,
-            "label": "Rate per Unit",
-            "reqd": 1
-        },
-        {
-            "fieldname": "consumption_cost",
-            "fieldtype": "Currency",
-            "in_list_view": 1,
-            "label": "Total Cost",
-            "read_only": 1
-        }
-    ],
-    "istable": 1,
-    "links": [],
-    "modified": "2023-01-01 00:00:00.000000",
-    "modified_by": "Administrator",
-    "module": "PoultryOS",
-    "name": "Broiler Consumption Detail",
-    "naming_rule": "Random",
-    "owner": "Administrator",
-    "permissions": [],
-    "sort_field": "modified",
-    "sort_order": "DESC",
-    "states": []
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2023-01-01 00:00:00",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "consumption_type",
+  "consumption_item",
+  "consumption_qty",
+  "consumption_cost"
+ ],
+ "fields": [
+  {
+   "fieldname": "consumption_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Consumption Type",
+   "options": "\nFeed\nMedicine\nVaccine\nVitamin",
+   "reqd": 1
+  },
+  {
+   "fieldname": "consumption_item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item Master",
+   "reqd": 1
+  },
+  {
+   "fieldname": "consumption_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity",
+   "precision": "3",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "consumption_cost",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Total Cost",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2025-03-15 15:17:31.673333",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Broiler Consumption Detail",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
 }

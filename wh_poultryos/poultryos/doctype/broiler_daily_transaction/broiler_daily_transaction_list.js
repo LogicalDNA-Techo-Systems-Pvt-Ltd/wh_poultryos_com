@@ -29,14 +29,24 @@ frappe.listview_settings['Broiler Daily Transaction'] = {
     },
 
     // Helper method to add batch performance report button
+    // addBatchPerformanceReportButton: function (listview) {
+    //     // Check if button already exists to avoid duplicates
+    //     if (!listview.page.menu.has_item(__('Generate Batch Performance Report'))) {
+    //         listview.page.add_menu_item(__('Generate Batch Performance Report'), function () {
+    //             frappe.set_route('query-report', 'Broiler Batch Performance');
+    //         });
+    //     }
+    // },
+
     addBatchPerformanceReportButton: function (listview) {
         // Check if button already exists to avoid duplicates
-        if (!listview.page.menu.has_item(__('Generate Batch Performance Report'))) {
+        if (!$(`.menu-item:contains("Generate Batch Performance Report")`).length) {
             listview.page.add_menu_item(__('Generate Batch Performance Report'), function () {
                 frappe.set_route('query-report', 'Broiler Batch Performance');
             });
         }
     },
+    
 
     // Add status indicators for transactions
     get_indicator: function (doc) {

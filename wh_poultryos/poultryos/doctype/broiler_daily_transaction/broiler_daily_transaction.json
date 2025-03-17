@@ -1,371 +1,393 @@
 {
-    "actions": [],
-    "autoname": "BDT-.YYYY.-.MM.-.DD.-.####",
-    "creation": "2023-01-01 00:00:00.000000",
-    "doctype": "DocType",
-    "editable_grid": 1,
-    "engine": "InnoDB",
-    "field_order": [
-        "batch_section",
-        "batch",
-        "batch_details_section",
-        "batch_age",
-        "batch_live_qty",
-        "column_break_5",
-        "fcr",
-        "eef",
-        "production_cost",
-        "transaction_section",
-        "transaction_date",
-        "mortality_section",
-        "mortality_details",
-        "mortality_summary_section",
-        "total_mortality_qty",
-        "total_cull_qty",
-        "column_break_14",
-        "standard_mortality",
-        "standard_culls",
-        "column_break_17",
-        "mortality_variance",
-        "cull_variance",
-        "weight_section",
-        "standard_avg_bird_weight",
-        "actual_avg_bird_weight",
-        "column_break_22",
-        "weight_variance",
-        "weight_variance_percentage",
-        "consumption_section",
-        "consumption_details",
-        "consumption_summary_section",
-        "standard_total_feed_consumption",
-        "actual_total_feed_consumption",
-        "column_break_29",
-        "feed_consumption_variance",
-        "feed_consumption_variance_percentage",
-        "cost_section",
-        "total_mortality_cost",
-        "total_cull_cost",
-        "column_break_35",
-        "total_feed_cost",
-        "total_medicine_cost",
-        "total_vaccine_cost",
-        "total_vitamin_cost",
-        "column_break_40",
-        "total_daily_cost"
-    ],
-    "fields": [
-        {
-            "fieldname": "batch_section",
-            "fieldtype": "Section Break",
-            "label": "Batch Selection"
-        },
-        {
-            "fieldname": "batch",
-            "fieldtype": "Link",
-            "label": "Batch",
-            "options": "Broiler Batch",
-            "reqd": 1
-        },
-        {
-            "fieldname": "batch_details_section",
-            "fieldtype": "Section Break",
-            "label": "Batch Details"
-        },
-        {
-            "fetch_from": "batch.batch_age_in_days",
-            "fieldname": "batch_age",
-            "fieldtype": "Int",
-            "label": "Batch Age (Days)",
-            "read_only": 1
-        },
-        {
-            "fetch_from": "batch.live_quantity_number_of_birds",
-            "fieldname": "batch_live_qty",
-            "fieldtype": "Int",
-            "label": "Batch Live Quantity",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_5",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fetch_from": "batch.current_fcr",
-            "fieldname": "fcr",
-            "fieldtype": "Float",
-            "label": "FCR",
-            "precision": 3,
-            "read_only": 1
-        },
-        {
-            "fetch_from": "batch.current_eef",
-            "fieldname": "eef",
-            "fieldtype": "Float",
-            "label": "EEF",
-            "precision": 2,
-            "read_only": 1
-        },
-        {
-            "fetch_from": "batch.production_cost",
-            "fieldname": "production_cost",
-            "fieldtype": "Currency",
-            "label": "Production Cost",
-            "read_only": 1
-        },
-        {
-            "fieldname": "transaction_section",
-            "fieldtype": "Section Break",
-            "label": "Transaction Details"
-        },
-        {
-            "default": "Today",
-            "fieldname": "transaction_date",
-            "fieldtype": "Date",
-            "in_list_view": 1,
-            "label": "Transaction Date",
-            "reqd": 1
-        },
-        {
-            "fieldname": "mortality_section",
-            "fieldtype": "Section Break",
-            "label": "Mortality & Culls Details"
-        },
-        {
-            "fieldname": "mortality_details",
-            "fieldtype": "Table",
-            "label": "Mortality & Culls",
-            "options": "Broiler Mortality Detail"
-        },
-        {
-            "fieldname": "mortality_summary_section",
-            "fieldtype": "Section Break",
-            "label": "Mortality Summary"
-        },
-        {
-            "fieldname": "total_mortality_qty",
-            "fieldtype": "Int",
-            "label": "Actual Mortality",
-            "read_only": 1
-        },
-        {
-            "fieldname": "total_cull_qty",
-            "fieldtype": "Int",
-            "label": "Actual Culls",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_14",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "standard_mortality",
-            "fieldtype": "Int",
-            "label": "Standard Mortality"
-        },
-        {
-            "fieldname": "standard_culls",
-            "fieldtype": "Int",
-            "label": "Standard Culls"
-        },
-        {
-            "fieldname": "column_break_17",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "mortality_variance",
-            "fieldtype": "Int",
-            "label": "Mortality Variance",
-            "read_only": 1
-        },
-        {
-            "fieldname": "cull_variance",
-            "fieldtype": "Int",
-            "label": "Cull Variance",
-            "read_only": 1
-        },
-        {
-            "fieldname": "weight_section",
-            "fieldtype": "Section Break",
-            "label": "Bird Weight"
-        },
-        {
-            "fieldname": "standard_avg_bird_weight",
-            "fieldtype": "Float",
-            "label": "Standard Average Bird Weight (In Grams)",
-            "precision": 2
-        },
-        {
-            "fieldname": "actual_avg_bird_weight",
-            "fieldtype": "Float",
-            "label": "Actual Average Bird Weight (In Grams)",
-            "precision": 2
-        },
-        {
-            "fieldname": "column_break_22",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "weight_variance",
-            "fieldtype": "Float",
-            "label": "Weight Variance (In Grams)",
-            "precision": 2,
-            "read_only": 1
-        },
-        {
-            "fieldname": "weight_variance_percentage",
-            "fieldtype": "Percent",
-            "label": "Weight Variance (%)",
-            "read_only": 1
-        },
-        {
-            "fieldname": "consumption_section",
-            "fieldtype": "Section Break",
-            "label": "Consumption Details"
-        },
-        {
-            "fieldname": "consumption_details",
-            "fieldtype": "Table",
-            "label": "Consumption Details",
-            "options": "Broiler Consumption Detail"
-        },
-        {
-            "fieldname": "consumption_summary_section",
-            "fieldtype": "Section Break",
-            "label": "Feed Consumption Summary"
-        },
-        {
-            "fieldname": "standard_total_feed_consumption",
-            "fieldtype": "Float",
-            "label": "Standard Total Feed Consumption (In Grams)",
-            "precision": 2
-        },
-        {
-            "fieldname": "actual_total_feed_consumption",
-            "fieldtype": "Float",
-            "label": "Actual Total Feed Consumption (In Grams)",
-            "precision": 2,
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_29",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "feed_consumption_variance",
-            "fieldtype": "Float",
-            "label": "Feed Consumption Variance (In Grams)",
-            "precision": 2,
-            "read_only": 1
-        },
-        {
-            "fieldname": "feed_consumption_variance_percentage",
-            "fieldtype": "Percent",
-            "label": "Feed Consumption Variance (%)",
-            "read_only": 1
-        },
-        {
-            "fieldname": "cost_section",
-            "fieldtype": "Section Break",
-            "label": "Cost Summary"
-        },
-        {
-            "fieldname": "total_mortality_cost",
-            "fieldtype": "Currency",
-            "label": "Total Mortality Cost",
-            "read_only": 1
-        },
-        {
-            "fieldname": "total_cull_cost",
-            "fieldtype": "Currency",
-            "label": "Total Cull Cost",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_35",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "total_feed_cost",
-            "fieldtype": "Currency",
-            "label": "Total Feed Cost",
-            "read_only": 1
-        },
-        {
-            "fieldname": "total_medicine_cost",
-            "fieldtype": "Currency",
-            "label": "Total Medicine Cost",
-            "read_only": 1
-        },
-        {
-            "fieldname": "total_vaccine_cost",
-            "fieldtype": "Currency",
-            "label": "Total Vaccine Cost",
-            "read_only": 1
-        },
-        {
-            "fieldname": "total_vitamin_cost",
-            "fieldtype": "Currency",
-            "label": "Total Vitamin Cost",
-            "read_only": 1
-        },
-        {
-            "fieldname": "column_break_40",
-            "fieldtype": "Column Break"
-        },
-        {
-            "fieldname": "total_daily_cost",
-            "fieldtype": "Currency",
-            "label": "Total Daily Cost",
-            "read_only": 1
-        }
-    ],
-    "index_web_pages_for_search": 1,
-    "links": [],
-    "modified": "2023-01-01 00:00:00.000000",
-    "modified_by": "Administrator",
-    "module": "PoultryOS",
-    "name": "Broiler Daily Transaction",
-    "naming_rule": "Expression",
-    "owner": "Administrator",
-    "permissions": [
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "System Manager",
-            "share": 1,
-            "write": 1
-        },
-        {
-            "create": 1,
-            "delete": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "Poultry Manager",
-            "share": 1,
-            "write": 1
-        },
-        {
-            "create": 1,
-            "email": 1,
-            "export": 1,
-            "print": 1,
-            "read": 1,
-            "report": 1,
-            "role": "Poultry User",
-            "share": 1,
-            "write": 1
-        }
-    ],
-    "sort_field": "modified",
-    "sort_order": "DESC",
-    "states": [],
-    "track_changes": 1
+ "actions": [],
+ "autoname": "BDT-.YYYY.-.MM.-.DD.-.####",
+ "creation": "2023-01-01 00:00:00",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "batch_section",
+  "batch",
+  "batch_details_section",
+  "batch_age",
+  "batch_live_qty",
+  "column_break_5",
+  "fcr",
+  "eef",
+  "production_cost",
+  "transaction_section",
+  "transaction_date",
+  "mortality_section",
+  "mortality_details",
+  "mortality_cost",
+  "mortality_summary_section",
+  "total_mortality_qty",
+  "total_cull_qty",
+  "column_break_14",
+  "standard_mortality",
+  "standard_culls",
+  "column_break_17",
+  "mortality_variance",
+  "cull_variance",
+  "weight_section",
+  "standard_avg_bird_weight",
+  "actual_avg_bird_weight",
+  "column_break_22",
+  "weight_variance",
+  "weight_variance_percentage",
+  "consumption_section",
+  "consumption_details",
+  "feed_cost",
+  "medicine_cost",
+  "consumption_summary_section",
+  "standard_total_feed_consumption",
+  "actual_total_feed_consumption",
+  "column_break_29",
+  "feed_consumption_variance",
+  "feed_consumption_variance_percentage",
+  "cost_section",
+  "total_mortality_cost",
+  "total_cull_cost",
+  "column_break_35",
+  "total_feed_cost",
+  "total_medicine_cost",
+  "total_vaccine_cost",
+  "total_vitamin_cost",
+  "column_break_40",
+  "total_daily_cost"
+ ],
+ "fields": [
+  {
+   "fieldname": "batch_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Selection"
+  },
+  {
+   "fieldname": "batch",
+   "fieldtype": "Link",
+   "label": "Batch",
+   "options": "Broiler Batch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "batch_details_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Details"
+  },
+  {
+   "fetch_from": "batch.batch_age_in_days",
+   "fieldname": "batch_age",
+   "fieldtype": "Int",
+   "label": "Batch Age (Days)",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "batch.live_quantity_number_of_birds",
+   "fieldname": "batch_live_qty",
+   "fieldtype": "Int",
+   "label": "Batch Live Quantity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "batch.current_fcr",
+   "fieldname": "fcr",
+   "fieldtype": "Float",
+   "label": "FCR",
+   "precision": "3",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "batch.current_eef",
+   "fieldname": "eef",
+   "fieldtype": "Float",
+   "label": "EEF",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "batch.production_cost",
+   "fieldname": "production_cost",
+   "fieldtype": "Currency",
+   "label": "Production Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "transaction_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Details"
+  },
+  {
+   "default": "Today",
+   "fieldname": "transaction_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Transaction Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mortality_section",
+   "fieldtype": "Section Break",
+   "label": "Mortality & Culls Details"
+  },
+  {
+   "fieldname": "mortality_details",
+   "fieldtype": "Table",
+   "label": "Mortality & Culls",
+   "options": "Broiler Mortality Detail"
+  },
+  {
+   "fieldname": "mortality_summary_section",
+   "fieldtype": "Section Break",
+   "label": "Mortality Summary"
+  },
+  {
+   "fieldname": "total_mortality_qty",
+   "fieldtype": "Int",
+   "label": "Actual Mortality",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_cull_qty",
+   "fieldtype": "Int",
+   "label": "Actual Culls",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "standard_mortality",
+   "fieldtype": "Int",
+   "label": "Standard Mortality"
+  },
+  {
+   "fieldname": "standard_culls",
+   "fieldtype": "Int",
+   "label": "Standard Culls"
+  },
+  {
+   "fieldname": "column_break_17",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mortality_variance",
+   "fieldtype": "Int",
+   "label": "Mortality Variance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cull_variance",
+   "fieldtype": "Int",
+   "label": "Cull Variance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "weight_section",
+   "fieldtype": "Section Break",
+   "label": "Bird Weight"
+  },
+  {
+   "fieldname": "standard_avg_bird_weight",
+   "fieldtype": "Float",
+   "label": "Standard Average Bird Weight (In Grams)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "actual_avg_bird_weight",
+   "fieldtype": "Float",
+   "label": "Actual Average Bird Weight (In Grams)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "weight_variance",
+   "fieldtype": "Float",
+   "label": "Weight Variance (In Grams)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "weight_variance_percentage",
+   "fieldtype": "Percent",
+   "label": "Weight Variance (%)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "consumption_section",
+   "fieldtype": "Section Break",
+   "label": "Consumption Details"
+  },
+  {
+   "fieldname": "consumption_details",
+   "fieldtype": "Table",
+   "label": "Consumption Details",
+   "options": "Broiler Consumption Detail"
+  },
+  {
+   "fieldname": "consumption_summary_section",
+   "fieldtype": "Section Break",
+   "label": "Feed Consumption Summary"
+  },
+  {
+   "fieldname": "standard_total_feed_consumption",
+   "fieldtype": "Float",
+   "label": "Standard Total Feed Consumption (In Grams)",
+   "precision": "2"
+  },
+  {
+   "fieldname": "actual_total_feed_consumption",
+   "fieldtype": "Float",
+   "label": "Actual Total Feed Consumption (In Grams)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_29",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "feed_consumption_variance",
+   "fieldtype": "Float",
+   "label": "Feed Consumption Variance (In Grams)",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "feed_consumption_variance_percentage",
+   "fieldtype": "Percent",
+   "label": "Feed Consumption Variance (%)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost_section",
+   "fieldtype": "Section Break",
+   "label": "Cost Summary"
+  },
+  {
+   "fieldname": "total_mortality_cost",
+   "fieldtype": "Currency",
+   "label": "Total Mortality Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_cull_cost",
+   "fieldtype": "Currency",
+   "label": "Total Cull Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_35",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_feed_cost",
+   "fieldtype": "Currency",
+   "label": "Total Feed Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_medicine_cost",
+   "fieldtype": "Currency",
+   "label": "Total Medicine Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_vaccine_cost",
+   "fieldtype": "Currency",
+   "label": "Total Vaccine Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_vitamin_cost",
+   "fieldtype": "Currency",
+   "label": "Total Vitamin Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_40",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_daily_cost",
+   "fieldtype": "Currency",
+   "label": "Total Daily Cost",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "mortality_cost",
+   "fieldtype": "Int",
+   "label": "Mortality Cost",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "feed_cost",
+   "fieldtype": "Read Only",
+   "label": "Feed Cost"
+  },
+  {
+   "default": "0",
+   "fieldname": "medicine_cost",
+   "fieldtype": "Read Only",
+   "label": "Medicine Cost"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-03-15 19:26:51.785911",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Broiler Daily Transaction",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Poultry Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Poultry User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
 }

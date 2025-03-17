@@ -15,6 +15,7 @@ def execute(filters=None):
             p1.party_group,
             b1.type,
             b1.instock,
+            COALESCE(b1.body_weight, 0) AS "body_weight",
             b1.quantity,
             b1.rate,
             s1.total_amount
@@ -47,6 +48,7 @@ def execute(filters=None):
         {"label": "Party Group", "fieldname": "party_group", "fieldtype": "Data", "width": 150},
         {"label": "Type", "fieldname": "type", "fieldtype": "Data", "width": 100},
         {"label": "Instock", "fieldname": "instock", "fieldtype": "Float", "width": 100},
+        {"label": "Body Weight", "fieldname": "body_weight", "fieldtype": "Float", "width": 100},
         {"label": "Quantity", "fieldname": "quantity", "fieldtype": "Float", "width": 100},
         {"label": "Rate", "fieldname": "rate", "fieldtype": "Currency", "width": 120},
         {"label": "Total Amount", "fieldname": "total_amount", "fieldtype": "Currency", "width": 150},

@@ -168,7 +168,8 @@ frappe.ui.form.on('Custom Sales Invoice', {
         frm.refresh_field('total_amount');
         if (frm.doc.sales_type === "Sales by Bird") {
 
-            frm.set_df_property('batches', 'hidden', 0);  // Show the child table         
+            frm.set_df_property('batches', 'hidden', 0);  // Show the child table     
+            frm.set_df_property('batch_weight', 'hidden', 1);    
 
         } else {
             frm.set_df_property('batch_weight', 'hidden', 0);  // Hide the child table
