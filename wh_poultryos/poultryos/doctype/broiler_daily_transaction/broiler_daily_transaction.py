@@ -307,6 +307,7 @@ def scrap_batch(batch_name):
         # Update batch status and culls
         batch_doc.batch_status = "Completed"
         batch_doc.culls += live_quantity  # Add live birds to culls
+        batch_doc.live_quantity_number_of_birds = 0
         batch_doc.save()
 
         frappe.db.commit()

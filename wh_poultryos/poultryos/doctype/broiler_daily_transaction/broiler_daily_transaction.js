@@ -8,7 +8,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
         frm.set_query('batch', function () {
             return {
                 filters: {
-                    batch_status: ['not in', ['Completed', 'Scrapped']]
+                    batch_status: ['not in', ['Completed']]
                 }
             };
         });
@@ -327,9 +327,11 @@ frappe.ui.form.on('Broiler Consumption Detail', {
         calculateConsumptionCost(frm, cdt, cdn);
     },
 
+    
     consumption_type: function (frm, cdt, cdn) {
         // Reset values when type changes
         var row = locals[cdt][cdn];
+
         if (row.consumption_type) {
 
             row.consumption_qty = 0;
@@ -339,6 +341,19 @@ frappe.ui.form.on('Broiler Consumption Detail', {
             frm.refresh_field('consumption_details');
         }
     },
+
+    consumption_item: function (frm, cdt, cdn) {
+        var row = locals[cdt][cdn];
+
+        // Check if the same consumption_item already exists in the table
+        var existing_entry = frm.doc.consumption_details.some(item => item.consumption_item === row.consumption_item && item.name !== row.name);
+
+        if (existing_entry) {
+            frappe.msgprint(__('You have already entered feed consumption for this item.'));
+            frappe.model.set_value(cdt, cdn, 'consumption_item', '');
+            return;
+        }
+    }
 
 
 });
@@ -583,6 +598,13 @@ function validateRequiredFields(frm) {
 
     if (frm.doc.consumption_details.length === 0) {
         warnings.push(__('No consumption details have been added'));
+    }
+
+    let current_date = frappe.datetime.get_today();
+
+    // Transaction Date can't be in the future
+    if (frm.doc.transaction_date > current_date) {
+        warnings.push(__('Transaction Date cannot be in the Future'));
     }
 
     // Display warnings if any
