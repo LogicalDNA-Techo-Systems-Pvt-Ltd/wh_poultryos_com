@@ -17,6 +17,9 @@ def execute(filters=None):
             b1.opening_date,
             b1.live_batch_date,
             b1.batch_age_in_days AS Age,
+            b1.body_weight,
+            b1.total_feed,
+            COALESCE(b1.sale_quantity, 0) AS sale_quantity,
             br1.breed_name,
             b1.place_quantity_number_of_birds AS Placement,
             b1.live_quantity_number_of_birds AS Live_Quantity,
@@ -83,7 +86,7 @@ def execute(filters=None):
             "width": 120,
         },
         {
-            "label": "Live Batch Date",
+            "label": "Live Date",
             "fieldname": "live_batch_date",
             "fieldtype": "Date",
             "width": 120,
@@ -109,6 +112,19 @@ def execute(filters=None):
         },
         {"label": "Module", "fieldname": "Module", "fieldtype": "Data", "width": 90},
         {
+            "label": "Body Weight",
+            "fieldname": "body_weight",
+            "fieldtype": "Float",
+            "width": 110,
+        },
+         {
+            "label": "Feed Cost",
+            "fieldname": "total_feed",
+            "fieldtype": "Float",
+            "width": 110,
+        },
+         
+        {
             "label": "FWM",
             "fieldname": "first_week_mortality",
             "fieldtype": "Int",
@@ -121,6 +137,12 @@ def execute(filters=None):
             "width": 90,
         },
         {"label": "Culls", "fieldname": "culls", "fieldtype": "Int", "width": 100},
+        {
+            "label": "Sale Quantity",
+            "fieldname": "sale_quantity",
+            "fieldtype": "Int",
+            "width": 130,
+        },
         {
             "label": "Biological Value",
             "fieldname": "biological_value",

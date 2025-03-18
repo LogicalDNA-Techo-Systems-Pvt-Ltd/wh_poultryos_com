@@ -86,17 +86,17 @@ def execute(filters=None):
             t2.farmer_name,
             l1.location_name,
             s1.shed_name,
-            t1.batch_placed_on AS Placement_Date,
+            t2.opening_date AS Placement_Date,
             t1.transaction_date AS Transaction_Date,
-            t1.batch_live_quantity AS Live_Quantity,
-            COALESCE(t1.average_bird_weight_in_kg, 0) AS "Body Weight",           
-            t1.mortality_number_of_birds AS Mortality,                      
-            COALESCE(t1.culls, 0) AS Culls,
-            t1.feed_consumed_quantity AS Feed,
+            t1.batch_live_qty AS Live_Quantity,
+            COALESCE(t1.actual_avg_bird_weight, 0) AS "Body Weight",           
+            t1.total_mortality_qty AS Mortality,                      
+            COALESCE(t1.total_cull_qty, 0) AS Culls,
+            t1.actual_total_feed_consumption AS Feed,
             t2.feed_rate as "Feed Rate",
             t1.feed_cost AS Feed_Cost,            
             t2.batch_status AS Batch_Status,
-            (t1.batch_live_quantity - t1.mortality_number_of_birds) AS Closing_Balance  
+            (t1.batch_live_qty - t1.total_mortality_qty) AS Closing_Balance  
         FROM 
             `tabBroiler Daily Transaction` AS t1
         LEFT JOIN 

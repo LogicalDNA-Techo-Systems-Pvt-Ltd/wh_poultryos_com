@@ -8,7 +8,7 @@ frappe.query_reports["Broiler Batch Details Report"] = {
             "fieldname": "from_date",
             "label": __("From Date"),
             "fieldtype": "Date",
-            "default": frappe.datetime.get_today(),
+            "default": frappe.datetime.now_date().slice(0, 4) + "-01-01",
             "reqd": 1
         },
         {
