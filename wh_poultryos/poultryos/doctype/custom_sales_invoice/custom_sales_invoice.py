@@ -104,7 +104,8 @@ def update_batch_quantities(batches,sales_type):
         # ✅ Convert values properly
         current_quantity = int(batch_data.get(field_to_update) or 0)
         current_sale_quantity = int(batch_data.get("sale_quantity") or 0)
-        bird_cost = float(batch_data.get("bird_cost") or 0.0)
+        bird_cost2 = float(batch_data.get("bird_cost") or 0.0)
+        bird_cost = round(bird_cost2, 3)  # Round to 3 decimal places
         biological_value = float(batch_data.get("biological_value") or 0.0)
         liveQTY = int(batch_data.get("live_quantity_number_of_birds") or 0)
        
@@ -123,10 +124,10 @@ def update_batch_quantities(batches,sales_type):
             # 2️⃣ Update sale quantity
             new_sale_quantity = current_sale_quantity + quantity_sold
             frappe.db.set_value("Broiler Batch", batch_id, "sale_quantity", new_sale_quantity)
-
+            frappe.msgprint(f"quantity_sold: {quantity_sold}")
+            frappe.msgprint(f"bird_cost: {bird_cost}")
             # 3️⃣ Update biological value
-            # deducted_value = quantity_sold * bird_cost
-            deducted_value = round(quantity_sold * bird_cost, 3)
+            deducted_value = quantity_sold * bird_cost            
             frappe.msgprint(f"deducted_value: {deducted_value}")
             # new_biological_value = max(biological_value - deducted_value, 0)  
             new_biological_value = round(max(biological_value - deducted_value, 0), 3)
