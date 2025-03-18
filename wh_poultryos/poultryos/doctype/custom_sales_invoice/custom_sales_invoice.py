@@ -127,10 +127,11 @@ def update_batch_quantities(batches,sales_type):
             frappe.msgprint(f"quantity_sold: {quantity_sold}")
             frappe.msgprint(f"bird_cost: {bird_cost}")
             # 3️⃣ Update biological value
-            deducted_value = quantity_sold * bird_cost            
-            frappe.msgprint(f"deducted_value: {deducted_value}")
+            deducted_value = quantity_sold * bird_cost
+            deducted_value2 = round(deducted_value, 3)            
+            frappe.msgprint(f"deducted_value: {deducted_value2}")
             # new_biological_value = max(biological_value - deducted_value, 0)  
-            new_biological_value = round(max(biological_value - deducted_value, 0), 3)
+            new_biological_value = round(max(biological_value - deducted_value2, 0), 3)
             frappe.msgprint(f"new_biological_value: {new_biological_value}")
             frappe.db.set_value("Broiler Batch", batch_id, "biological_value", new_biological_value)
 
