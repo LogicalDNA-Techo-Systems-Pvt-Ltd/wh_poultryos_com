@@ -4,6 +4,12 @@
 frappe.ui.form.on("Growing Charges", {
 
     onload: function (frm) {
+
+        // Auto-refresh the page when navigating to Growing Charges screen
+        if (!frm.is_new()) {
+            location.reload();  // Reload the page to ensure all fields are recalculated
+        }
+
         // First, fetch the ID of "Contract" from Batch Type
         frappe.call({
             method: "frappe.client.get_list",
@@ -318,7 +324,8 @@ frappe.ui.form.on("Growing Charges", {
                                                     salesIncentive = incentive * frm.doc.total_delivered_weight;
                                                     // ✅ Output Results
 
-
+                                                    totalMortalityDeduction = parseFloat((totalMortalityDeduction || 0).toFixed(3));  // Round up to 3 decimals
+                                                    fcrdeductions = (typeof fcrdeductions !== 'undefined' && fcrdeductions !== null) ? parseFloat(fcrdeductions.toFixed(3)) : 0;
 
                                                     // Calculate the Rearing Charges Payable
                                                     let rearingChargesPayable = (
@@ -333,8 +340,11 @@ frappe.ui.form.on("Growing Charges", {
                                                     // Bind the calculated value to the `rearing_charges_payable` field
                                                     frm.set_value("net_payable_amount", rearingChargesPayable);
 
+
                                                     // Optional: Show a success message
                                                     frappe.msgprint(__('Rearing Charges Payable calculated successfully.'));
+
+                                                    
 
 
                                                 }
@@ -599,6 +609,8 @@ frappe.ui.form.on("Growing Charges", {
 
                                         // Set the calculated value to the `actual_rearing_charge` field
                                         frm.set_value("rearing_chargebird", rearingchargeperkg);
+
+
                                     }
 
                                 }
@@ -687,7 +699,24 @@ frappe.ui.form.on("Growing Charges", {
             callback: function (r) {
                 if (r.message.status === "success") {
                     frappe.msgprint(__('GC UPDATED.'));
-
+                    // Update the growing_charges field in Broiler Batch
+                    let finalvalue = frm.doc.net_payable_amount;
+                    frappe.call({
+                        method: "frappe.client.set_value",
+                        args: {
+                            doctype: "Broiler Batch",
+                            name: frm.doc.batch,  // Pass batch name or ID
+                            fieldname: "growing_charges",
+                            value: finalvalue
+                        },
+                        callback: function (response) {
+                            if (!response.exc) {
+                               
+                            } else {
+                                frappe.msgprint("Failed to update growing charges.");
+                            }
+                        }
+                    });
                     console.log("", frm.doc.net_payable_amount);
                 } else {
 

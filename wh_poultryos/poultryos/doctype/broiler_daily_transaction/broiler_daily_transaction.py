@@ -7,8 +7,7 @@ from datetime import datetime, timedelta
 class BroilerDailyTransaction(Document):
     def validate(self):
         
-        self.calculate_totals()
-        
+        self.calculate_totals()        
         self.calculate_mortality_stats()
         self.calculate_weight_stats()
         self.calculate_consumption_stats()
@@ -28,7 +27,7 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-   
+        frappe.msgprint(f"total_mortality_qty: {self.total_mortality_qty}")
         
         self.total_cull_qty = (
             sum([float(d.qty or 0) for d in self.mortality_details if d.transaction_type == "Cull"])
@@ -49,7 +48,7 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-   
+        frappe.msgprint(f"total_mortality_cost: {self.total_mortality_cost}")
         
         self.total_cull_cost = (
             sum(
@@ -69,7 +68,7 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-    
+        frappe.msgprint(f"actual_total_feed_consumption: {self.actual_total_feed_consumption}")
         
         # Calculate consumption costs
         self.total_feed_cost = (
@@ -82,7 +81,7 @@ class BroilerDailyTransaction(Document):
             )
             or 0
         )
-     
+        frappe.msgprint(f"total_feed_cost: {self.total_feed_cost}")
         
         self.total_medicine_cost = (
             sum(
@@ -127,7 +126,7 @@ class BroilerDailyTransaction(Document):
         (self.total_vaccine_cost or 0) +
         (self.total_vitamin_cost or 0)
         )
-     
+        frappe.msgprint(f"total_daily_cost: {self.total_daily_cost}")
 
 
     def calculate_mortality_stats(self):

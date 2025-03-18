@@ -265,9 +265,14 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
     `);
 
     $(document).ready(function () {
+
+
         // Batch Selection Functionality
         function populateBatchDropdown() {
             frappe.call({
@@ -295,6 +300,8 @@ frappe.pages['Broiler Batch Summary'].on_page_load = function (wrapper) {
                 }
             });
         }
+
+        
 
         // Fetch Batch Data
         function fetchBatchData(batchId) {

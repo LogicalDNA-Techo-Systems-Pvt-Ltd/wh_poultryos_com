@@ -61,12 +61,21 @@ def update_batch_stats(batch):
             ],
         )
 
+        print(transactions)
+        
         # Calculate cumulative values (safely handle None values)
         total_mortality = sum([t.total_mortality_qty or 0 for t in transactions])
         total_culls = sum([t.total_cull_qty or 0 for t in transactions])
         total_feed = sum([t.actual_total_feed_consumption or 0 for t in transactions])
-        total_cost = sum([t.feed_cost or 0 for t in transactions])
+        # total_cost = sum([t.feed_cost or 0 for t in transactions])
+        total_cost = sum([float(t.feed_cost) if t.feed_cost else 0 for t in transactions])
 
+        
+        print(total_mortality)
+        print(total_feed)
+        print(total_cost)       
+        
+        
         # Get the latest weight
         latest_weight = 0
         if transactions:
@@ -141,8 +150,8 @@ def update_batch_stats(batch):
        
         # Save the batch document
         batch_doc.save()
-        frappe.db.commit()  # Ensure commit happens
-        print("Batch doc saved successfully!")  
+        # frappe.db.commit()  # Ensure commit happens
+        # print("Batch doc saved successfully!")  
                 
         return {
             "success": True,

@@ -99,7 +99,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
             callback: function (r) {
                 if (r.message) {
                     let mor = r.message;
-
+                    console.log(mor);
                     frappe.call({
                         method: 'wh_poultryos.poultryos.doctype.broiler_daily_transaction.broiler_daily_transaction.update_first_week_mortality',
                         args: {
@@ -145,8 +145,9 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                         let mortality_cost = frm.doc.mortality_cost || 0; // Mortality Cost from the form
 
                         // ✅ Calculate Updated Values
-                        let updated_biological_value = biological_value + feed_cost - mortality_cost;
-                        let updated_batch_live_quantity = batch_placed_quantity - (frm.doc.total_mortality_qty || 0) - (frm.doc.total_cull_qty || 0) - salequantity;
+                        // let updated_biological_value = biological_value + feed_cost - mortality_cost;
+                        let updated_biological_value = parseFloat((biological_value + feed_cost - mortality_cost).toFixed(3));
+                        let updated_batch_live_quantity = frm.doc.batch_live_qty - (frm.doc.total_mortality_qty || 0) - (frm.doc.total_cull_qty || 0) - salequantity;
 
                         // ✅ Calculate Bird Cost
                         let bird_cost = 0;
