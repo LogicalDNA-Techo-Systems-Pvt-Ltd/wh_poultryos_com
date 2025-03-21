@@ -30,8 +30,14 @@
   "mortality_variance",
   "cull_variance",
   "consumption_details_section",
-  "layer_consumtpion",
+  "layer_consumption",
   "layer_feed_cost",
+  "bird_weight_section",
+  "standard_average_bird_weight_in_grams",
+  "actual_average_bird_weight_in_grams",
+  "column_break_bsvx",
+  "weight_variance_in_grams",
+  "weight_variance_",
   "feed_consumption_summary_section",
   "standard_total_feed_consumption_in_grams",
   "actual_total_feed_consumption_in_grams",
@@ -111,12 +117,6 @@
    "label": "Consumption Details"
   },
   {
-   "fieldname": "layer_consumtpion",
-   "fieldtype": "Table",
-   "label": "Layer Consumtpion",
-   "options": "Layer Consumption Details"
-  },
-  {
    "default": "0",
    "fieldname": "layer_feed_cost",
    "fieldtype": "Float",
@@ -181,9 +181,11 @@
    "label": "Standard Total Feed Consumption (In Grams)"
   },
   {
+   "default": "0",
    "fieldname": "actual_total_feed_consumption_in_grams",
    "fieldtype": "Float",
-   "label": "Actual Total Feed Consumption (In Grams)"
+   "label": "Actual Total Feed Consumption (In Grams)",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_mcmz",
@@ -224,16 +226,54 @@
    "read_only": 1
   },
   {
-   "default": "0",
    "fieldname": "production_cost",
    "fieldtype": "Float",
    "label": "Production Cost",
    "read_only": 1
+  },
+  {
+   "fieldname": "bird_weight_section",
+   "fieldtype": "Section Break",
+   "label": "Bird Weight"
+  },
+  {
+   "default": "0",
+   "fieldname": "standard_average_bird_weight_in_grams",
+   "fieldtype": "Float",
+   "label": "Standard Average Bird Weight (In Grams)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "actual_average_bird_weight_in_grams",
+   "fieldtype": "Float",
+   "label": "Actual Average Bird Weight (In Grams)"
+  },
+  {
+   "fieldname": "column_break_bsvx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "weight_variance_in_grams",
+   "fieldtype": "Float",
+   "label": "Weight Variance (In Grams)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "weight_variance_",
+   "fieldtype": "Float",
+   "label": "Weight Variance (%)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "layer_consumption",
+   "fieldtype": "Table",
+   "label": "Layer Consumption",
+   "options": "Layer Consumption Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-21 11:26:50.915798",
+ "modified": "2025-03-21 14:01:26.725392",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Layer Daily Transaction",

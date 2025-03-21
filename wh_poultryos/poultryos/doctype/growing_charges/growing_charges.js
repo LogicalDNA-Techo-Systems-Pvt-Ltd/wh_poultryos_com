@@ -628,7 +628,7 @@ frappe.ui.form.on("Growing Charges", {
                                         let chick_cost = s ? s.chick_cost : 0;
 
                                         // Use chick_cost only if cost_from_batch == 1, otherwise keep it as rate
-                                        let final_rate = frm.doc.cost_from_batch == 1 ? chick_cost : rate;
+                                        let final_rate = frm.doc.cost_from_batch == 1 ? rate : chick_cost;
 
                                         // Calculate Production Cost
                                         production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (final_rate * place_quantity_number_of_birds);

@@ -3,6 +3,17 @@
 
 frappe.ui.form.on('Layer Daily Transaction', {
 
+    onload: function (frm)
+    {
+        // Set a query filter for the Batch dropdown
+        frm.set_query('batch', function () {
+            return {
+                filters: {
+                    batch_status: ['not in', ['Completed']]
+                }
+            };
+        });
+    },
 
     refresh: function (frm) {
         // Add custom buttons
@@ -50,11 +61,6 @@ frappe.ui.form.on('Layer Daily Transaction', {
 
     },
 
-    average_bird_weight_in_grams: function (frm) {
-        // Automatically update weight in KG when weight in grams is entered
-        frm.set_value("average_bird_weight_in_kg", (frm.doc.average_bird_weight_in_grams / 1000));
-    },
-
     transaction_date: function (frm) {
         // If both batch and transaction date are set, update batch age
         if (frm.doc.batch && frm.doc.transaction_date) {
@@ -70,11 +76,64 @@ frappe.ui.form.on('Layer Daily Transaction', {
         }
     },
 
+     // Calculate consumption cost automatically
+     validate: function (frm) {
+
+        // calculateAllConsumptionCosts(frm);
+
+        // Check for missing critical values
+        validateRequiredFields(frm);
+
+        frappe.call({
+            method: "wh_poultryos.poultryos.doctype.broiler_daily_transaction.broiler_daily_transaction.check_daily_transaction",
+            args: {
+                batch: frm.doc.batch,
+                transaction_date: frm.doc.transaction_date
+            },
+            async: false, // Ensure validation waits for response
+            callback: function (response) {
+                if (response.message.exists) {
+                    frappe.msgprint({
+                        title: __('Warning'),
+                        indicator: 'red',
+                        message: __('Daily transaction already exists for this batch on the given date.')
+                    });
+                    frappe.validated = false; // Prevent saving
+                }
+            }
+        });
+
+    },
+
     after_save: function (frm) {
 
     }
 
 });
+
+function validateRequiredFields(frm) {
+    var warnings = [];
+
+    // Check for critical missing values
+    if (!frm.doc.actual_average_bird_weight_in_grams) {
+        warnings.push(__('Average Bird Weight is missing'));
+    }
+
+    if (frm.doc.layer_consumption.length === 0) {
+        warnings.push(__('No consumption details have been added'));
+    }
+
+    // Display warnings if any
+    if (warnings.length > 0) {
+        frappe.msgprint({
+            title: __('Warning'),
+            indicator: 'yellow',
+            message: warnings.join('<br><br>') // Adds extra space between messages
+        });
+
+        frappe.validated = false;
+    }
+}
 
 function fetchBatchDetails(frm) {
     frappe.call({
@@ -89,6 +148,8 @@ function fetchBatchDetails(frm) {
                 frm.set_value('batch_live_quantity', r.message.live_quantity_number_of_birds);
                 frm.set_value('production_cost', r.message.production_cost);
                 frm.set_value('batch_placed_on', r.message.opening_date);
+                frm.set_value('batch_placed_quantity', r.message.place_quantity_number_of_birds);
+              
 
                 // If transaction date is already set, update batch age
                 if (frm.doc.transaction_date) {
@@ -139,8 +200,8 @@ function setupCustomButtons(frm) {
                 if (r.message) {
                     frm.set_value('standard_mortality', r.message.mortality);
                     frm.set_value('standard_culls', r.message.culls);
-                    frm.set_value('standard_avg_bird_weight', r.message.avg_weight);
-                    frm.set_value('standard_total_feed_consumption', r.message.feed_consumption);
+                    frm.set_value('standard_average_bird_weight_in_grams', r.message.avg_weight);
+                    frm.set_value('standard_total_feed_consumption_in_grams', r.message.feed_consumption);
                     frappe.show_alert({
                         message: __('Standard values loaded'),
                         indicator: 'green'
@@ -157,7 +218,6 @@ function setupCustomButtons(frm) {
 
 
 }
-
 
 function updateBatchAge(frm) {
     frappe.call({

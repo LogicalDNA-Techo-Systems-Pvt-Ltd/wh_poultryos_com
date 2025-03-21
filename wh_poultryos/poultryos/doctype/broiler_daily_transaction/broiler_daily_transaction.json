@@ -201,7 +201,7 @@
    "fieldname": "actual_avg_bird_weight",
    "fieldtype": "Float",
    "label": "Actual Average Bird Weight (In Grams)",
-   "precision": "2"
+   "precision": "0"
   },
   {
    "fieldname": "column_break_22",
@@ -343,7 +343,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-21 11:05:44.418576",
+ "modified": "2025-03-21 15:17:20.275939",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Daily Transaction",

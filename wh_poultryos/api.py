@@ -215,7 +215,8 @@ def get_standard_values(batch, age,module):
 
     # Convert age to integer to ensure proper comparison
     age = int(age)
-
+    print("breed is", breed)
+    print("age is", age)
     # Query the Standard Chart for the given breed and age
     standard_values = frappe.get_all(
         "Standard Chart",
@@ -227,7 +228,9 @@ def get_standard_values(batch, age,module):
             "standard_total_feed_consumption",
         ],
     )
-
+    print("checkinghgggggggggggggggggggggggggggggg")
+    print(standard_values)
+    
     # Check if standard values exist for the given criteria
     if not standard_values:
         # Try to find the closest age record if exact age match is not found
