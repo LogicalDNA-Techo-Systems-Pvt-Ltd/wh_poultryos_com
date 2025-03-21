@@ -3,6 +3,12 @@
 
 frappe.ui.form.on('Layer Daily Transaction', {
 
+
+    refresh: function (frm) {
+        // Add custom buttons
+        setupCustomButtons(frm);
+    },
+
     validate: function (frm) {
 
         // Ensure the Transaction Date is not in the future when validating
@@ -113,16 +119,19 @@ function setupCustomButtons(frm) {
 
     // Add a custom button to fetch standard values based on breed and age
     frm.add_custom_button(__('Load Standard Values'), function () {
-        if (!frm.doc.batch || !frm.doc.batch_age) {
+
+        if (!frm.doc.batch || frm.doc.batch_age_in_days === undefined || frm.doc.batch_age_in_days === null || frm.doc.batch_age_in_days === '') {
             frappe.msgprint(__('Batch and batch age are required to load standard values'));
             return;
         }
+
 
         frappe.call({
             method: 'wh_poultryos.api.get_standard_values',
             args: {
                 'batch': frm.doc.batch,
-                'age': frm.doc.batch_age
+                'age': frm.doc.batch_age_in_days,
+                'module': "LAYER"
             },
             freeze: true,
             freeze_message: __('Loading standard values...'),
@@ -145,8 +154,8 @@ function setupCustomButtons(frm) {
             }
         });
     });
- 
-    
+
+
 }
 
 

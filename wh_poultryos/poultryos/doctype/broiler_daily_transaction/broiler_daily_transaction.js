@@ -181,9 +181,10 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
         let batch_age_in_days = frm.doc.batch_age;
         let average_bird_weight_in_kg = frm.doc.actual_avg_bird_weight;
+        let average_bird_weight_in_kg2 = (frm.doc.actual_avg_bird_weight / 1000);
 
         // Only proceed if conditions are met
-        if (batch_age_in_days >= 15 || average_bird_weight_in_kg >= 1.5) {
+        if (batch_age_in_days >= 15 || average_bird_weight_in_kg2 >= 1.5) {
             try {
                 // Check if the settings are available
                 await checkBroilerBirdSaleSettings();
@@ -406,7 +407,8 @@ function setupCustomButtons(frm) {
             method: 'wh_poultryos.api.get_standard_values',
             args: {
                 'batch': frm.doc.batch,
-                'age': frm.doc.batch_age
+                'age': frm.doc.batch_age,
+                'module': "CBF"
             },
             freeze: true,
             freeze_message: __('Loading standard values...'),

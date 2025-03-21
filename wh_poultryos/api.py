@@ -178,7 +178,7 @@ def update_batch_stats(batch):
 
 
 @frappe.whitelist()
-def get_standard_values(batch, age):
+def get_standard_values(batch, age,module):
     """
     Fetches standard values for a given batch and age from Standard Chart
     and converts percentage values to quantities based on opening quantity.
@@ -192,7 +192,14 @@ def get_standard_values(batch, age):
               average weight, and feed consumption
     """
     # Get the breed and opening quantity from the batch
-    batch_doc = frappe.get_doc("Broiler Batch", batch)
+    
+    # Determine which batch doctype to fetch
+    batch_doc_type = "Broiler Batch" if module == "CBF" else "Layer Batch"
+
+    # Get the batch document based on the module
+    batch_doc = frappe.get_doc(batch_doc_type, batch)
+    
+    # batch_doc = frappe.get_doc("Broiler Batch", batch)
 
     if not batch_doc:
         frappe.throw(_("Batch not found"))
