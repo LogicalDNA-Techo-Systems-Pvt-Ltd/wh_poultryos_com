@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "autoname": "format:LCD-{###}",
+ "creation": "2025-03-20 17:15:46.933219",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "consumption_type",
+  "consumption_item",
+  "consumption_qty",
+  "consumption_cost"
+ ],
+ "fields": [
+  {
+   "fieldname": "consumption_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Consumption Type",
+   "options": "\nFeed\nMedicine\nVaccine\nVitamin",
+   "reqd": 1
+  },
+  {
+   "fieldname": "consumption_item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Item",
+   "options": "Item Master",
+   "reqd": 1
+  },
+  {
+   "fieldname": "consumption_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Quantity",
+   "precision": "3",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "consumption_cost",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Total Cost",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2025-03-20 17:26:13.018567",
+ "modified_by": "Administrator",
+ "module": "PoultryOS",
+ "name": "Layer Consumption Details",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

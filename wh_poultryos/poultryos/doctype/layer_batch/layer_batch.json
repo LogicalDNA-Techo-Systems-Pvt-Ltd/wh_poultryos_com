@@ -11,9 +11,7 @@
   "batch_information_section",
   "batch_name",
   "opening_date",
-  "farmer_name",
   "column_break_njbw",
-  "batch_type",
   "module",
   "breed_name",
   "quantity_and_age_information_section",
@@ -26,9 +24,16 @@
   "financial_information_section",
   "rate",
   "amount",
+  "feed_rate",
+  "medicine_rate",
+  "eggs_prediction_per_chicken",
+  "total_eggs_collected",
   "column_break_lsms",
   "biological_value",
   "bird_cost",
+  "total_feed",
+  "total_feed_cost",
+  "first_week_mortality",
   "location_and_shed_information_section",
   "location",
   "column_break_zbgd",
@@ -40,7 +45,8 @@
   "column_break_oeks",
   "org_name",
   "miscellaneous_information_section",
-  "live_batch_date"
+  "live_batch_date",
+  "layer_production_cost"
  ],
  "fields": [
   {
@@ -145,17 +151,20 @@
   {
    "fieldname": "amount",
    "fieldtype": "Float",
-   "label": "Amount"
+   "label": "Amount",
+   "read_only": 1
   },
   {
    "fieldname": "biological_value",
    "fieldtype": "Float",
-   "label": "Biological Value"
+   "label": "Biological Value",
+   "read_only": 1
   },
   {
    "fieldname": "bird_cost",
    "fieldtype": "Float",
-   "label": "Bird Cost"
+   "label": "Bird Cost",
+   "read_only": 1
   },
   {
    "default": "0",
@@ -228,18 +237,59 @@
    "label": "Transaction Related Information"
   },
   {
-   "fieldname": "farmer_name",
-   "fieldtype": "Data",
-   "label": "Farmer Name",
-   "reqd": 1
+   "fieldname": "feed_rate",
+   "fieldtype": "Int",
+   "label": "Feed Rate",
+   "non_negative": 1,
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
-   "fieldname": "batch_type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Batch Type",
-   "options": "Batch Type",
-   "reqd": 1
+   "fieldname": "medicine_rate",
+   "fieldtype": "Int",
+   "label": "Medicine Rate",
+   "non_negative": 1,
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "total_feed",
+   "fieldtype": "Float",
+   "label": "Total Feed",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "total_feed_cost",
+   "fieldtype": "Float",
+   "label": "Total Feed Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "eggs_prediction_per_chicken",
+   "fieldtype": "Int",
+   "label": "Eggs Prediction Per Chicken"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_eggs_collected",
+   "fieldtype": "Int",
+   "label": "Total Eggs Collected",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "first_week_mortality",
+   "fieldtype": "Int",
+   "label": "First Week Mortality",
+   "read_only": 1
+  },
+  {
+   "fieldname": "layer_production_cost",
+   "fieldtype": "Currency",
+   "label": "Production Cost",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -255,7 +305,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-02-20 11:39:43.384753",
+ "modified": "2025-03-21 10:53:09.757314",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Layer Batch",

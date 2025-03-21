@@ -7,6 +7,10 @@ frappe.ui.form.on('Broiler Batch', {
         // Fetch the transaction data and process for heatmap
         fetchTransactionData(frm);
         renderKPIs(frm);
+
+        if (frm.doc.live_quantity_number_of_birds === 0) {
+            frm.set_value('batch_status', 'Completed');
+        }
     },
 
     onload: function (frm) {
@@ -27,6 +31,14 @@ frappe.ui.form.on('Broiler Batch', {
             checkTokenBalance(frm);
         }
     },
+
+    // refresh: function (frm) {
+    //     // Check and update batch status if live_quantity is 0
+    //     if (frm.doc.live_quantity_number_of_birds === 0) {
+    //         frm.set_value('batch_status', 'Completed');
+
+    //     }
+    // },
 
     module: function (frm) {
         if (frm.doc.module) {
@@ -239,61 +251,6 @@ function fetchTransactionData(frm) {
     });
 }
 
-// Function to process transaction data for heatmap
-// function processTransactionData(transactions, openingDate) {
-//     let dataPoints = {};
-//     let startDate = openingDate || frappe.datetime.get_today();
-//     let endDate = frappe.datetime.add_days(startDate, 70);
-
-//     // Convert transaction data to heatmap-friendly format
-//     transactions.forEach(function (transaction) {
-//         let date = transaction.transaction_date;
-
-//         // Initialize if not exists
-//         if (!dataPoints[date]) {
-//             dataPoints[date] = 0;
-//         }
-
-//         // Increment count for this date
-//         dataPoints[date]++;
-//     });
-
-//     return { dataPoints, startDate, endDate };
-// }
-
-// // Function to render the heatmap chart
-// function renderHeatmap(frm, { dataPoints, startDate, endDate }) {
-//     const heatmapContainer = frm.fields_dict['broiler_batch_daily_transactions_heatmap'].wrapper;
-
-//     // Ensure heatmap container is available
-//     if (heatmapContainer && frm.fields_dict.broiler_batch_daily_transactions_heatmap.$wrapper) {
-//         // Apply styles to center the chart
-//         $(heatmapContainer).css({
-//             "width": "100%",
-//             "display": "flex",
-//             "justify-content": "center"
-//         });
-
-//         // Clear any existing heatmap
-//         frm.fields_dict.broiler_batch_daily_transactions_heatmap.$wrapper.empty();
-
-//         // Render the new heatmap chart
-//         new frappe.Chart(frm.fields_dict.broiler_batch_daily_transactions_heatmap.$wrapper.get(0), {
-//             type: 'heatmap',
-//             width: 500,
-//             data: {
-//                 dataPoints: dataPoints,
-//                 start: new Date(startDate),
-//                 end: new Date(endDate)
-//             },
-//             countLabel: 'Daily Transaction',
-//             discreteDomains: 1,
-//             showLegend: 0
-//         });
-//     } else {
-//         console.error("Heatmap HTML field not found or not fully rendered");
-//     }
-// }
 
 function processTransactionData(transactions, openingDate) {
     let dataPoints = {};

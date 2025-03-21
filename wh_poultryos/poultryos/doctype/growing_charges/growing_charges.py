@@ -10,6 +10,24 @@ class GrowingCharges(Document):
 
 import frappe
 
+
+@frappe.whitelist()
+def get_batch_rates(batch):
+    if not batch:
+        return {}
+
+    feed_rate, medicine_rate, rate = frappe.db.get_value(
+        "Broiler Batch",
+        batch,
+        ["feed_rate", "medicine_rate", "rate"]
+    ) or (0, 0, 0)
+
+    return {
+        "feed_rate": feed_rate,
+        "medicine_rate": medicine_rate,
+        "rate": rate
+    }
+    
 @frappe.whitelist()
 def get_delivered_weights(batch):
     if not batch:

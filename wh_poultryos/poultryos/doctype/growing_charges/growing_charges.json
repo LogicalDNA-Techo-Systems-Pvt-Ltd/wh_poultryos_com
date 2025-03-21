@@ -7,6 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "scheme",
+  "cost_from_batch",
+  "cost_from_scheme",
   "batch",
   "shortage_birds",
   "farmer_name",
@@ -228,11 +230,23 @@
    "fieldname": "production_incentive",
    "fieldtype": "Read Only",
    "label": "Production Incentive"
+  },
+  {
+   "default": "0",
+   "fieldname": "cost_from_batch",
+   "fieldtype": "Check",
+   "label": "Cost From Batch (Feed,Bird,Medicine)"
+  },
+  {
+   "default": "0",
+   "fieldname": "cost_from_scheme",
+   "fieldtype": "Check",
+   "label": "Cost From Scheme"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-27 15:36:47.968152",
+ "modified": "2025-03-20 10:45:12.201531",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Growing Charges",

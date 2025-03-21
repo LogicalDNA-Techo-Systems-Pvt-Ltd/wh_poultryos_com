@@ -105,7 +105,12 @@ def update_batch_stats(batch):
         initial_qty = int(batch_doc.place_quantity_number_of_birds or 0)
         live_qty = int(max(0, initial_qty - total_mortality - total_culls))
         batch_doc.live_quantity_number_of_birds = live_qty
-
+        
+       
+        print(initial_qty)
+        print(live_qty)
+        
+        
         batch_doc.body_weight = latest_weight
         batch_doc.total_feed = total_feed
         batch_doc.total_feed_cost = total_cost

@@ -397,7 +397,7 @@ function setupCustomButtons(frm) {
 
     // Add a custom button to fetch standard values based on breed and age
     frm.add_custom_button(__('Load Standard Values'), function () {
-        if (!frm.doc.batch || !frm.doc.batch_age) {
+        if (!frm.doc.batch) {
             frappe.msgprint(__('Batch and batch age are required to load standard values'));
             return;
         }

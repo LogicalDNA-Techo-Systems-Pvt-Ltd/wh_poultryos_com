@@ -7,24 +7,39 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "batch_details_section",
+  "batch_selection_section",
   "batch",
+  "transaction_details_section",
+  "transaction_date",
+  "batch_details_section",
   "batch_placed_on",
   "batch_age_in_days",
   "column_break_enib",
   "batch_placed_quantity",
   "batch_live_quantity",
-  "transaction_details_section",
-  "transaction_date",
-  "mortality_number_of_birds",
-  "mortality_reason",
-  "average_bird_weight_in_grams",
-  "average_bird_weight_in_kg",
-  "column_break_pkev",
-  "feed_consumed_quantity",
-  "medicine_consumed_quantity",
-  "vaccine_consumed_quantity",
-  "vitamin_consumed_quantity"
+  "production_cost",
+  "mortality_and_culls_details_section",
+  "mortality_detail",
+  "mortality_cost",
+  "total_mortality",
+  "total_culls",
+  "mortality_summary_section",
+  "standard_mortality",
+  "standard_culls",
+  "column_break_kysk",
+  "mortality_variance",
+  "cull_variance",
+  "consumption_details_section",
+  "layer_consumtpion",
+  "layer_feed_cost",
+  "feed_consumption_summary_section",
+  "standard_total_feed_consumption_in_grams",
+  "actual_total_feed_consumption_in_grams",
+  "column_break_mcmz",
+  "feed_consumption_variance_in_grams",
+  "feed_consumption_variance_",
+  "cost_summary_section",
+  "total_daily_cost"
  ],
  "fields": [
   {
@@ -35,20 +50,16 @@
   {
    "fieldname": "batch",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Batch",
-   "options": "Layer Batch",
-   "reqd": 1
+   "options": "Layer Batch"
   },
   {
-   "fetch_from": "batch.opening_date",
    "fieldname": "batch_placed_on",
    "fieldtype": "Date",
    "label": "Batch Placed On",
    "read_only": 1
   },
   {
-   "fetch_from": "batch.batch_age_in_days",
    "fieldname": "batch_age_in_days",
    "fieldtype": "Int",
    "label": "Batch Age (In Days)",
@@ -59,14 +70,12 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "batch.place_quantity_number_of_birds",
    "fieldname": "batch_placed_quantity",
    "fieldtype": "Int",
    "label": "Batch Placed Quantity",
    "read_only": 1
   },
   {
-   "fetch_from": "batch.live_quantity_number_of_birds",
    "fetch_if_empty": 1,
    "fieldname": "batch_live_quantity",
    "fieldtype": "Int",
@@ -74,84 +83,157 @@
    "read_only": 1
   },
   {
-   "depends_on": "batch",
+   "fieldname": "batch_selection_section",
+   "fieldtype": "Section Break",
+   "label": "Batch Selection"
+  },
+  {
+   "fieldname": "mortality_and_culls_details_section",
+   "fieldtype": "Section Break",
+   "label": "Mortality and Culls Details"
+  },
+  {
+   "fieldname": "mortality_detail",
+   "fieldtype": "Table",
+   "label": "Mortality Detail",
+   "options": "Layer Mortality Detail"
+  },
+  {
+   "default": "0",
+   "fieldname": "mortality_cost",
+   "fieldtype": "Float",
+   "label": "Mortality Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "consumption_details_section",
+   "fieldtype": "Section Break",
+   "label": "Consumption Details"
+  },
+  {
+   "fieldname": "layer_consumtpion",
+   "fieldtype": "Table",
+   "label": "Layer Consumtpion",
+   "options": "Layer Consumption Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "layer_feed_cost",
+   "fieldtype": "Float",
+   "label": "Layer Feed Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "mortality_summary_section",
+   "fieldtype": "Section Break",
+   "label": "Mortality Summary"
+  },
+  {
+   "fieldname": "standard_mortality",
+   "fieldtype": "Int",
+   "label": "Standard Mortality",
+   "read_only": 1
+  },
+  {
+   "fieldname": "standard_culls",
+   "fieldtype": "Int",
+   "label": "Standard Culls",
+   "read_only": 1
+  },
+  {
+   "fieldname": "mortality_variance",
+   "fieldtype": "Int",
+   "label": "Mortality Variance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cull_variance",
+   "fieldtype": "Int",
+   "label": "Cull Variance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_kysk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_mortality",
+   "fieldtype": "Int",
+   "label": "Total Mortality",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "total_culls",
+   "fieldtype": "Int",
+   "label": "Total Culls",
+   "read_only": 1
+  },
+  {
+   "fieldname": "feed_consumption_summary_section",
+   "fieldtype": "Section Break",
+   "label": "Feed Consumption Summary"
+  },
+  {
+   "fieldname": "standard_total_feed_consumption_in_grams",
+   "fieldtype": "Float",
+   "label": "Standard Total Feed Consumption (In Grams)"
+  },
+  {
+   "fieldname": "actual_total_feed_consumption_in_grams",
+   "fieldtype": "Float",
+   "label": "Actual Total Feed Consumption (In Grams)"
+  },
+  {
+   "fieldname": "column_break_mcmz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "feed_consumption_variance_in_grams",
+   "fieldtype": "Float",
+   "label": "Feed Consumption Variance (In Grams)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "feed_consumption_variance_",
+   "fieldtype": "Percent",
+   "label": "Feed Consumption Variance (%)",
+   "read_only": 1
+  },
+  {
    "fieldname": "transaction_details_section",
    "fieldtype": "Section Break",
    "label": "Transaction Details"
   },
   {
+   "default": "Today",
    "fieldname": "transaction_date",
    "fieldtype": "Date",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Transaction Date",
-   "reqd": 1
+   "label": "Transaction Date"
   },
   {
-   "fieldname": "mortality_number_of_birds",
-   "fieldtype": "Int",
-   "label": "Mortality (Number of Birds)",
-   "non_negative": 1,
-   "reqd": 1
+   "fieldname": "cost_summary_section",
+   "fieldtype": "Section Break",
+   "label": "Cost Summary"
   },
   {
-   "fieldname": "mortality_reason",
-   "fieldtype": "Link",
-   "label": "Mortality Reason",
-   "options": "Mortality Reason"
-  },
-  {
-   "fieldname": "average_bird_weight_in_grams",
+   "fieldname": "total_daily_cost",
    "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Average Bird Weight (In Grams)",
-   "non_negative": 1,
-   "reqd": 1
+   "label": "Total Daily cost",
+   "read_only": 1
   },
   {
-   "fieldname": "average_bird_weight_in_kg",
-   "fieldtype": "Read Only",
-   "in_list_view": 1,
-   "label": "Average Bird Weight (In KG)",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "column_break_pkev",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "feed_consumed_quantity",
+   "default": "0",
+   "fieldname": "production_cost",
    "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Feed (Consumed Quantity)",
-   "non_negative": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "medicine_consumed_quantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Medicine (Consumed Quantity)",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "vaccine_consumed_quantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Vaccine (Consumed Quantity)",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "vitamin_consumed_quantity",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Vitamin (Consumed Quantity)",
-   "non_negative": 1
+   "label": "Production Cost",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-20 17:32:27.333273",
+ "modified": "2025-03-21 11:26:50.915798",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Layer Daily Transaction",
