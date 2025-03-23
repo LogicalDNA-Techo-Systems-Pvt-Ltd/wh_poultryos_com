@@ -19,10 +19,7 @@ frappe.ui.form.on("Growing Charges", {
 
     onload: function (frm) {
 
-        // Auto-refresh the page when navigating to Growing Charges screen
-        if (!frm.is_new()) {
-            location.reload();  // Reload the page to ensure all fields are recalculated
-        }
+       
 
         // First, fetch the ID of "Contract" from Batch Type
         frappe.call({
