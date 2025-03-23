@@ -117,10 +117,15 @@ def update_batch_stats(batch):
         batch_doc.batch_age_in_days = diff_days
         batch_doc.live_batch_date = transaction_date
 
+        
+        print("latest weight is", latest_weight)
+        print("total feed is", total_feed)
+        
         # Calculate FCR (Feed Conversion Ratio) - safely handle zero values
         batch_doc.current_fcr = 0
         if latest_weight > 0 and live_qty > 0:
             total_live_weight = float(latest_weight) * float(live_qty)
+            print("total weight is ",total_live_weight)
             if total_live_weight > 0:
                 batch_doc.current_fcr = float(total_feed) / float(total_live_weight)
 

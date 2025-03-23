@@ -535,7 +535,7 @@ frappe.ui.form.on("Growing Charges", {
                                 if (frm.doc.cost_from_batch == 1) {
                                     frappe.db.get_doc('Broiler Batch', frm.doc.batch).then(r => {
                                         let { feed_rate, medicine_rate, rate, total_feed } = r || {};
-                                        let total_feed_cost2 = (feed_rate || 0) * total_feed;
+                                        let total_feed_cost2 = total_feed;
                                         total_feed_cost = total_feed_cost2;
                                         const fcr = total_feed_cost / total_weight;
                                         frm.set_value("fcr", fcr.toFixed(2));
@@ -543,7 +543,7 @@ frappe.ui.form.on("Growing Charges", {
                                     });
                                 }
                                 else {
-                                    total_feed_cost = response.message.feed_cost;
+                                    total_feed_cost = response.message.total_feed;
                                     const fcr = total_feed_cost / total_weight;
                                     frm.set_value("fcr", fcr.toFixed(2));
                                     console.log("FCR Calculated:", fcr.toFixed(2));

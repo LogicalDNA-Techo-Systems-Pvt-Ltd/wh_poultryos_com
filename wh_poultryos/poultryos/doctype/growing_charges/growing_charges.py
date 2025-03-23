@@ -44,15 +44,17 @@ def get_delivered_weights(batch):
     feed_costs = frappe.get_all(
         "Broiler Daily Transaction",
         filters={"batch": batch},  
-        fields=["feed_cost"]
+        fields=["feed_cost","actual_total_feed_consumption"]
     )
 
     # Sum up all feed costs
     total_feed_cost = sum(float(record.get("feed_cost", 0)) for record in feed_costs)
+    total_feed = sum(float(record.get("actual_total_feed_consumption", 0)) for record in feed_costs)
 
     return {
         "delivered_weights": delivered_weights,
-        "feed_cost": total_feed_cost
+        "feed_cost": total_feed_cost,
+        "total_feed": total_feed
     }
 
 
