@@ -86,11 +86,14 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
     },
 
-
+    before_save : async function (frm)
+    {
+        console.log("Age is", frm.doc.batch_age);
+    },
     
 
     after_save: async function (frm) {
-
+      
         frappe.call({
             method: 'wh_poultryos.poultryos.doctype.broiler_daily_transaction.broiler_daily_transaction.get_first_week_mortality',
             args: {
@@ -442,7 +445,8 @@ function setupCustomButtons(frm) {
         frappe.call({
             method: 'wh_poultryos.api.update_batch_stats',
             args: {
-                'batch': frm.doc.batch
+                'batch': frm.doc.batch,
+                "transaction_datee": frm.doc.transaction_date
             },
             freeze: true,
             freeze_message: __('Updating batch statistics...'),

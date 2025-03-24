@@ -197,11 +197,13 @@ class BroilerDailyTransaction(Document):
         try:
             from wh_poultryos.api import update_batch_stats
 
-            result = update_batch_stats(self.batch)
+            result = update_batch_stats(self.batch, self.transaction_date)
 
             if result.get("success"):
                 # Update local variables from the API response
+               
                 data = result.get("data", {})
+                print("Data is", data)
                 self.fcr = data.get("current_fcr", 0)
                 self.eef = data.get("current_eef", 0)
                 self.production_cost = data.get("production_cost", 0)

@@ -26,7 +26,7 @@ def get_available_balance_of_user():
 
 
 @frappe.whitelist()
-def update_batch_stats(batch):
+def update_batch_stats(batch,transaction_datee):
     """Update batch statistics based on all transactions
 
     Args:
@@ -60,9 +60,15 @@ def update_batch_stats(batch):
                 "feed_cost",
             ],
         )
+        print("tdate is",transaction_datee)
+        transactions_on_date = frappe.get_all(
+            "Broiler Daily Transaction",
+            filters={"batch": batch, "transaction_date": transaction_datee},
+            fields=["actual_total_feed_consumption", "feed_cost"],
+        )
 
         print(transactions)
-        
+        print("feed is", transactions_on_date)
         # Calculate cumulative values (safely handle None values)
         total_mortality = sum([t.total_mortality_qty or 0 for t in transactions])
         total_culls = sum([t.total_cull_qty or 0 for t in transactions])
@@ -70,7 +76,7 @@ def update_batch_stats(batch):
         # total_cost = sum([t.feed_cost or 0 for t in transactions])
         total_cost = sum([float(t.feed_cost) if t.feed_cost else 0 for t in transactions])
 
-        
+        total_feed_day = sum([t.actual_total_feed_consumption or 0 for t in transactions_on_date])
         print(total_mortality)
         print(total_feed)
         print(total_cost)       
@@ -119,7 +125,8 @@ def update_batch_stats(batch):
 
         
         print("latest weight is", latest_weight)
-        print("total feed is", total_feed)
+        print("total feed is", total_feed_day)
+        
         
         # Calculate FCR (Feed Conversion Ratio) - safely handle zero values
         batch_doc.current_fcr = 0
@@ -127,21 +134,28 @@ def update_batch_stats(batch):
             total_live_weight = float(latest_weight) * float(live_qty)
             print("total weight is ",total_live_weight)
             if total_live_weight > 0:
-                batch_doc.current_fcr = float(total_feed) / float(total_live_weight)
+                batch_doc.current_fcr = float(total_feed_day) / float(total_live_weight)
 
+        # Round off FCR value to 3 decimal places before using it       
+        # Round and update batch_doc.current_fcr properly
+        batch_doc.current_fcr = round(batch_doc.current_fcr, 5)
+        print("FCR IS", batch_doc.current_fcr)
         # Calculate EEF (European Efficiency Factor)
         batch_doc.current_eef = 0
         batch_age_in_days = int(batch_doc.batch_age_in_days or 0)
         if initial_qty > 0 and batch_age_in_days > 0 and batch_doc.current_fcr > 0:
-            livability = (float(live_qty) / float(initial_qty)) * 100
-
+            livability = round((float(live_qty) / float(initial_qty)) * 100, 2)
+            print("Livability is", livability)
+            print("age is", batch_age_in_days)
+            print("fcr is",batch_doc.current_fcr)
             if latest_weight > 0:
                 batch_doc.current_eef = (
                     (livability * (float(latest_weight) / 1000))
                     / (batch_age_in_days * float(batch_doc.current_fcr))
                     * 100
                 )
-
+        
+        print("total cost is", total_cost)
         # Calculate production cost per kg
         batch_doc.production_cost = 0
         if all(
@@ -151,7 +165,9 @@ def update_batch_stats(batch):
                 live_qty > 0,
             ]
         ):
-            total_live_weight_kg = (float(latest_weight) / 1000) * float(live_qty)
+            # total_live_weight_kg = (float(latest_weight) / 1000) * float(live_qty)
+            total_live_weight_kg = round((float(latest_weight) / 1000) * float(live_qty), 2)
+            print("total live weight is", total_live_weight_kg)
             if total_live_weight_kg > 0:
                 batch_doc.production_cost = float(total_cost) / float(
                     total_live_weight_kg
@@ -162,7 +178,9 @@ def update_batch_stats(batch):
         batch_doc.save()
         # frappe.db.commit()  # Ensure commit happens
         # print("Batch doc saved successfully!")  
-                
+        print("Returning FCR:", batch_doc.current_fcr)
+        print("Returning FCR 2:", batch_doc.current_eef)
+        
         return {
             "success": True,
             "message": _("Batch statistics updated successfully"),

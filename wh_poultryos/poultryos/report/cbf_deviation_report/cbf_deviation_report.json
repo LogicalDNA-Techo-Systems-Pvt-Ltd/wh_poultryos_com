@@ -9,21 +9,22 @@
  "idx": 0,
  "is_standard": "Yes",
  "letterhead": null,
- "modified": "2025-02-10 17:35:57.065511",
+ "modified": "2025-03-24 00:50:52.454207",
  "modified_by": "Administrator",
  "module": "PoultryOS",
- "name": "Broiler Deviation Report",
+ "name": "CBF Deviation Report",
  "owner": "Administrator",
  "prepared_report": 0,
+ "query": "SELECT \r\n            b1.batch_name AS \"Batch Name\",\r\n            b1.opening_date AS \"Placement Date\",\r\n            d1.transaction_date AS \"Transaction Date\",\r\n            b1.farmer_name AS \"Farmer Name\",\r\n            d1.batch_age AS \"Age\",\r\n            i1.item_name AS \"Item Name\",\r\n            COALESCE(d1.total_mortality_qty, 0) AS \"Mortality\",\r\n            COALESCE(d1.actual_total_feed_consumption, 0) AS \"Feed\",\r\n            COALESCE(st.standard_mortality, 0) AS \"mortality\",\r\n            COALESCE(st.standard_total_feed_consumption, 0) AS \"Standard Consumption\",\r\n            COALESCE((d1.actual_total_feed_consumption - st.standard_total_feed_consumption), 0) AS \"Deviation\",\r\n            CASE \r\n                WHEN COALESCE(st.standard_total_feed_consumption, 0) > 0 THEN \r\n                    ROUND(((d1.actual_total_feed_consumption - st.standard_total_feed_consumption) / st.standard_total_feed_consumption) * 100, 2)\r\n                ELSE \r\n                    0\r\n            END AS \"Deviation P\",\r\n            COALESCE((d1.total_mortality_qty - st.standard_mortality), 0) AS \"Mor Deviation\",\r\n            CASE \r\n                WHEN COALESCE(st.standard_mortality, 0) > 0 THEN \r\n                    ROUND(((d1.total_mortality_qty - st.standard_mortality) / st.standard_mortality) * 100, 2)\r\n                ELSE \r\n                    0\r\n            END AS \"Mortality P\",\r\n            d1.owner AS \"Owner\"\r\n        FROM \r\n            `tabBroiler Daily Transaction` d1 \r\n        LEFT JOIN \r\n            `tabStandard Chart` st \r\n            ON d1.batch_age = st.age_in_days \r\n        LEFT JOIN \r\n            `tabBroiler Batch` b1 \r\n            ON b1.name = d1.batch \r\n        LEFT JOIN\r\n            `tabBroiler Consumption Detail` TC\r\n            ON TC.parent = d1.name     \r\n        LEFT JOIN \r\n            `tabItem Master` i1  \r\n            ON i1.name = TC.consumption_item\r\n        WHERE \r\n            d1.batch = \"BT-25-00329\"\r\n         \r\n        ORDER BY \r\n            d1.transaction_date ASC;",
  "ref_doctype": "Broiler Daily Transaction",
- "report_name": "Broiler Deviation Report",
- "report_type": "Script Report",
+ "report_name": "CBF Deviation Report",
+ "report_type": "Query Report",
  "roles": [
   {
    "role": "Administrator"
   },
   {
-   "role": "Broiler Farm Owner"
+   "role": "CBF Farm Owner"
   }
  ],
  "timeout": 0
