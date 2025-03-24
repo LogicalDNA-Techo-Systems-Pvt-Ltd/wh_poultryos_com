@@ -153,8 +153,8 @@ def update_batch_stats(batch,transaction_datee):
                     (livability * (float(latest_weight) / 1000))
                     / (batch_age_in_days * float(batch_doc.current_fcr))
                     * 100
-                )
-        
+                )   
+
         print("total cost is", total_cost)
         # Calculate production cost per kg
         batch_doc.production_cost = 0

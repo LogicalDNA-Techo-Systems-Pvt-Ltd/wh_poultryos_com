@@ -204,7 +204,8 @@
    "fieldtype": "Read Only",
    "hidden": 1,
    "in_list_view": 1,
-   "label": "Org Name"
+   "label": "Org Name",
+   "set_only_once": 1
   },
   {
    "default": "New",
@@ -344,7 +345,8 @@
   {
    "fieldname": "current_fcr",
    "fieldtype": "Float",
-   "label": "Current FCR"
+   "label": "Current FCR",
+   "precision": "5"
   },
   {
    "fieldname": "current_eef",
@@ -371,7 +373,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-03-15 23:02:20.684855",
+ "modified": "2025-03-24 16:24:02.269468",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Batch",
