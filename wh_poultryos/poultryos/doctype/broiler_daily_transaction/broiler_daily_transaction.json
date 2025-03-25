@@ -76,7 +76,6 @@
    "label": "Batch Details"
   },
   {
-   "fetch_from": "batch.batch_age_in_days",
    "fieldname": "batch_age",
    "fieldtype": "Int",
    "label": "Batch Age (Days)",
@@ -351,7 +350,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-24 22:48:58.775975",
+ "modified": "2025-03-25 14:00:50.799314",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Daily Transaction",
