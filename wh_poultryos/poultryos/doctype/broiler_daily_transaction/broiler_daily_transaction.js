@@ -5,13 +5,16 @@ frappe.ui.form.on('Broiler Daily Transaction', {
     onload: function (frm) {
 
         // Set a query filter for the Batch dropdown
-        frm.set_query('batch', function () {
-            return {
-                filters: {
-                    batch_status: ['not in', ['Completed']]
-                }
-            };
-        });
+        // frm.set_query('batch', function () {
+        //     return {
+        //         filters: {
+        //             batch_status: ['not in', ['Completed']]
+        //         }
+        //     };
+        // });
+
+       
+       
 
         // Apply filter to Item Name based on Consumption Type using set_query
         frm.set_query('consumption_item', 'consumption_details', function (doc, cdt, cdn) {

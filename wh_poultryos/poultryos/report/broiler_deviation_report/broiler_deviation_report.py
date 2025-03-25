@@ -23,8 +23,8 @@ def execute(filters=None):
         d1.batch_age AS "Age",
         i1.item_name AS "Item Name",
         COALESCE(TM.qty, 0) AS "Mortality",
-        COALESCE(st.standard_mortality, 0) AS "Std Mortality",
-        COALESCE(st.standard_mortality, 0) - COALESCE(d1.total_mortality_qty, 0) AS "Mortality Deviation",
+        COALESCE(d1.standard_mortality, 0) AS "Std Mortality",
+        COALESCE(d1.standard_mortality, 0) - COALESCE(d1.total_mortality_qty, 0) AS "Mortality Deviation",
         CASE  
             WHEN COALESCE(st.standard_mortality, 0) > 0 THEN 
                 ROUND(((st.standard_mortality - d1.total_mortality_qty) / st.standard_mortality) * 100, 2)
