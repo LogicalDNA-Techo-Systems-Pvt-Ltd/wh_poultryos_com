@@ -5,13 +5,13 @@ frappe.ui.form.on('Broiler Daily Transaction', {
     onload: function (frm) {
 
         // Set a query filter for the Batch dropdown
-        // frm.set_query('batch', function () {
-        //     return {
-        //         filters: {
-        //             batch_status: ['not in', ['Completed']]
-        //         }
-        //     };
-        // });
+        frm.set_query('batch', function () {
+            return {
+                filters: {
+                    batch_status: ['not in', ['Completed']]
+                }
+            };
+        });
 
        
        
@@ -87,10 +87,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
     },
 
-    // before_save: async function(frm)
-    // {
-    //     updateBatchAge(frm);
-    // },
+   
 
     after_save: async function (frm) {
 

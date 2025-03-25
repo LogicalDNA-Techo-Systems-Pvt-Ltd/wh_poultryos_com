@@ -27,7 +27,7 @@ def execute(filters=None):
         COALESCE(d1.standard_mortality, 0) - COALESCE(d1.total_mortality_qty, 0) AS "Mortality Deviation",
         CASE  
             WHEN COALESCE(st.standard_mortality, 0) > 0 THEN 
-                ROUND(((st.standard_mortality - d1.total_mortality_qty) / st.standard_mortality) * 100, 2)
+                ROUND(((d1.standard_mortality - d1.total_mortality_qty) / st.standard_mortality) * 100, 2)
             ELSE 
                 0
         END AS "Mortality Deviation Percentage",
