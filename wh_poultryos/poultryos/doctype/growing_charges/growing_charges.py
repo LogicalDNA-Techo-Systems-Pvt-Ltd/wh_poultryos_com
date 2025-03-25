@@ -33,13 +33,44 @@ def get_delivered_weights(batch):
     if not batch:
         return {"error": "Batch parameter is required."}
 
+   
     # Fetch delivered weights and rates from Batch Selection
     delivered_weights = frappe.get_all(
         "Batch Selection",
-        filters={"batch": batch},  
+        filters={"batch": batch},
         fields=["rate", "weight"]
     )
+   
+    # Fetch delivered weights and rates from Batch Selection Weight
+    batch_selection_weight_weights = frappe.get_all(
+        "Batch Selection Weight",
+        filters={"batch": batch},
+        fields=["rate", "weights"]
+    )
 
+    
+       
+    # Combine weights from both tables into a single list
+    combined_weights = []
+    
+    # Add weights from Batch Selection
+    for record in delivered_weights:
+        combined_weights.append({
+            "rate": record.get("rate", 0),
+            "weight": float(record.get("weight", 0))  # Convert to float for consistency
+        })
+    
+    
+    # Add weights from Batch Selection Weight
+    for record in batch_selection_weight_weights:
+        combined_weights.append({
+            "rate": record.get("rate", 0),
+            "weight": float(record.get("weights", 0))  # Use weights from this table
+        })
+        
+    # Sum up all weights
+    total_weight = sum(item["weight"] for item in combined_weights)
+    
     # Fetch feed costs from Daily Transaction and sum them
     feed_costs = frappe.get_all(
         "Broiler Daily Transaction",
@@ -52,7 +83,8 @@ def get_delivered_weights(batch):
     total_feed = sum(float(record.get("actual_total_feed_consumption", 0)) for record in feed_costs)
 
     return {
-        "delivered_weights": delivered_weights,
+        "delivered_weights": combined_weights,
+        "total_weight": total_weight,
         "feed_cost": total_feed_cost,
         "total_feed": total_feed
     }

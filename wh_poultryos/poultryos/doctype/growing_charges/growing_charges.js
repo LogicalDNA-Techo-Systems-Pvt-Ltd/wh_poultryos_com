@@ -519,7 +519,8 @@ frappe.ui.form.on("Growing Charges", {
                     frappe.call({
                         method: "wh_poultryos.poultryos.doctype.growing_charges.growing_charges.get_delivered_weights",  // Replace with your app name
                         args: {
-                            batch: frm.doc.batch  // Pass selected batch from form
+                            batch: frm.doc.batch // Pass selected batch from form
+                           
                         },
                         callback: function (response) {
                             if (response.message) {

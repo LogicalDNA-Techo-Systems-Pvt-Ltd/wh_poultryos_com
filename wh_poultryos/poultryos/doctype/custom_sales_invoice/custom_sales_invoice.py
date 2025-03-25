@@ -47,7 +47,7 @@ def get_total_weight(batches,sales_type):
                 weight_entry = frappe.get_value("Batch Selection Weight", {"batch": batch_name}, "weights")
               
                 
-             # If weight exists, add it to the result list
+            # If weight exists, add it to the result list
             batch_weights.append({
                 "batch_name": batch_name,
                 "total_weight": float(weight_entry) if weight_entry else 0

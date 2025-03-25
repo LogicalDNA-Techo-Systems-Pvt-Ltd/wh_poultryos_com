@@ -11,6 +11,7 @@
   "batch_details_section",
   "batch_age",
   "batch_live_qty",
+  "placement_date",
   "column_break_5",
   "fcr",
   "eef",
@@ -339,11 +340,18 @@
    "fieldname": "medicine_cost",
    "fieldtype": "Read Only",
    "label": "Medicine Cost"
+  },
+  {
+   "fetch_from": "batch.opening_date",
+   "fieldname": "placement_date",
+   "fieldtype": "Date",
+   "label": "Placement Date",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-21 15:17:20.275939",
+ "modified": "2025-03-24 22:48:58.775975",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Daily Transaction",

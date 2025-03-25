@@ -8,7 +8,7 @@ frappe.ui.form.on('Broiler Batch', {
         fetchTransactionData(frm);
         renderKPIs(frm);
 
-        if (frm.doc.live_quantity_number_of_birds === 0) {
+        if (!frm.is_new() && frm.doc.live_quantity_number_of_birds === 0) {
             frm.set_value('batch_status', 'Completed');
         }
     },
@@ -32,13 +32,7 @@ frappe.ui.form.on('Broiler Batch', {
         }
     },
 
-    // refresh: function (frm) {
-    //     // Check and update batch status if live_quantity is 0
-    //     if (frm.doc.live_quantity_number_of_birds === 0) {
-    //         frm.set_value('batch_status', 'Completed');
-
-    //     }
-    // },
+ 
 
     module: function (frm) {
         if (frm.doc.module) {

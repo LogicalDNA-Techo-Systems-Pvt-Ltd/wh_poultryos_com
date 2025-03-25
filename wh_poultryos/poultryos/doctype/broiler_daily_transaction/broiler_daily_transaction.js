@@ -51,16 +51,14 @@ frappe.ui.form.on('Broiler Daily Transaction', {
     },
 
     transaction_date: function (frm) {
-        // If both batch and transaction date are set, update batch age
+        // If batch and transaction date are set, update batch age
         if (frm.doc.batch && frm.doc.transaction_date) {
-            updateBatchAge(frm);
+            // updateBatchAge(frm);
         }
     },
 
     // Calculate consumption cost automatically
     validate: function (frm) {
-
-        // calculateAllConsumptionCosts(frm);
 
         // Check for missing critical values
         validateRequiredFields(frm);
@@ -86,14 +84,13 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
     },
 
-    before_save : async function (frm)
-    {
-        console.log("Age is", frm.doc.batch_age);
-    },
-    
+    // before_save: async function(frm)
+    // {
+    //     updateBatchAge(frm);
+    // },
 
     after_save: async function (frm) {
-      
+
         frappe.call({
             method: 'wh_poultryos.poultryos.doctype.broiler_daily_transaction.broiler_daily_transaction.get_first_week_mortality',
             args: {
@@ -220,6 +217,10 @@ frappe.ui.form.on('Broiler Daily Transaction', {
 
 });
 
+
+
+
+
 async function checkBroilerBirdSaleSettings() {
     return new Promise((resolve, reject) => {
         frappe.call({
@@ -332,7 +333,7 @@ frappe.ui.form.on('Broiler Consumption Detail', {
         calculateConsumptionCost(frm, cdt, cdn);
     },
 
-    
+
     consumption_type: function (frm, cdt, cdn) {
         // Reset values when type changes
         var row = locals[cdt][cdn];
@@ -475,6 +476,9 @@ function setupCustomButtons(frm) {
     }, __('Actions'));
 }
 
+
+
+
 function fetchBatchDetails(frm) {
     frappe.call({
         method: 'frappe.client.get',
@@ -499,6 +503,30 @@ function fetchBatchDetails(frm) {
     });
 }
 
+// function updateBatchAge(frm) {
+
+//     frappe.call({
+//         method: 'frappe.client.get',
+//         args: {
+//             doctype: 'Broiler Batch',
+//             name: frm.doc.batch,
+//             fields: ['opening_date']
+//         },
+//         callback: function (r) {
+//             if (r.message && r.message.opening_date) {
+//                 // Calculate age as days between opening date and transaction date
+//                 var openingDate = frappe.datetime.str_to_obj(r.message.opening_date);
+//                 var transactionDate = frappe.datetime.str_to_obj(frm.doc.transaction_date);
+//                 var diffDays = frappe.datetime.get_diff(transactionDate, openingDate);
+
+//                 // Set batch age
+//                 frm.set_value('batch_age', diffDays);
+//                 frm.refresh_field('batch_age');
+//             }
+//         }
+//     });
+// }
+
 function updateBatchAge(frm) {
     frappe.call({
         method: 'frappe.client.get',
@@ -509,17 +537,54 @@ function updateBatchAge(frm) {
         },
         callback: function (r) {
             if (r.message && r.message.opening_date) {
-                // Calculate age as days between opening date and transaction date
-                var openingDate = frappe.datetime.str_to_obj(r.message.opening_date);
-                var transactionDate = frappe.datetime.str_to_obj(frm.doc.transaction_date);
-                var diffDays = frappe.datetime.get_diff(transactionDate, openingDate);
+                // Convert and set time to 00:00:00 to avoid day shift
+                // Get and standardize both dates
+                let placementDate = new Date(r.message.opening_date);
+                let transactionDate = new Date(frm.doc.transaction_date);
 
-                // Set batch age
-                frm.set_value('batch_age', diffDays);
+                // // Reset time to 00:00:00 to avoid time-based discrepancies
+                // placementDate.setHours(0, 0, 0, 0);
+                // transactionDate.setHours(0, 0, 0, 0);
+
+                // console.log("Standardized Placement Date:", placementDate);
+                // console.log("Standardized Transaction Date:", transactionDate);
+
+                // if (placementDate && transactionDate) {
+                //     // Calculate difference in days
+                //     let days_diff = frappe.datetime.get_diff(transactionDate, placementDate);
+                //     console.log("Age in days:", days_diff);
+
+                //     // Optionally set the value in a field
+                //     frm.set_value('batch_age', days_diff);
+                //     // Remember to refresh if you're setting a value
+                //     frm.refresh_field('batch_age');
+                // } else {
+                //     console.log("Error: Invalid date format");
+                // }
+
+                // Reset time to 00:00:00 to remove any time discrepancies
+                placementDate.setHours(0, 0, 0, 0);
+                transactionDate.setHours(0, 0, 0, 0);
+
+                // Force date format to YYYY-MM-DD to avoid time zone issues
+                let placementDateStr = placementDate.toISOString().split('T')[0];
+                let transactionDateStr = transactionDate.toISOString().split('T')[0];
+
+                console.log("Placement Date (ISO):", placementDateStr);
+                console.log("Transaction Date (ISO):", transactionDateStr);
+
+                // Use frappe.datetime.get_diff for consistent results
+                let days_diff = frappe.datetime.get_diff(transactionDateStr, placementDateStr);
+                console.log("Age in days:", days_diff);
+
+                // Set batch age only if diff is 0 or more (avoid negative values)
+                frm.set_value('batch_age', days_diff >= 0 ? days_diff : 0);
+                frm.refresh_field('batch_age');
             }
         }
     });
 }
+
 
 function calculateConsumptionCost(frm, cdt, cdn) {
     var row = locals[cdt][cdn];
@@ -608,6 +673,11 @@ function validateRequiredFields(frm) {
     }
 
     let current_date = frappe.datetime.get_today();
+
+    // Transaction Date must be >= Batch Placed On
+    if (frm.doc.transaction_date < frm.doc.placement_date) {
+        warnings.push(__('Transaction Date must be greater than or equal to Batch Placed On'));
+    }
 
     // Transaction Date can't be in the future
     if (frm.doc.transaction_date > current_date) {
