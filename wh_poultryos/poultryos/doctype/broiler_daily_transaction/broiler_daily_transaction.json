@@ -97,7 +97,7 @@
    "fieldname": "fcr",
    "fieldtype": "Float",
    "label": "FCR",
-   "precision": "3",
+   "precision": "5",
    "read_only": 1
   },
   {
@@ -201,7 +201,7 @@
    "fieldname": "actual_avg_bird_weight",
    "fieldtype": "Float",
    "label": "Actual Average Bird Weight (In Grams)",
-   "precision": "0"
+   "precision": "3"
   },
   {
    "fieldname": "column_break_22",
@@ -350,7 +350,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-25 14:00:50.799314",
+ "modified": "2025-03-26 10:25:01.113553",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Daily Transaction",

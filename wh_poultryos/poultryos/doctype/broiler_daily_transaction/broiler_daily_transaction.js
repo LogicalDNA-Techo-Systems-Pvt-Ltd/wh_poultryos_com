@@ -202,7 +202,7 @@ frappe.ui.form.on('Broiler Daily Transaction', {
                 }
 
                 // Check for ideal average weight for selling birds
-                if (enable_ideal_average_weight_for_selling_birds && average_bird_weight_in_kg >= ideal_weight_for_selling_birds) {
+                if (enable_ideal_average_weight_for_selling_birds && average_bird_weight_in_kg2 >= ideal_weight_for_selling_birds) {
                     await updateBatchStatus(frm, 'Ready for Sale');
                 }
 

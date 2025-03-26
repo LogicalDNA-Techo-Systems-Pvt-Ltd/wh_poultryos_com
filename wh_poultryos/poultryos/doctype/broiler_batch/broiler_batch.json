@@ -205,7 +205,7 @@
    "hidden": 1,
    "in_list_view": 1,
    "label": "Org Name",
-   "set_only_once": 1
+   "read_only": 1
   },
   {
    "default": "New",
@@ -373,7 +373,7 @@
    "link_fieldname": "batch"
   }
  ],
- "modified": "2025-03-24 16:24:02.269468",
+ "modified": "2025-03-25 17:43:00.563143",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Broiler Batch",

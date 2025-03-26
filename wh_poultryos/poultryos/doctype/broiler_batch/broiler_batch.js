@@ -16,15 +16,16 @@ frappe.ui.form.on('Broiler Batch', {
     onload: function (frm) {
         // Fetch organization name
 
-
-        frappe.call({
-            method: 'wh_poultryos.session_getter.get_org_name_from_session',
-            callback: function (r) {
-                if (r.message) {
-                    frm.set_value('org_name', r.message.org_name);
+        if (frm.is_new()) {
+            frappe.call({
+                method: 'wh_poultryos.session_getter.get_org_name_from_session',
+                callback: function (r) {
+                    if (r.message) {
+                        frm.set_value('org_name', r.message.org_name);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         // Check token balance if it's a new form
         if (frm.is_new()) {
@@ -32,7 +33,7 @@ frappe.ui.form.on('Broiler Batch', {
         }
     },
 
- 
+
 
     module: function (frm) {
         if (frm.doc.module) {

@@ -23,10 +23,13 @@ def execute(filters=None):
             g1.feed_cost,
             g1.medicine_cost,
             g1.mortality_percentage,
+            g1.rearing_charge,
             g1.administrative_cost,
             g1.production_cost,
             g1.total_sale_quantity,
             g1.total_delivered_weight,
+            g1.fcr,
+            g1.total_rearing_charges,
             g1.net_payable_amount AS Final_Amount
         FROM `tabGrowing Charges` g1 
         LEFT JOIN `tabCBF Batch` AS t2 ON g1.batch = t2.name
@@ -48,10 +51,13 @@ def execute(filters=None):
         {"label": "Feed Cost", "fieldname": "feed_cost", "fieldtype": "Currency", "width": 120},
         {"label": "Medicine Cost", "fieldname": "medicine_cost", "fieldtype": "Currency", "width": 120},
         {"label": "Mortality Percentage", "fieldname": "mortality_percentage", "fieldtype": "Percent", "width": 120},
+        {"label": "Rearing Charge", "fieldname": "rearing_charge", "fieldtype": "Int", "width": 90},
         {"label": "Administrative Cost", "fieldname": "administrative_cost", "fieldtype": "Currency", "width": 150},
         {"label": "Production Cost", "fieldname": "production_cost", "fieldtype": "Currency", "width": 120},
         {"label": "Total Sale Quantity", "fieldname": "total_sale_quantity", "fieldtype": "Int", "width": 120},
-        {"label": "Total Delivered Weight", "fieldname": "total_delivered_weight", "fieldtype": "Float", "width": 150},
+        {"label": "Total Delivered Weight", "fieldname": "total_delivered_weight", "fieldtype": "Float", "width": 150},       
+        {"label": "FCR", "fieldname": "fcr", "fieldtype": "Float", "width": 110},
+        {"label": "Total Rearing Charge", "fieldname": "total_rearing_charges", "fieldtype": "Float", "width": 130},
         {"label": "Final Amount", "fieldname": "Final_Amount", "fieldtype": "Currency", "width": 150}
     ]
     
