@@ -9,8 +9,6 @@
  "field_order": [
   "batch_selection_section",
   "batch",
-  "transaction_details_section",
-  "transaction_date",
   "batch_details_section",
   "batch_placed_on",
   "batch_age_in_days",
@@ -18,6 +16,8 @@
   "batch_placed_quantity",
   "batch_live_quantity",
   "production_cost",
+  "transaction_details_section",
+  "transaction_date",
   "mortality_and_culls_details_section",
   "mortality_detail",
   "mortality_cost",
@@ -35,6 +35,7 @@
   "bird_weight_section",
   "standard_average_bird_weight_in_grams",
   "actual_average_bird_weight_in_grams",
+  "sexing_error_quantity",
   "column_break_bsvx",
   "weight_variance_in_grams",
   "weight_variance_",
@@ -131,14 +132,12 @@
   {
    "fieldname": "standard_mortality",
    "fieldtype": "Int",
-   "label": "Standard Mortality",
-   "read_only": 1
+   "label": "Standard Mortality"
   },
   {
    "fieldname": "standard_culls",
    "fieldtype": "Int",
-   "label": "Standard Culls",
-   "read_only": 1
+   "label": "Standard Culls"
   },
   {
    "fieldname": "mortality_variance",
@@ -246,7 +245,8 @@
   {
    "fieldname": "actual_average_bird_weight_in_grams",
    "fieldtype": "Float",
-   "label": "Actual Average Bird Weight (In Grams)"
+   "label": "Actual Average Bird Weight (In Grams)",
+   "precision": "5"
   },
   {
    "fieldname": "column_break_bsvx",
@@ -269,11 +269,17 @@
    "fieldtype": "Table",
    "label": "Layer Consumption",
    "options": "Layer Consumption Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "sexing_error_quantity",
+   "fieldtype": "Int",
+   "label": "Sexing Error Quantity"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-21 14:01:26.725392",
+ "modified": "2025-03-26 23:58:43.394412",
  "modified_by": "Administrator",
  "module": "PoultryOS",
  "name": "Layer Daily Transaction",

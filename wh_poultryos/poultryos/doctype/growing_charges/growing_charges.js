@@ -19,7 +19,7 @@ frappe.ui.form.on("Growing Charges", {
 
     onload: function (frm) {
 
-       
+
 
         // First, fetch the ID of "Contract" from Batch Type
         frappe.call({
@@ -410,6 +410,14 @@ frappe.ui.form.on("Growing Charges", {
         })
     },
 
+
+    actual_rearing_chargekg: function (frm) {
+        if (frm.doc.actual_rearing_chargekg) {
+            frm.set_value("total_rearing_charges", (frm.doc.actual_rearing_chargekg * (frm.doc.total_delivered_weight)).toFixed(2));
+
+        }
+    },
+
     batch: function (frm) {
 
         if (!frm.doc.batch) {
@@ -465,6 +473,257 @@ frappe.ui.form.on("Growing Charges", {
                                 frm.set_value("mortality_percentage", mortality_percent.toFixed(2)); // Limit to 2 decimal places
 
                                 frappe.msgprint(__('First-week mortality calculated successfully.'));
+
+
+                                // feed cost
+                                frappe.call({
+                                    method: "frappe.client.get_list",
+                                    args: {
+                                        doctype: "Broiler Daily Transaction",
+                                        filters: [
+                                            ["batch", "=", frm.doc.batch],
+                                            ["transaction_date", ">=", placement_date],
+                                            ["transaction_date", "<=", live_batch_date]
+                                        ],
+                                        fields: ["actual_total_feed_consumption", "feed_cost"]
+                                    },
+                                    callback: function (res) {
+                                        if (res.message) {
+
+                                            const total_feed_quantity = res.message.reduce((sum, record) => sum + (parseFloat(record.actual_total_feed_consumption) || 0), 0);
+                                            const total_feed_cost = res.message.reduce((sum, record) => sum + (parseFloat(record.feed_cost) || 0), 0);
+
+                                            console.log("", frm.doc.cost_from_batch);
+
+                                            if (frm.doc.cost_from_batch == 1) {
+                                                frappe.db.get_doc('Broiler Batch', frm.doc.batch).then(r => {
+                                                    let { feed_rate, medicine_rate, rate } = r || {};
+                                                    let total_feed_cost2 = (feed_rate || 0) * total_feed_quantity;
+                                                    frm.set_value("total_feed_consumed", total_feed_quantity);
+                                                    frm.set_value("feed_cost", total_feed_cost2);
+                                                });
+                                            }
+                                            else {
+                                                frm.set_value("total_feed_consumed", total_feed_quantity);
+                                                frm.set_value("feed_cost", total_feed_cost);
+                                            }
+
+
+
+                                            frappe.msgprint(__('Feed quantity and cost calculated successfully.'));
+
+                                            // get delivered weight
+                                            frappe.call({
+                                                method: "wh_poultryos.poultryos.doctype.growing_charges.growing_charges.get_delivered_weights",  // Replace with your app name
+                                                args: {
+                                                    batch: frm.doc.batch // Pass selected batch from form
+
+                                                },
+                                                callback: function (response) {
+                                                    if (response.message) {
+                                                        console.log("Delivered Weights:", response.message);
+                                                        let total_feed_cost;
+                                                        let total_weight = response.message.delivered_weights.reduce((sum, record) =>
+                                                            sum + (parseFloat(record.weight) || 0), 0
+                                                        );
+
+                                                        if (frm.doc.cost_from_batch == 1) {
+                                                            frappe.db.get_doc('Broiler Batch', frm.doc.batch).then(r => {
+                                                                let { feed_rate, medicine_rate, rate, total_feed } = r || {};
+                                                                let total_feed_cost2 = total_feed;
+                                                                total_feed_cost = total_feed_cost2;
+                                                                const fcr = total_feed_cost / total_weight;
+                                                                frm.set_value("fcr", fcr.toFixed(2));
+                                                                console.log("FCR Calculated:", fcr.toFixed(2));
+                                                            });
+                                                        }
+                                                        else {
+                                                            total_feed_cost = response.message.total_feed;
+                                                            const fcr = total_feed_cost / total_weight;
+                                                            frm.set_value("fcr", fcr.toFixed(2));
+                                                            console.log("FCR Calculated:", fcr.toFixed(2));
+                                                        }
+
+                                                        // Display the total delivered weight
+                                                        frappe.msgprint(__('Total Delivered Weight: ') + total_weight);
+                                                        frm.set_value("total_delivered_weight", total_weight);
+
+                                                        // Get total sales quantity
+                                                        const total_sales_quantity = (frm.doc.total_sale_quantity) || 0;
+
+                                                        if (total_sales_quantity === 0) {
+                                                            frappe.msgprint(__('Total Sales Quantity is zero, cannot calculate Average Weight of Birds.'));
+                                                            frm.set_value("average_weight_of_birds", 0);
+                                                        } else {
+                                                            // Calculate average weight of birds
+                                                            const average_weight_of_birds = total_weight / total_sales_quantity;
+
+                                                            // Set the calculated average weight in the form
+                                                            frm.set_value("average_weight_of_birds", average_weight_of_birds.toFixed(2));
+
+                                                        }
+
+                                                        if (frm.doc.administrative_cost) {
+                                                            // Fetch the placement date from the Batch doctype
+                                                            frappe.call({
+                                                                method: "frappe.client.get",
+                                                                args: {
+                                                                    doctype: "Broiler Batch",
+                                                                    name: frm.doc.batch
+                                                                },
+                                                                callback: function (response) {
+                                                                    if (response.message) {
+
+                                                                        let placement_date = response.message.opening_date;
+                                                                        let live_batch_date = response.message.live_batch_date;
+                                                                        const live_batch_quantity = parseFloat(response.message.live_quantity_number_of_birds || 0);
+                                                                        const rate = response.message.rate;
+                                                                        const place_quantity_number_of_birds = response.message.place_quantity_number_of_birds;
+
+                                                                        if (!placement_date) {
+                                                                            frappe.msgprint(__('Placement date not found for the selected batch.'));
+                                                                            return;
+                                                                        }
+
+                                                                        const feed_cost = parseFloat(frm.doc.feed_cost);
+                                                                        const medicine_cost = parseFloat(frm.doc.medicine_cost);
+                                                                        const vaccine_cost = parseFloat(frm.doc.vaccine_cost);
+                                                                        const administrative_cost = frm.doc.administrative_cost;
+
+                                                                        let production_cost;
+
+                                                                        // Get chick_cost from Scheme Management
+                                                                        frappe.db.get_doc('Scheme Management', frm.doc.scheme).then(s => {
+                                                                            let chick_cost = s ? s.chick_cost : 0;
+
+                                                                            // Use chick_cost only if cost_from_batch == 1, otherwise keep it as rate
+                                                                            let final_rate = frm.doc.cost_from_batch == 1 ? rate : chick_cost;
+
+                                                                            // Calculate Production Cost
+                                                                            production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (final_rate * place_quantity_number_of_birds);
+
+                                                                            // Log and set value
+                                                                            console.log("Production Cost:", production_cost);
+                                                                            frm.set_value("production_cost", production_cost.toFixed(2)); // Round to 2 decimal places
+
+                                                                            // Get total delivered weight
+                                                                            const total_delivered_weight = parseFloat(frm.doc.total_delivered_weight) || 0;
+
+                                                                            if (total_delivered_weight === 0) {
+                                                                                frappe.msgprint(__('Total Delivered Weight is zero, cannot calculate Production Cost per kg.'));
+                                                                                frm.set_value("production_costkg", 0);
+                                                                            } else {
+                                                                                // Calculate production cost per kg
+                                                                                const production_cost_per_kg = production_cost / total_delivered_weight;
+
+                                                                                // Round to 2 decimal places
+                                                                                frm.set_value("production_costkg", production_cost_per_kg.toFixed(2));
+
+                                                                                console.log("Production Cost per kg:", production_cost_per_kg);
+                                                                                frappe.msgprint(__('Production Cost per kg calculated successfully: ') + production_cost_per_kg.toFixed(2));
+                                                                            }
+                                                                        });
+
+
+                                                                        // // Calculate Production Cost
+                                                                        // const production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (rate * place_quantity_number_of_birds);
+                                                                        // console.log("", production_cost);
+
+                                                                        // Get chick_cost from Scheme Management
+                                                                        // frappe.db.get_doc('Scheme Management', frm.doc.scheme).then(s => {
+                                                                        //     let chick_cost = s ? s.chick_cost : 0;
+
+                                                                        //     // Use chick_cost only if cost_from_batch == 1, otherwise keep it as rate
+                                                                        //     let final_rate = frm.doc.cost_from_batch == 1 ? chick_cost : rate;
+
+                                                                        //     // Calculate Production Cost
+                                                                        //     production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (final_rate * place_quantity_number_of_birds);
+
+                                                                        //     // Log and set value
+                                                                        //     console.log("Production Cost:", production_cost);
+                                                                        //     frm.set_value("production_cost", production_cost.toFixed(2)); // Round to 2 decimal places
+                                                                        // });
+
+                                                                        // // Get total delivered weight
+                                                                        // const total_delivered_weight = parseFloat(frm.doc.total_delivered_weight) || 0;
+
+                                                                        // if (total_delivered_weight === 0) {
+                                                                        //     frappe.msgprint(__('Total Delivered Weight is zero, cannot calculate Production Cost per kg.'));
+                                                                        //     frm.set_value("production_cost_per_kg", 0);
+                                                                        // } else {
+                                                                        //     // Calculate production cost per kg
+                                                                        //     const production_cost_per_kg = production_cost / total_delivered_weight;
+
+
+                                                                        //     // Round to 2 decimal places
+                                                                        //     frm.set_value("production_costkg", production_cost_per_kg.toFixed(2));
+
+                                                                        //     console.log("Production Cost per kg:", production_cost_per_kg);
+                                                                        //     frappe.msgprint(__('Production Cost per kg calculated successfully: ') + production_cost_per_kg.toFixed(2));
+
+                                                                        // }
+
+                                                                        // scheme production cost
+                                                                        if (frm.doc.production_cost) {
+                                                                            // Retrieve necessary fields from the form
+                                                                            let actualProductionCost = parseFloat(frm.doc.production_cost);
+                                                                            let totalDeliveredWeight = parseFloat(frm.doc.total_delivered_weight);
+                                                                            let schemeProductionCost = parseFloat(frm.doc.scheme_production_cost);
+                                                                            let rearingCharges = parseFloat(frm.doc.rearing_charge);
+                                                                            let productionIncentive = frm.doc.production_incentive;
+
+                                                                            // Check if totalDeliveredWeight is valid to avoid division by zero
+                                                                            if (totalDeliveredWeight === 0) {
+                                                                                frappe.msgprint(__('Total Delivered Weight cannot be zero for rearing charge calculation.'));
+                                                                                return;
+                                                                            }
+
+                                                                            // Calculate Actual Production Cost Per Unit
+                                                                            let productionCostPerUnit = Number((actualProductionCost / totalDeliveredWeight).toFixed(2));
+
+                                                                            let actualRearingCharge;
+
+                                                                            // Calculate Actual Rearing Charge based on the conditions
+                                                                            if (productionCostPerUnit < schemeProductionCost) {
+                                                                                actualRearingCharge = (rearingCharges + ((schemeProductionCost - productionCostPerUnit) * productionIncentive) / 100);
+                                                                            } else {
+                                                                                actualRearingCharge = (rearingCharges - ((productionCostPerUnit - schemeProductionCost) * productionIncentive) / 100);
+                                                                            }
+
+                                                                            // Set the calculated value to the `actual_rearing_charge` field
+                                                                            frm.set_value("actual_rearing_chargekg", actualRearingCharge);
+                                                                            // frm.set_value("total_sale_quantity", 80);
+
+                                                                            let rearingchargeperkg;
+                                                                            rearingchargeperkg = ((totalDeliveredWeight * actualRearingCharge) / (frm.doc.total_sale_quantity)).toFixed(2);
+
+                                                                            // Set the calculated value to the `actual_rearing_charge` field
+                                                                            frm.set_value("rearing_chargebird", rearingchargeperkg);
+
+
+                                                                        }
+
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+
+
+                                                    } else {
+                                                        frappe.msgprint(__('No records found for the given batch.'));
+                                                    }
+                                                }
+                                            });
+
+                                        } else {
+                                            frappe.msgprint(__('No feed records found.'));
+                                            frm.set_value("feed_consumed_quantity", 0);
+                                            frm.set_value("feed_cost", 0);
+                                        }
+                                    }
+                                });
+
+
                             } else {
                                 frappe.msgprint(__('No mortality records found for the first week.'));
                                 frm.set_value("first_week_mortality", 0);
@@ -472,340 +731,119 @@ frappe.ui.form.on("Growing Charges", {
                         }
                     });
 
-                    frappe.call({
-                        method: "frappe.client.get_list",
-                        args: {
-                            doctype: "Broiler Daily Transaction",
-                            filters: [
-                                ["batch", "=", frm.doc.batch],
-                                ["transaction_date", ">=", placement_date],
-                                ["transaction_date", "<=", live_batch_date]
-                            ],
-                            fields: ["actual_total_feed_consumption", "feed_cost"]
-                        },
-                        callback: function (res) {
-                            if (res.message) {
-
-                                const total_feed_quantity = res.message.reduce((sum, record) => sum + (parseFloat(record.actual_total_feed_consumption) || 0), 0);
-                                const total_feed_cost = res.message.reduce((sum, record) => sum + (parseFloat(record.feed_cost) || 0), 0);
-
-                                console.log("", frm.doc.cost_from_batch);
-
-                                if (frm.doc.cost_from_batch == 1) {
-                                    frappe.db.get_doc('Broiler Batch', frm.doc.batch).then(r => {
-                                        let { feed_rate, medicine_rate, rate } = r || {};
-                                        let total_feed_cost2 = (feed_rate || 0) * total_feed_quantity;
-                                        frm.set_value("total_feed_consumed", total_feed_quantity);
-                                        frm.set_value("feed_cost", total_feed_cost2);
-                                    });
-                                }
-                                else {
-                                    frm.set_value("total_feed_consumed", total_feed_quantity);
-                                    frm.set_value("feed_cost", total_feed_cost);
-                                }
-
-
-
-                                frappe.msgprint(__('Feed quantity and cost calculated successfully.'));
-
-                            } else {
-                                frappe.msgprint(__('No feed records found.'));
-                                frm.set_value("feed_consumed_quantity", 0);
-                                frm.set_value("feed_cost", 0);
-                            }
-                        }
-                    });
-
-                    frappe.call({
-                        method: "wh_poultryos.poultryos.doctype.growing_charges.growing_charges.get_delivered_weights",  // Replace with your app name
-                        args: {
-                            batch: frm.doc.batch // Pass selected batch from form
-                           
-                        },
-                        callback: function (response) {
-                            if (response.message) {
-                                console.log("Delivered Weights:", response.message);
-                                let total_feed_cost;
-                                let total_weight = response.message.delivered_weights.reduce((sum, record) =>
-                                    sum + (parseFloat(record.weight) || 0), 0
-                                );
-
-                                if (frm.doc.cost_from_batch == 1) {
-                                    frappe.db.get_doc('Broiler Batch', frm.doc.batch).then(r => {
-                                        let { feed_rate, medicine_rate, rate, total_feed } = r || {};
-                                        let total_feed_cost2 = total_feed;
-                                        total_feed_cost = total_feed_cost2;
-                                        const fcr = total_feed_cost / total_weight;
-                                        frm.set_value("fcr", fcr.toFixed(2));
-                                        console.log("FCR Calculated:", fcr.toFixed(2));
-                                    });
-                                }
-                                else {
-                                    total_feed_cost = response.message.total_feed;
-                                    const fcr = total_feed_cost / total_weight;
-                                    frm.set_value("fcr", fcr.toFixed(2));
-                                    console.log("FCR Calculated:", fcr.toFixed(2));
-                                }
-
-                                // Display the total delivered weight
-                                frappe.msgprint(__('Total Delivered Weight: ') + total_weight);
-                                frm.set_value("total_delivered_weight", total_weight);
-
-                                // const fcr = total_feed_cost / total_weight;
-                                // frm.set_value("fcr", fcr.toFixed(2));
-                                // console.log("FCR Calculated:", fcr.toFixed(2));
-
-                                // Get total sales quantity
-                                const total_sales_quantity = (frm.doc.total_sale_quantity) || 0;
-
-                                if (total_sales_quantity === 0) {
-                                    frappe.msgprint(__('Total Sales Quantity is zero, cannot calculate Average Weight of Birds.'));
-                                    frm.set_value("average_weight_of_birds", 0);
-                                } else {
-                                    // Calculate average weight of birds
-                                    const average_weight_of_birds = total_weight / total_sales_quantity;
-
-                                    // Set the calculated average weight in the form
-                                    frm.set_value("average_weight_of_birds", average_weight_of_birds.toFixed(2));
-
-                                }
-
-
-
-                                // if (delivered_weight === 0) {
-                                //     frappe.msgprint(__('Total Delivered Weight is zero, cannot calculate FCR.'));
-                                //     frm.set_value("fcr", 0);
-                                // } else {
-                                //     // Calculate and set FCR
-                                //     const fcr = total_feed_cost / delivered_weight;
-                                //     frm.set_value("fcr", fcr.toFixed(2));
-                                //     console.log("FCR Calculated:", fcr.toFixed(2));
-                                //     frappe.msgprint(__('FCR calculated successfully: ') + fcr.toFixed(2));
-                                // }
-
-
-
-                            } else {
-                                frappe.msgprint(__('No records found for the given batch.'));
-                            }
-                        }
-                    });
 
                     // administrator cost
-                    if (frm.doc.administrative_cost) {
-                        // Fetch the placement date from the Batch doctype
-                        frappe.call({
-                            method: "frappe.client.get",
-                            args: {
-                                doctype: "Broiler Batch",
-                                name: frm.doc.batch
-                            },
-                            callback: function (response) {
-                                if (response.message) {
+                    // if (frm.doc.administrative_cost) {
+                    //     // Fetch the placement date from the Batch doctype
+                    //     frappe.call({
+                    //         method: "frappe.client.get",
+                    //         args: {
+                    //             doctype: "Broiler Batch",
+                    //             name: frm.doc.batch
+                    //         },
+                    //         callback: function (response) {
+                    //             if (response.message) {
 
-                                    let placement_date = response.message.opening_date;
-                                    let live_batch_date = response.message.live_batch_date;
-                                    const live_batch_quantity = parseFloat(response.message.live_quantity_number_of_birds || 0);
-                                    const rate = response.message.rate;
-                                    const place_quantity_number_of_birds = response.message.place_quantity_number_of_birds;
+                    //                 let placement_date = response.message.opening_date;
+                    //                 let live_batch_date = response.message.live_batch_date;
+                    //                 const live_batch_quantity = parseFloat(response.message.live_quantity_number_of_birds || 0);
+                    //                 const rate = response.message.rate;
+                    //                 const place_quantity_number_of_birds = response.message.place_quantity_number_of_birds;
 
-                                    if (!placement_date) {
-                                        frappe.msgprint(__('Placement date not found for the selected batch.'));
-                                        return;
-                                    }
+                    //                 if (!placement_date) {
+                    //                     frappe.msgprint(__('Placement date not found for the selected batch.'));
+                    //                     return;
+                    //                 }
 
-                                    const feed_cost = parseFloat(frm.doc.feed_cost);
-                                    const medicine_cost = parseFloat(frm.doc.medicine_cost);
-                                    const vaccine_cost = parseFloat(frm.doc.vaccine_cost);
-                                    const administrative_cost = frm.doc.administrative_cost;
+                    //                 const feed_cost = parseFloat(frm.doc.feed_cost);
+                    //                 const medicine_cost = parseFloat(frm.doc.medicine_cost);
+                    //                 const vaccine_cost = parseFloat(frm.doc.vaccine_cost);
+                    //                 const administrative_cost = frm.doc.administrative_cost;
 
-                                    let production_cost;
+                    //                 let production_cost;
 
-                                    // Get chick_cost from Scheme Management
-                                    frappe.db.get_doc('Scheme Management', frm.doc.scheme).then(s => {
-                                        let chick_cost = s ? s.chick_cost : 0;
+                    //                 // Get chick_cost from Scheme Management
+                    //                 frappe.db.get_doc('Scheme Management', frm.doc.scheme).then(s => {
+                    //                     let chick_cost = s ? s.chick_cost : 0;
 
-                                        // Use chick_cost only if cost_from_batch == 1, otherwise keep it as rate
-                                        let final_rate = frm.doc.cost_from_batch == 1 ? rate : chick_cost;
+                    //                     // Use chick_cost only if cost_from_batch == 1, otherwise keep it as rate
+                    //                     let final_rate = frm.doc.cost_from_batch == 1 ? rate : chick_cost;
 
-                                        // Calculate Production Cost
-                                        production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (final_rate * place_quantity_number_of_birds);
+                    //                     // Calculate Production Cost
+                    //                     production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (final_rate * place_quantity_number_of_birds);
 
-                                        // Log and set value
-                                        console.log("Production Cost:", production_cost);
-                                        frm.set_value("production_cost", production_cost.toFixed(2)); // Round to 2 decimal places
+                    //                     // Log and set value
+                    //                     console.log("Production Cost:", production_cost);
+                    //                     frm.set_value("production_cost", production_cost.toFixed(2)); // Round to 2 decimal places
 
-                                        // Get total delivered weight
-                                        const total_delivered_weight = parseFloat(frm.doc.total_delivered_weight) || 0;
+                    //                     // Get total delivered weight
+                    //                     const total_delivered_weight = parseFloat(frm.doc.total_delivered_weight) || 0;
 
-                                        if (total_delivered_weight === 0) {
-                                            frappe.msgprint(__('Total Delivered Weight is zero, cannot calculate Production Cost per kg.'));
-                                            frm.set_value("production_costkg", 0);
-                                        } else {
-                                            // Calculate production cost per kg
-                                            const production_cost_per_kg = production_cost / total_delivered_weight;
+                    //                     if (total_delivered_weight === 0) {
+                    //                         frappe.msgprint(__('Total Delivered Weight is zero, cannot calculate Production Cost per kg.'));
+                    //                         frm.set_value("production_costkg", 0);
+                    //                     } else {
+                    //                         // Calculate production cost per kg
+                    //                         const production_cost_per_kg = production_cost / total_delivered_weight;
 
-                                            // Round to 2 decimal places
-                                            frm.set_value("production_costkg", production_cost_per_kg.toFixed(2));
+                    //                         // Round to 2 decimal places
+                    //                         frm.set_value("production_costkg", production_cost_per_kg.toFixed(2));
 
-                                            console.log("Production Cost per kg:", production_cost_per_kg);
-                                            frappe.msgprint(__('Production Cost per kg calculated successfully: ') + production_cost_per_kg.toFixed(2));
-                                        }
-                                    });
+                    //                         console.log("Production Cost per kg:", production_cost_per_kg);
+                    //                         frappe.msgprint(__('Production Cost per kg calculated successfully: ') + production_cost_per_kg.toFixed(2));
+                    //                     }
+                    //                 });
 
+                    //                 // scheme production cost
+                    //                 if (frm.doc.production_cost) {
+                    //                     // Retrieve necessary fields from the form
+                    //                     let actualProductionCost = parseFloat(frm.doc.production_cost);
+                    //                     let totalDeliveredWeight = parseFloat(frm.doc.total_delivered_weight);
+                    //                     let schemeProductionCost = parseFloat(frm.doc.scheme_production_cost);
+                    //                     let rearingCharges = parseFloat(frm.doc.rearing_charge);
+                    //                     let productionIncentive = frm.doc.production_incentive;
 
-                                    // // Calculate Production Cost
-                                    // const production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (rate * place_quantity_number_of_birds);
-                                    // console.log("", production_cost);
+                    //                     // Check if totalDeliveredWeight is valid to avoid division by zero
+                    //                     if (totalDeliveredWeight === 0) {
+                    //                         frappe.msgprint(__('Total Delivered Weight cannot be zero for rearing charge calculation.'));
+                    //                         return;
+                    //                     }
 
-                                    // Get chick_cost from Scheme Management
-                                    // frappe.db.get_doc('Scheme Management', frm.doc.scheme).then(s => {
-                                    //     let chick_cost = s ? s.chick_cost : 0;
+                    //                     // Calculate Actual Production Cost Per Unit
+                    //                     let productionCostPerUnit = Number((actualProductionCost / totalDeliveredWeight).toFixed(2));
 
-                                    //     // Use chick_cost only if cost_from_batch == 1, otherwise keep it as rate
-                                    //     let final_rate = frm.doc.cost_from_batch == 1 ? chick_cost : rate;
+                    //                     let actualRearingCharge;
 
-                                    //     // Calculate Production Cost
-                                    //     production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (final_rate * place_quantity_number_of_birds);
+                    //                     // Calculate Actual Rearing Charge based on the conditions
+                    //                     if (productionCostPerUnit < schemeProductionCost) {
+                    //                         actualRearingCharge = (rearingCharges + ((schemeProductionCost - productionCostPerUnit) * productionIncentive) / 100);
+                    //                     } else {
+                    //                         actualRearingCharge = (rearingCharges - ((productionCostPerUnit - schemeProductionCost) * productionIncentive) / 100);
+                    //                     }
 
-                                    //     // Log and set value
-                                    //     console.log("Production Cost:", production_cost);
-                                    //     frm.set_value("production_cost", production_cost.toFixed(2)); // Round to 2 decimal places
-                                    // });
+                    //                     // Set the calculated value to the `actual_rearing_charge` field
+                    //                     frm.set_value("actual_rearing_chargekg", actualRearingCharge);
+                    //                     // frm.set_value("total_sale_quantity", 80);
 
-                                    // // Get total delivered weight
-                                    // const total_delivered_weight = parseFloat(frm.doc.total_delivered_weight) || 0;
+                    //                     let rearingchargeperkg;
+                    //                     rearingchargeperkg = ((totalDeliveredWeight * actualRearingCharge) / (frm.doc.total_sale_quantity)).toFixed(2);
 
-                                    // if (total_delivered_weight === 0) {
-                                    //     frappe.msgprint(__('Total Delivered Weight is zero, cannot calculate Production Cost per kg.'));
-                                    //     frm.set_value("production_cost_per_kg", 0);
-                                    // } else {
-                                    //     // Calculate production cost per kg
-                                    //     const production_cost_per_kg = production_cost / total_delivered_weight;
-
-
-                                    //     // Round to 2 decimal places
-                                    //     frm.set_value("production_costkg", production_cost_per_kg.toFixed(2));
-
-                                    //     console.log("Production Cost per kg:", production_cost_per_kg);
-                                    //     frappe.msgprint(__('Production Cost per kg calculated successfully: ') + production_cost_per_kg.toFixed(2));
-
-                                    // }
-
-                                    // scheme production cost
-                                    if (frm.doc.production_cost) {
-                                        // Retrieve necessary fields from the form
-                                        let actualProductionCost = parseFloat(frm.doc.production_cost);
-                                        let totalDeliveredWeight = parseFloat(frm.doc.total_delivered_weight);
-                                        let schemeProductionCost = parseFloat(frm.doc.scheme_production_cost);
-                                        let rearingCharges = parseFloat(frm.doc.rearing_charge);
-                                        let productionIncentive = frm.doc.production_incentive;
-
-                                        // Check if totalDeliveredWeight is valid to avoid division by zero
-                                        if (totalDeliveredWeight === 0) {
-                                            frappe.msgprint(__('Total Delivered Weight cannot be zero for rearing charge calculation.'));
-                                            return;
-                                        }
-
-                                        // Calculate Actual Production Cost Per Unit
-                                        let productionCostPerUnit = Number((actualProductionCost / totalDeliveredWeight).toFixed(2));
-
-                                        let actualRearingCharge;
-
-                                        // Calculate Actual Rearing Charge based on the conditions
-                                        if (productionCostPerUnit < schemeProductionCost) {
-                                            actualRearingCharge = (rearingCharges + ((schemeProductionCost - productionCostPerUnit) * productionIncentive) / 100);
-                                        } else {
-                                            actualRearingCharge = (rearingCharges - ((productionCostPerUnit - schemeProductionCost) * productionIncentive) / 100);
-                                        }
-
-                                        // Set the calculated value to the `actual_rearing_charge` field
-                                        frm.set_value("actual_rearing_chargekg", actualRearingCharge);
-                                        // frm.set_value("total_sale_quantity", 80);
-
-                                        let rearingchargeperkg;
-                                        rearingchargeperkg = ((totalDeliveredWeight * actualRearingCharge) / (frm.doc.total_sale_quantity)).toFixed(2);
-
-                                        // Set the calculated value to the `actual_rearing_charge` field
-                                        frm.set_value("rearing_chargebird", rearingchargeperkg);
+                    //                     // Set the calculated value to the `actual_rearing_charge` field
+                    //                     frm.set_value("rearing_chargebird", rearingchargeperkg);
 
 
-                                    }
+                    //                 }
 
-                                }
-                            }
-                        });
-                    }
+                    //             }
+                    //         }
+                    //     });
+                    // }
 
                 }
             }
         });
     },
 
-    actual_rearing_chargekg: function (frm) {
-        if (frm.doc.actual_rearing_chargekg) {
-            frm.set_value("total_rearing_charges", (frm.doc.actual_rearing_chargekg * (frm.doc.total_delivered_weight)).toFixed(2));
-
-        }
-    },
-
-    //     if (frm.doc.administrative_cost) {
-    //         // Fetch the placement date from the Batch doctype
-    //         frappe.call({
-    //             method: "frappe.client.get",
-    //             args: {
-    //                 doctype: "Broiler Batch",
-    //                 name: frm.doc.batch
-    //             },
-    //             callback: function (response) {
-    //                 if (response.message) {
-    //                     let placement_date = response.message.opening_date;
-    //                     let live_batch_date = response.message.live_batch_date;
-    //                     const live_batch_quantity = parseFloat(response.message.live_quantity_number_of_birds || 0);
-    //                     const rate = response.message.rate;
-    //                     const place_quantity_number_of_birds = response.message.place_quantity_number_of_birds;
-    //                     if (!placement_date) {
-    //                         frappe.msgprint(__('Placement date not found for the selected batch.'));
-    //                         return;
-    //                     }
-
-    //                     const feed_cost = parseFloat(frm.doc.feed_cost);
-    //                     const medicine_cost = parseFloat(frm.doc.medicine_cost);
-    //                     const vaccine_cost = parseFloat(frm.doc.vaccine_cost);
-    //                     const administrative_cost = frm.doc.administrative_cost;
-    //                     // Calculate Production Cost
-    //                     const production_cost = feed_cost + medicine_cost + vaccine_cost + administrative_cost + (rate * place_quantity_number_of_birds);
-    //                     console.log("", production_cost);
-
-    //                     // Set the calculated production cost in the respective field
-    //                     frm.set_value("production_cost", production_cost.toFixed(2)); // Round to 2 decimal places
-
-    //                     // Get total delivered weight
-    //                     const total_delivered_weight = parseFloat(frm.doc.total_delivered_weight) || 0;
-
-    //                     if (total_delivered_weight === 0) {
-    //                         frappe.msgprint(__('Total Delivered Weight is zero, cannot calculate Production Cost per kg.'));
-    //                         frm.set_value("production_cost_per_kg", 0);
-    //                     } else {
-    //                         // Calculate production cost per kg
-    //                         const production_cost_per_kg = production_cost / total_delivered_weight;
-
-    //                         // Set values in the form
-    //                         frm.set_value("production_cost", production_cost.toFixed(2));  // Round to 2 decimal places
-    //                         frm.set_value("production_costkg", production_cost_per_kg.toFixed(2));
-
-    //                         console.log("Production Cost per kg:", production_cost_per_kg);
-    //                         frappe.msgprint(__('Production Cost per kg calculated successfully: ') + production_cost_per_kg.toFixed(2));
-    //                     }
-
-
-    //                 }
-    //             }
-    //         });
-    //     }
-
-
-    // },
 
     after_save: function (frm) {
 
@@ -844,3 +882,12 @@ frappe.ui.form.on("Growing Charges", {
         });
     }
 });
+
+function handleMortalityData(res, frm) {
+    let total_mortality_per = res.reduce((sum, record) => sum + (record.total_mortality_qty || 0), 0);
+    const mortality_percent2 = (total_mortality_per / place_quantity_number_of_birds) * 100;
+
+    frm.set_value("first_week_mortality", total_mortality_per);
+    frm.set_value("first_week_mortality_percentage", mortality_percent2.toFixed(2));
+    frappe.msgprint(__('First-week mortality calculated successfully.'));
+}
